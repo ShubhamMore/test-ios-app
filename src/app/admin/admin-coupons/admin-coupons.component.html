@@ -1,0 +1,40 @@
+<nb-card>
+  <nb-card-header>
+    <button class="btn btn-yellow float-right" nbButton routerLink="add">Add Coupon</button>
+    <h3>Coupons</h3>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive" *ngIf="coupons.length > 0; else noCoupons">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Coupon Code</th>
+            <th>Amount Type</th>
+            <th>Coupon Amount</th>
+            <th>Expiry Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let coupon of coupons">
+            <td>{{ coupon.code }}</td>
+            <td>{{ coupon.amountType | uppercase }}</td>
+            <td>{{ coupon.amount }} {{ coupon.amountType === 'amount' ? '/-' : '%' }}</td>
+            <td>{{ coupon.expiryDate.split('-').reverse().join('-') }}</td>
+            <td>
+              <button class="btn mr-2" nbButton status="basic" (click)="editCoupon(coupon._id)">
+                Edit
+              </button>
+              <button class="btn" nbButton status="danger" (click)="deleteCoupon(coupon._id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noCoupons>
+      <p class="pt-5 text-center">No Coupons Added</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,94 @@
+<nb-card *ngIf="display">
+  <nb-card-header>
+    <div>
+      <button class="btn btn-yellow-black float-right" (click)="back()">MANAGE Plans</button>
+      <p style="color: black; font-weight: bold">
+        {{ edit === 'true' ? 'Edit' : 'Add' }} Plan Here
+      </p>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="form" (ngSubmit)="savePlan()">
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="planType">*Plan Type</label>
+          <input
+            type="text"
+            nbInput
+            id="planType"
+            fullWidth
+            [status]="
+              form.get('planType').invalid && form.get('planType').touched ? 'danger' : 'basic'
+            "
+            formControlName="planType"
+            placeholder="Plan Name"
+          />
+          <small *ngIf="form.get('planType').invalid && form.get('planType').touched"
+            >*Plan Type is required</small
+          >
+        </div>
+        <div class="col-sm-6">
+          <label for="planCode">*Plan Code</label>
+          <input
+            type="text"
+            nbInput
+            id="planCode"
+            fullWidth
+            [status]="
+              form.get('planCode').invalid && form.get('planCode').touched ? 'danger' : 'basic'
+            "
+            formControlName="planCode"
+            placeholder="Plan Code"
+          />
+          <small *ngIf="form.get('planCode').invalid && form.get('planCode').touched"
+            >*Plan code is required</small
+          >
+        </div>
+        <div class="col-sm-6">
+          <label for="amount">*Plan Amount</label>
+          <input
+            type="text"
+            nbInput
+            fullWidth
+            [status]="form.get('amount').invalid && form.get('amount').touched ? 'danger' : 'basic'"
+            #amount
+            id="amount"
+            formControlName="amount"
+            placeholder="Plan amount"
+          />
+          <small *ngIf="form.get('amount').invalid && form.get('amount').touched"
+            >*Plan amount is required</small
+          >
+        </div>
+        <div class="col-sm-6">
+          <label for="amount">*Plan Upgrade Amount</label>
+          <input
+            type="text"
+            nbInput
+            fullWidth
+            [status]="
+              form.get('upgradeAmount').invalid && form.get('upgradeAmount').touched
+                ? 'danger'
+                : 'basic'
+            "
+            #amount
+            id="upgradeAmount"
+            formControlName="upgradeAmount"
+            placeholder="Plan Upgrade Amount"
+          />
+          <small *ngIf="form.get('upgradeAmount').invalid && form.get('upgradeAmount').touched"
+            >*Plan Upgrade amount is required</small
+          >
+        </div>
+      </div>
+
+      <hr />
+
+      <div>
+        <button type="submit" class="btn btn-yellow-black float-right">
+          {{ edit === 'true' ? 'Update Plan' : 'Add Plan' }}
+        </button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

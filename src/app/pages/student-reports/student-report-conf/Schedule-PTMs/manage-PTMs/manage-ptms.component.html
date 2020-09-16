@@ -1,0 +1,49 @@
+<!-- <ngx-institute-header></ngx-institute-header> -->
+
+<nb-card *ngIf="display">
+  <nb-card-header>
+    <button class="btn btn-yellow-black float-right" (click)="addPtms()">Schedule PTM</button>
+    <p style="color: black; font-weight: bold">Scheduled Meetings</p>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive">
+      <table class="table table-borderless" *ngIf="ptmList.length > 0; else noPtmList">
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>Batch</th>
+            <th>Date</th>
+            <th>Time</th>
+            <!-- <th>Topic</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of ptmList; let i = index">
+            <td>{{ item.courseId }}</td>
+            <td>{{ item.batchId }}</td>
+            <td>{{ item.date }}</td>
+            <td>{{ item.time }}</td>
+            <!-- <td>{{ item.topic }}</td> -->
+            <td class="text-right">
+              <button class="mr-3 btn-yellow" nbButton (click)="edit(item._id)">
+                <span class="btnText"> Edit </span>
+                <span class="btnIcon">
+                  <nb-icon icon="edit-outline"></nb-icon>
+                </span>
+              </button>
+              <button nbButton status="danger" (click)="delete(item._id, i)">
+                <span class="btnText"> Del </span>
+                <span class="btnIcon">
+                  <nb-icon icon="trash-2-outline"></nb-icon>
+                </span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noPtmList>
+      <p class="text-center mt-3">No PTMs Found</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

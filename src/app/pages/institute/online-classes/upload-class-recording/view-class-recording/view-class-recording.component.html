@@ -1,0 +1,104 @@
+<div class="backdrop" (click)="onClose()"></div>
+
+<ngx-play-video-recording
+  *ngIf="playVideoRecording"
+  [recording]="recording"
+  (close)="closePlayingVideo()"
+></ngx-play-video-recording>
+
+<div class="view-recording-box">
+  <nb-card>
+    <nb-card-header style="background-color: #ffd500; color: #000">
+      <h4>VIEW RECORDING</h4>
+    </nb-card-header>
+    <nb-card-body>
+      <div *ngIf="meeting; else loading">
+        <div class="row meeting-header">
+          <div class="col-md-2">
+            <div class="date-block">
+              <span class="month">{{ month(meeting.date) }}</span>
+              <span class="day">{{ day(meeting.date) }}</span>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <p>
+              <strong>Topic: </strong>
+              <span>{{ meeting.topic }}</span>
+              <br />
+              <strong>Date: </strong>
+              <span>{{ createDate(meeting.date) }}</span>
+            </p>
+          </div>
+          <div class="col-md-5">
+            <p>
+              <strong>From Time: </strong>
+              <span>{{ createTime(meeting.fromTime) }}</span>
+              <br />
+              <strong>To Time: </strong>
+              <span>{{ createTime(meeting.toTime) }}</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="row storage-size">
+          <div class="col-sm-4">
+            <p>
+              <strong>Total Allowed: </strong>
+              <span></span>
+            </p>
+          </div>
+          <div class="col-sm-4">
+            <p>
+              <strong>Total Used: </strong>
+              <span></span>
+            </p>
+          </div>
+          <div class="col-sm-4">
+            <p>
+              <strong>Total Free: </strong>
+              <span></span>
+            </p>
+          </div>
+        </div>
+
+        <div class="row file-list">
+          <div class="col-12">
+            <div class="table-responsive" *ngIf="meeting.recordings.length > 0; else noRecordings">
+              <table class="table">
+                <tbody>
+                  <tr *ngFor="let recording of meeting.recordings; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ recording.fileName }}</td>
+                    <td>
+                      <button
+                        class="btn btn-yellow-black btn-sm mr-3"
+                        (click)="viewRecording(recording)"
+                      >
+                        View
+                      </button>
+
+                      <button
+                        nbButton
+                        size="small"
+                        status="danger"
+                        (click)="deleteRecording(meeting._id, recording._id)"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <ng-template #noRecordings>
+              <p class="pt-2 text-center">No Recordings</p>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <ng-template #loading>
+        <p class="mt-5 mb-5 text-center">Loading...</p>
+      </ng-template>
+    </nb-card-body>
+  </nb-card>
+</div>

@@ -1,0 +1,151 @@
+<ngx-terms-and-conditions *ngIf="tncDisplay" (close)="closeTnC()"></ngx-terms-and-conditions>
+
+<div class="wrapper fadeInDown signupContainer">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- <h2 class="inactive underlineHover">Sign Up </h2> -->
+
+    <!-- Login Form -->
+    <!-- <form> -->
+
+    <nb-layout style="background-color: white">
+      <nb-layout-column style="background-color: white">
+        <nb-card style="box-shadow: none">
+          <nb-card-body class="text-center">
+            <div class="fadeIn first">
+              <img src="assets/img/EA FAVI.png" id="icon" alt="User Icon" style="width: 25%" />
+            </div>
+
+            <h2 class="font-weight-bolder d-inline-block" style="font-size: 25px; color: black">
+              Create Your Account
+            </h2>
+            <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()">
+              <input
+                type="text"
+                id="name"
+                class="fadeIn first"
+                formControlName="name"
+                name="name"
+                placeholder="Name *"
+              />
+
+              <div *ngIf="!signUpForm.get('name').valid && signUpForm.get('name').touched">
+                <small>*This field is required</small>
+              </div>
+
+              <input
+                type="email"
+                id="email"
+                class="fadeIn second"
+                formControlName="email"
+                name="email"
+                placeholder="Email *"
+              />
+              <div *ngIf="!signUpForm.get('email').valid && signUpForm.get('email').touched">
+                <small>*Enter Valid Email</small>
+              </div>
+
+              <input
+                type="text"
+                id="phone"
+                class="fadeIn third"
+                pattern="\d*"
+                formControlName="phone"
+                name="phone"
+                placeholder="Contact Number *"
+                minlength="10"
+                maxlength="10"
+              />
+
+              <div *ngIf="!signUpForm.get('phone').valid && signUpForm.get('phone').touched">
+                <small>*Enter Correct Phone Number</small>
+              </div>
+
+              <input
+                type="password"
+                id="password"
+                minlength="7"
+                class="fadeIn fourth"
+                formControlName="password"
+                name="password"
+                placeholder="Password *"
+              />
+              <div *ngIf="!signUpForm.get('password').valid && signUpForm.get('password').touched">
+                <small *ngIf="signUpForm.get('password').errors?.required"
+                  >*This field is required</small
+                >
+                <small *ngIf="signUpForm.get('password').errors?.minlength"
+                  >*Minimum length 7 is required</small
+                >
+              </div>
+
+              <input
+                type="password"
+                id="confirmPassword"
+                class="fadeIn fifth"
+                formControlName="confirmPassword"
+                name="confirmPassword"
+                placeholder="Confirm Password *"
+              />
+
+              <div
+                *ngIf="
+                  !signUpForm.get('confirmPassword').valid &&
+                  signUpForm.get('confirmPassword').touched
+                "
+              >
+                <small>*This field is required</small>
+              </div>
+
+              <div
+                *ngIf="
+                  signUpForm.hasError('invalidPassword') &&
+                  signUpForm.get('confirmPassword').touched
+                "
+              >
+                <small>*Password must match</small>
+              </div>
+
+              <div>
+                <nb-select
+                  class="fadeIn eight"
+                  formControlName="role"
+                  placeholder="Select Role"
+                  size="giant"
+                  fullWidth
+                >
+                  <nb-option value="institute">Institute</nb-option>
+                  <nb-option value="student">Student</nb-option>
+                </nb-select>
+              </div>
+
+              <div *ngIf="!signUpForm.get('role').valid && signUpForm.get('role').touched">
+                <small>*Select Role</small>
+              </div>
+
+              <div>
+                <nb-checkbox
+                  status="warning"
+                  (change)="acceptTermsAndConditions($event.target.checked)"
+                >
+                  I agree with the
+                  <span class="btn btn-link pointer" (click)="openTnC()">TERMS AND CONDITIONS</span>
+                </nb-checkbox>
+              </div>
+
+              <div>
+                <button type="Submit" class="fadeIn seventh">Create Account</button>
+              </div>
+            </form>
+
+            <div>
+              <span>Already Registered ? </span>
+              <a routerLink="/login">Sign In Here</a>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </nb-layout-column>
+    </nb-layout>
+  </div>
+</div>

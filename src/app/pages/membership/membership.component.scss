@@ -1,0 +1,186 @@
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+nb-card-header {
+  background-color: #f39f86;
+  background-image: linear-gradient(315deg, #f39f86 0%, #f9d976 74%);
+}
+
+.pricingDiv {
+  padding: 50px 10px;
+}
+
+.priceTable {
+  padding: 0 40px;
+  background-color: #fff;
+}
+
+.priceTable th {
+  height: 139px;
+  width: 200px;
+  padding: 0px;
+}
+.lite {
+  background-color: #ffd500;
+  height: 100%;
+  color: #000;
+}
+.liteHeader {
+  background-color: #cda300;
+  height: 53px;
+  line-height: 53px;
+
+  color: #fff;
+}
+.liteHeader span {
+  text-align: center;
+  font-weight: 300;
+}
+.lite-plus {
+  background-color: #ff3d71;
+  height: 100%;
+  color: #000;
+}
+.lite-plusHeader {
+  background-color: #db3662;
+  height: 53px;
+  line-height: 53px;
+
+  color: #fff;
+}
+.lite-plusHeader span {
+  text-align: center;
+  font-weight: 300;
+}
+
+.value {
+  background-color: #4c34fb;
+  height: 100%;
+  color: #fff;
+}
+.valueHeader {
+  background-color: #1a02c9;
+  height: 53px;
+  line-height: 53px;
+}
+.valueHeader span {
+  text-align: center;
+  font-weight: 300;
+}
+
+.power {
+  background-color: #04c34f;
+  height: 100%;
+  color: #fff;
+}
+.powerHeader {
+  background-color: #00911d;
+  height: 53px;
+  line-height: 53px;
+}
+.powerHeader span {
+  text-align: center;
+  font-weight: 300;
+}
+
+.headerValue {
+  font-size: 30px;
+  font-weight: 400;
+  padding-top: 13px;
+}
+.headerSubValue {
+  font-size: 16px;
+  font-weight: 400;
+  padding-top: 10px;
+}
+
+.featuresHeader {
+  font-weight: 400;
+  font-size: 46px;
+  line-height: 56.626px;
+  text-transform: none;
+  color: rgb(98, 98, 98);
+  padding-bottom: 15px;
+}
+
+.pricingTitle {
+  font-size: 45px;
+  font-weight: bold;
+  font-family: 'Poppins';
+}
+td {
+  white-space: nowrap;
+}
+
+.hide {
+  display: none;
+}
+@include media-breakpoint-down(xl) {
+  .pricingDiv {
+    padding: 50px 20px;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .pricingDiv {
+    padding: 50px 20px;
+  }
+  .featuresHeader {
+    font-weight: 400;
+    font-size: auto;
+    line-height: unset;
+    text-transform: none;
+    color: rgb(98, 98, 98);
+    padding-bottom: 15px;
+
+    span {
+      display: block;
+      padding-bottom: 15px;
+    }
+    p {
+      display: block;
+    }
+  }
+  .headerValue {
+    font-size: auto;
+    font-weight: 400;
+    padding-top: 13px;
+  }
+  .priceTable th {
+    height: 139px;
+    width: auto;
+    padding: 0px;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .pricingDiv {
+    padding: 0px;
+    .pricingTitle {
+      padding-left: 20px;
+    }
+    .priceTable th {
+      height: 139px;
+      width: auto;
+      padding: 0px;
+    }
+  }
+  .featuresHeader {
+    font-weight: 400;
+    font-size: auto;
+    line-height: unset;
+    text-transform: none;
+    color: rgb(98, 98, 98);
+    padding-bottom: 15px;
+  }
+  .headerValue {
+    font-size: auto;
+    font-weight: 400;
+    padding-top: 13px;
+  }
+  .priceTable th {
+    height: auto;
+    width: auto;
+    padding: 0px;
+  }
+}

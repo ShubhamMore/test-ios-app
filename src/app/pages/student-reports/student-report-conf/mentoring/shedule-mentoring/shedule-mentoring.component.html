@@ -1,0 +1,162 @@
+<!-- <ngx-institute-header></ngx-institute-header> -->
+
+<nb-card *ngIf="display">
+  <nb-card-header>
+    <p style="color: black; font-weight: bold">Scheduled Mentoring</p>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="mentoringForm" (submit)="save()">
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="date">*Date</label>
+          <input
+            type="date"
+            nbInput
+            fullWidth
+            [status]="
+              mentoringForm.get('date').invalid && mentoringForm.get('date').touched
+                ? 'danger'
+                : 'basic'
+            "
+            formControlName="date"
+          />
+          <span
+            style="color: #f00"
+            *ngIf="mentoringForm.get('date').invalid && mentoringForm.get('date').touched"
+            >*Date is Required</span
+          >
+        </div>
+        <div class="col-sm-4">
+          <label for="time">*Time</label>
+          <input
+            type="time"
+            nbInput
+            fullWidth
+            [status]="
+              mentoringForm.get('time').invalid && mentoringForm.get('time').touched
+                ? 'danger'
+                : 'basic'
+            "
+            formControlName="time"
+          />
+          <span
+            style="color: #f00"
+            *ngIf="mentoringForm.get('time').invalid && mentoringForm.get('time').touched"
+            >*Time is Required</span
+          >
+        </div>
+
+        <div class="col-sm-4">
+          <label for="teacherId">*Teacher</label>
+          <nb-select
+            placeholder="Select Teacher"
+            [status]="
+              mentoringForm.get('teacherId').invalid && mentoringForm.get('teacherId').touched
+                ? 'danger'
+                : 'basic'
+            "
+            formControlName="teacherId"
+            fullWidth
+            id="teacherId"
+          >
+            <nb-option value="">Select Teacher</nb-option>
+            <nb-option *ngFor="let teacher of teachers" [value]="teacher._id">{{
+              teacher.basicDetails.name
+            }}</nb-option>
+          </nb-select>
+          <span
+            style="color: #f00"
+            *ngIf="mentoringForm.get('teacherId').invalid && mentoringForm.get('teacherId').touched"
+            >*Teacher is Required</span
+          >
+        </div>
+
+        <div class="col-sm-12">
+          <label for="time">*Note</label>
+          <textarea
+            name="note"
+            id="note"
+            rows="2"
+            nbInput
+            [status]="
+              mentoringForm.get('note').invalid && mentoringForm.get('note').touched
+                ? 'danger'
+                : 'basic'
+            "
+            fullWidth
+            formControlName="note"
+            placeholder="Note"
+          ></textarea>
+          <span
+            style="color: #f00"
+            *ngIf="mentoringForm.get('note').invalid && mentoringForm.get('note').touched"
+            >*Note is Required</span
+          >
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <button
+            class="btn float-right mt-3"
+            nbButton
+            status="danger"
+            (click)="cancelEdit()"
+            *ngIf="editMentoringId"
+          >
+            Cancel
+          </button>
+          <button class="btn btn-yellow float-right mt-3 mr-3" type="submit">
+            {{ editMentoringId ? 'Update' : 'Submit' }}
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <hr />
+    <div style="overflow: auto">
+      <table class="table table-borderless" *ngIf="mentorings.length > 0; else noMentoring">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Date/Time</th>
+            <th>Note</th>
+            <th>Teacher</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let mentoring of mentorings; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ mentoring.date }} - {{ mentoring.time }}</td>
+            <td>{{ mentoring.note }}</td>
+            <td>{{ mentoring.teacherName }}</td>
+            <td>
+              <button class="mr-3 mb-2 btn-yellow" nbButton (click)="editMentoring(i)">
+                <span class="btnText"> Edit </span>
+
+                <span class="btnIcon">
+                  <nb-icon icon="edit-outline"></nb-icon>
+                </span>
+              </button>
+              <button
+                class="mr-3 mb-2"
+                nbButton
+                status="danger"
+                (click)="deleteMentoring(mentoring._id, i)"
+              >
+                <span class="btnText"> Delete </span>
+                <span class="btnIcon">
+                  <nb-icon icon="trash-2-outline"></nb-icon>
+                </span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noMentoring>
+      <p class="text-center mt-3">No Mentoring Sessions Found</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

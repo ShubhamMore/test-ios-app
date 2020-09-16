@@ -1,0 +1,109 @@
+<nb-card *ngIf="student">
+  <nb-card-header>
+    <button class="btn float-right mr-3 btn btn-yellow" (click)="back()">Back</button>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12" *ngIf="display">
+        <h3>Course Details</h3>
+        <div>
+          <table class="table table-sm">
+            <tbody>
+              <tr>
+                <td><strong>Course: </strong></td>
+                <td>{{ getCourse(student.instituteDetails.courseId) }}</td>
+              </tr>
+              <tr>
+                <td><strong>Batch: </strong></td>
+                <td>{{ getBatch(student.instituteDetails.batchId) }}</td>
+              </tr>
+              <tr>
+                <td><strong>Status: </strong></td>
+                <td>{{ student.instituteDetails.status ? 'Active' : 'Pending' }}</td>
+              </tr>
+              <tr></tr>
+              <tr>
+                <td><strong>Roll No: </strong></td>
+                <td>{{ student.instituteDetails.rollNumber }}</td>
+              </tr>
+              <tr>
+                <td><strong>Date of Admission: </strong></td>
+                <td>{{ student.fees.date }}</td>
+              </tr>
+              <tr>
+                <td><strong>Net Payable: </strong></td>
+                <td>{{ student.instituteDetails.netPayable }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-12">
+        <h3>Payment/Installment Details</h3>
+
+        <div>
+          <table class="table table-sm">
+            <tbody>
+              <tr>
+                <td><strong>Total Payable Amount: </strong></td>
+                <td>{{ student.fees.totalAmount }}</td>
+              </tr>
+              <tr>
+                <td><strong>Amount Collected: </strong></td>
+                <td>{{ student.fees.amountCollected }}</td>
+              </tr>
+              <tr>
+                <td><strong>Pending Amount: </strong></td>
+                <td>{{ student.fees.pendingAmount }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div>
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>Installment No.</th>
+                <th>Installment Date</th>
+                <th>Amount</th>
+                <th>Pending Amount</th>
+                <th>Payment Mode</th>
+                <th>Bank Details</th>
+                <th>Transaction Details</th>
+                <th>Receipt</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let installment of student.fees.installments; let i = index"
+                [ngClass]="
+                  installment.paidStatus === 'true' ? 'paid-installment' : 'unpaid-installment'
+                "
+              >
+                <td>
+                  <strong>Installment {{ i + 1 }} </strong>
+                </td>
+                <td>{{ installment.paidOn }}</td>
+                <td>{{ installment.amount }}</td>
+                <td>{{ installment.amountPending }}</td>
+                <td>{{ installment.paymentMode }}</td>
+                <td>{{ installment.bankDetails }}</td>
+                <td>{{ installment.transDetails }}</td>
+                <td>
+                  <a
+                    class="receipt"
+                    href="#"
+                    (click)="openUrl(installment.receipt.secureUrl)"
+                    *ngIf="installment.paidStatus === 'true' && installment.receipt.secureUrl"
+                    >Receipt</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

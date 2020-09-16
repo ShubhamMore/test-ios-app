@@ -1,0 +1,67 @@
+<nb-card *ngIf="display" class="mobileFullHeight">
+  <nb-card-header>
+    <div>
+      <button class="btn btn-yellow-black float-right" (click)="goManage()">Manage Batches</button>
+      <p style="color: black; font-weight: bold">Add Batches</p>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="batchForm" (ngSubmit)="onSubmit()">
+      <p>Course</p>
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="course">Select Parent Course</label>
+          <nb-select
+            placeholder="Select Parent Course"
+            id="course"
+            fullWidth
+            formControlName="course"
+            [status]="f.course.errors && submitted ? 'danger' : 'basic'"
+          >
+            <!-- <nb-option value="">Select Parent Course</nb-option> -->
+            <nb-option *ngFor="let course of courses" [value]="course._id"
+              >{{ course.name }}
+            </nb-option>
+          </nb-select>
+          <small *ngIf="f.course.errors && submitted">*course is required</small>
+        </div>
+        <div class="col-sm-6">
+          <label for="code">Unique Code</label>
+          <input
+            type="text"
+            nbInput
+            fullWidth
+            id="code"
+            placeholder="Unique Code"
+            formControlName="batchCode"
+            required
+            [status]="f.batchCode.errors && submitted ? 'danger' : 'basic'"
+          />
+
+          <small *ngIf="f.batchCode.errors && submitted">*Code is required</small>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-sm-12">
+          <label for="des">Description</label>
+          <textarea
+            name="description"
+            id="des"
+            cols="30"
+            rows="6"
+            nbInput
+            status="basic"
+            fullWidth
+            formControlName="description"
+            placeholder="Description"
+          ></textarea>
+        </div>
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-yellow-black float-right m-1">Submit</button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

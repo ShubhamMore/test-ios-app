@@ -1,0 +1,96 @@
+<ngx-institute-header></ngx-institute-header>
+
+<nb-card *ngIf="display">
+  <nb-card-header>
+    <button class="btn btn-yellow-black float-right" (click)="back()">Manage Schedule</button>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-6">
+        <h6>Course</h6>
+      </div>
+      <div class="col-sm-6">
+        <p>{{ schedule.courseId }}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <h6>Batch</h6>
+      </div>
+      <div class="col-sm-6">
+        <p>{{ schedule.batchId }}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <h6>Schedule Start</h6>
+      </div>
+      <div class="col-sm-6">
+        <p>{{ getScheduleDate(schedule.scheduleStart) }}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <h6>Schedule End</h6>
+      </div>
+      <div class="col-sm-6">
+        <p>{{ getScheduleDate(schedule.scheduleEnd) }}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <h6>Recurrence at the time of definition</h6>
+      </div>
+      <div class="col-sm-6">
+        {{ schedule.recurrence === 'true' ? 'Yes' : 'No' }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive">
+          <table class="table table-borderless">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Day</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Topic</th>
+                <th>Teacher</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let day of schedule.days; let i = index">
+                <tr *ngIf="day.select">
+                  <td>
+                    {{ i + 1 }}
+                  </td>
+                  <td>
+                    {{ day.day }}
+                  </td>
+                  <td class="text-nowrap">
+                    {{ getScheduleDate(day.date) }}
+                  </td>
+                  <td>
+                    {{ day.startTime ? day.startTime : '--' }}
+                  </td>
+                  <td>
+                    {{ day.endTime ? day.endTime : '--' }}
+                  </td>
+                  <td>
+                    {{ day.topic ? day.topic : '--' }}
+                  </td>
+                  <td>
+                    {{ day.teacher ? day.teacher : '--' }}
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

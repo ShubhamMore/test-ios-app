@@ -1,0 +1,112 @@
+<ngx-view-links
+  *ngIf="viewClassRecording"
+  [meeting]="meetingDetails"
+  (close)="closeViewRecording()"
+></ngx-view-links>
+
+<nb-card status="info" *ngIf="display">
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-9">ONLINE CLASSES</div>
+      <div class="col-sm-3">
+        <nb-select
+          placeholder="Select Course"
+          status="basic"
+          fullWidth
+          (selectedChange)="onSelectCourse($event)"
+          [(selected)]="courseId"
+        >
+          <nb-option value="">Select Course</nb-option>
+          <nb-option *ngFor="let course of courses" [value]="course._id">{{
+            course.courseName + ' (' + course.batchCode + ')'
+          }}</nb-option>
+        </nb-select>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12">
+        <nb-tabset fullWidth>
+          <nb-tab tabTitle="UPCOMING CLASSES">
+            <div class="table-responsive" *ngIf="upcomingMeetings.length > 0; else noMeetings">
+              <table class="table">
+                <tbody>
+                  <tr *ngFor="let meeting of upcomingMeetings; let i = index">
+                    <td>
+                      <div class="date-block">
+                        <span class="month">{{ month(meeting.date) }}</span>
+                        <span class="day">{{ day(meeting.date) }}</span>
+                      </div>
+                    </td>
+                    <td class="text-nowrap">
+                      <div class="meeting-details">
+                        <div class="detail1">Topic: {{ meeting.topic }}</div>
+                        <!-- <div class="detail1">Batch: {{ meeting.batch }}</div> -->
+                      </div>
+                    </td>
+                    <td class="text-nowrap">
+                      <div class="meeting-details">
+                        <div class="detail1">From Time: {{ createTime(meeting.fromTime) }}</div>
+                        <div class="detail1">To Time: {{ createTime(meeting.toTime) }}</div>
+                      </div>
+                    </td>
+                    <td>
+                      <button
+                        class="mr-3 mb-1"
+                        nbButton
+                        status="success"
+                        (click)="start(meeting.link)"
+                      >
+                        Join
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </nb-tab>
+          <nb-tab tabTitle="PREVIOUS CLASSES">
+            <div class="table-responsive" *ngIf="previousMeetings.length > 0; else noMeetings">
+              <table class="table">
+                <tbody>
+                  <tr *ngFor="let meeting of previousMeetings; let i = index">
+                    <td>
+                      <div class="date-block">
+                        <span class="month">{{ month(meeting.date) }}</span>
+                        <span class="day">{{ day(meeting.date) }}</span>
+                      </div>
+                    </td>
+                    <td class="text-nowrap">
+                      <div class="meeting-details">
+                        <div class="detail1">Topic: {{ meeting.topic }}</div>
+                        <!-- <div class="detail1">Batch: {{ meeting.batch }}</div> -->
+                      </div>
+                    </td>
+                    <td class="text-nowrap">
+                      <div class="meeting-details">
+                        <div class="detail1">From Time: {{ createTime(meeting.fromTime) }}</div>
+                        <div class="detail1">To Time: {{ createTime(meeting.toTime) }}</div>
+                      </div>
+                    </td>
+                    <td>
+                      <button class="mr-3 mb-1 btn btn-yellow" (click)="viewRecording(meeting)">
+                        <span class="btnText"> View </span>
+                        <span class="btnIcon">
+                          <nb-icon icon="eye-outline"></nb-icon>
+                        </span>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </nb-tab>
+        </nb-tabset>
+      </div>
+    </div>
+    <ng-template #noMeetings>
+      <p class="mt-5 text-center">No Meetings Available</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap');
+// themes - our custom or/and out of the box themes
+@import 'themes';
+
+// framework component themes (styles tied to theme variables)
+@import '~@nebular/theme/styles/globals';
+@import '~@nebular/auth/styles/all';
+
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/grid';
+
+// loading progress bar theme
+@import './pace.theme';
+
+@import './layout';
+@import './overrides';
+
+// install the framework and custom global styles
+@include nb-install() {
+  // framework global styles
+  @include nb-theme-global();
+  @include nb-auth-global();
+
+  @include ngx-layout();
+  // loading progress bar
+  @include ngx-pace-theme();
+
+  @include nb-overrides();
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.btn-yellow {
+  background-color: #ffd500 !important;
+  text-transform: uppercase !important;
+  color: #fff !important;
+  font-weight: bold !important;
+  transition: all 0.2s !important;
+}
+
+.btn-yellow:hover {
+  background-color: #ffd50099 !important;
+  color: #ffffff99 !important;
+}
+
+.btn-yellow-black {
+  background-color: #ffd500 !important;
+  text-transform: uppercase !important;
+  color: #000 !important;
+  font-weight: bold !important;
+  transition: all 0.2s !important;
+}
+
+.btn-yellow-black:hover {
+  background-color: #ffd50099 !important;
+  color: #00000099 !important;
+}
+.nb-theme-default nb-layout .layout {
+  min-height: 0vh;
+}
+.chatWindow nb-card nb-card-body {
+  padding: 0;
+}
+.chatWindow nb-card-body nb-chat .header {
+  padding: 0;
+  border-top: 0;
+  border-bottom: 0;
+}
+.btnIcon {
+  display: none;
+}
+
+.input-error {
+  color: #f00;
+  font-size: 80%;
+}
+
+.instituteNameLogo {
+  float: left;
+  .logo {
+    float: left;
+  }
+  .name {
+    float: left;
+    padding-left: 15px;
+  }
+}
+
+/*--SCROLL BAR--*/
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: transparent;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #c1c1c1;
+}
+.showMobile {
+  display: none;
+}
+@media only screen and (max-width: 1200px) {
+  nb-layout-column {
+    padding: 0px !important;
+  }
+  nb-card {
+    margin-bottom: 0px !important;
+  }
+  nb-card-header h3 {
+    font-size: 80% !important;
+  }
+  nb-card-body {
+    padding: 1rem 0rem;
+  }
+  .table-responsive {
+    height: 82vh !important;
+  }
+  .nb-theme-default nb-layout .scrollable-container::-webkit-scrollbar {
+    width: 0rem !important;
+    height: 0rem !important;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollable-container {
+    overflow: unset !important;
+    overflow-y: scroll !important;
+  }
+  .btnText {
+    display: none;
+  }
+
+  .btnIcon {
+    display: inline;
+    font-size: 21px;
+  }
+  .hideMobile {
+    display: none;
+  }
+  .showMobile {
+    display: block;
+  }
+  .btn-yellow {
+    padding: 0.6875rem 1.125rem;
+    border-style: solid;
+    border-width: 0.0625rem;
+    text-transform: uppercase;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    line-height: 1rem;
+  }
+  .mobileFullHeight {
+    height: 85vh;
+  }
+  table tr td:last-child {
+    white-space: nowrap;
+    button {
+      display: inline !important;
+      padding: 8px !important;
+    }
+  }
+
+  nb-layout-header {
+    position: relative !important;
+  }
+  .layout-container {
+    padding-top: 0rem !important;
+  }
+
+  .row {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+
+    .col-sm-6 {
+      padding-left: 0px !important;
+      padding-right: 0px !important;
+    }
+  }
+
+  .instituteNameLogo {
+    width: 100%;
+    float: left;
+    .logo {
+      width: 10%;
+      float: left;
+    }
+    .name {
+      width: 90%;
+      float: left;
+      line-height: 25px;
+    }
+  }
+  .nb-theme-default nb-layout-header nav {
+    padding: 0 1.25rem !important;
+  }
+
+  .window-mode {
+    box-sizing: border-box !important;
+  }
+
+  // .cdk-overlay-pane {
+  //   background-color: rgba($color: #000000, $alpha: 0.2) !important;
+  // }
+}
+@media only screen and (max-width: 400px) {
+  .header-container .user-name {
+    display: none !important;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .header-container .user-name {
+    display: none !important;
+  }
+  .tabset {
+    display: block !important;
+  }
+}

@@ -1,0 +1,26 @@
+<div class="backdrop" (click)="onClose()"></div>
+<div class="play-recording-box">
+  <div class="row" *ngIf="recording; else loading">
+    <div class="col-12">
+      <video
+        #videoPlayer
+        class="video"
+        disablePictureInPicture
+        id="video"
+        name="video"
+        oncontextmenu="return false;"
+        width="100%"
+        loading="lazy"
+        controls
+        controlsList="nodownload"
+      >
+        <!--controlsList="noRemotePlayback"-->
+        <source [src]="recording.secureUrl" type="video/mp4" />
+        This browser/App does not support the video.
+      </video>
+    </div>
+  </div>
+  <ng-template #loading>
+    <p class="mt-5 mb-5 text-center">Loading...</p>
+  </ng-template>
+</div>

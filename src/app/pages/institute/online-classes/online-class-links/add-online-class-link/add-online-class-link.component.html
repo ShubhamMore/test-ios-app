@@ -1,0 +1,194 @@
+<!-- <ngx-institute-header></ngx-institute-header> -->
+
+<nb-card>
+  <nb-card-header>
+    <h4 style="color: black; font-weight: bold">Schedule A Class</h4>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="onlineClassForm" (submit)="saveOnlineClassLink()">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="topic">*Topic</label>
+            <input
+              type="topic"
+              nbInput
+              [status]="
+                onlineClassForm.get('topic').invalid && onlineClassForm.get('topic').touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              id="topic"
+              fullWidth
+              formControlName="topic"
+              placeholder="topic"
+            />
+            <small
+              *ngIf="onlineClassForm.get('topic').invalid && onlineClassForm.get('topic').touched"
+              >*Topic is required</small
+            >
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="link">*Online Class Link</label>
+            <input
+              type="url"
+              nbInput
+              [status]="
+                onlineClassForm.get('link').invalid && onlineClassForm.get('link').touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              id="link"
+              fullWidth
+              formControlName="link"
+              placeholder="Online Class Link"
+            />
+            <small
+              *ngIf="onlineClassForm.get('link').invalid && onlineClassForm.get('link').touched"
+              >*Link is required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <br />
+
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="courseId">*Course</label>
+          <nb-select
+            placeholder="Select Course"
+            id="courseId"
+            [status]="
+              onlineClassForm.get('courseId').invalid && onlineClassForm.get('courseId').touched
+                ? 'danger'
+                : 'basic'
+            "
+            fullWidth
+            formControlName="courseId"
+            (selectedChange)="onSelectCourse($event)"
+          >
+            <nb-option value="">Select Course</nb-option>
+            <nb-option *ngFor="let i of courses" [value]="i._id">{{ i.name }}</nb-option>
+          </nb-select>
+          <small
+            *ngIf="
+              onlineClassForm.get('courseId').invalid && onlineClassForm.get('courseId').touched
+            "
+            >*Course is required</small
+          >
+        </div>
+
+        <div class="col-sm-6">
+          <label for="batchId">*Batch</label>
+          <nb-select
+            placeholder="Select Batch"
+            id="batchId"
+            formControlName="batchId"
+            fullWidth
+            [status]="
+              onlineClassForm.get('batchId').invalid && onlineClassForm.get('batchId').touched
+                ? 'danger'
+                : 'basic'
+            "
+          >
+            <nb-option value="">Select Batch</nb-option>
+            <nb-option *ngFor="let item of batches" [value]="item._id">{{
+              item.batchCode
+            }}</nb-option>
+          </nb-select>
+          <small
+            *ngIf="onlineClassForm.get('batchId').invalid && onlineClassForm.get('batchId').touched"
+            >*Batch is required</small
+          >
+        </div>
+      </div>
+
+      <br />
+
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="date">*Start Date</label>
+            <input
+              type="date"
+              nbInput
+              [status]="
+                onlineClassForm.get('date').invalid && onlineClassForm.get('date').touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              id="date"
+              fullWidth
+              formControlName="date"
+              placeholder="Date"
+            />
+            <small
+              *ngIf="onlineClassForm.get('date').invalid && onlineClassForm.get('date').touched"
+              >*Start Date is required</small
+            >
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="fromTime">*From Time</label>
+            <input
+              type="time"
+              nbInput
+              [status]="
+                onlineClassForm.get('fromTime').invalid && onlineClassForm.get('fromTime').touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              id="fromTime"
+              fullWidth
+              formControlName="fromTime"
+              placeholder="fromTime"
+            />
+            <small
+              *ngIf="
+                onlineClassForm.get('fromTime').invalid && onlineClassForm.get('fromTime').touched
+              "
+              >*From Time is required</small
+            >
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="toTime">*To Time</label>
+            <input
+              type="time"
+              nbInput
+              [status]="
+                onlineClassForm.get('toTime').invalid && onlineClassForm.get('toTime').touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              id="toTime"
+              fullWidth
+              formControlName="toTime"
+              placeholder="toTime"
+            />
+            <small
+              *ngIf="onlineClassForm.get('toTime').invalid && onlineClassForm.get('toTime').touched"
+              >*To Time is required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="row">
+        <div class="col-12">
+          <button type="submit" class="btn btn-yellow-black float-right">Schedule</button>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,204 @@
+<!-- <ngx-institute-header></ngx-institute-header> -->
+
+<nb-card *ngIf="display">
+  <nb-card-header>
+    <p style="color: black; font-weight: bold">Create Test</p>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="createTestForm" (submit)="createTest()">
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="courseId">*Course</label>
+          <nb-select
+            placeholder="Select Course"
+            id="courseId"
+            [status]="
+              createTestForm.get('courseId').invalid && createTestForm.get('courseId').touched
+                ? 'danger'
+                : 'basic'
+            "
+            fullWidth
+            formControlName="courseId"
+            (selectedChange)="onSelectCourse($event)"
+          >
+            <nb-option value="">Select Course</nb-option>
+            <nb-option *ngFor="let i of institute.course" [value]="i._id">{{ i.name }}</nb-option>
+          </nb-select>
+          <small
+            *ngIf="createTestForm.get('courseId').invalid && createTestForm.get('courseId').touched"
+            >*Course is required</small
+          >
+        </div>
+
+        <div class="col-sm-4">
+          <label for="batchId">*Batch</label>
+          <nb-select
+            placeholder="Select Batch"
+            id="batchId"
+            formControlName="batchId"
+            fullWidth
+            [status]="
+              createTestForm.get('batchId').invalid && createTestForm.get('batchId').touched
+                ? 'danger'
+                : 'basic'
+            "
+          >
+            <nb-option value="">Select Batch</nb-option>
+            <nb-option *ngFor="let item of batches" [value]="item._id">{{
+              item.batchCode
+            }}</nb-option>
+          </nb-select>
+          <small
+            *ngIf="createTestForm.get('batchId').invalid && createTestForm.get('batchId').touched"
+            >*Batch is required</small
+          >
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="date">*Date</label>
+            <input
+              type="date"
+              nbInput
+              [status]="
+                createTestForm.get('date').invalid && createTestForm.get('date').touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              id="date"
+              fullWidth
+              formControlName="date"
+              placeholder="date"
+            />
+            <small *ngIf="createTestForm.get('date').invalid && createTestForm.get('date').touched"
+              >*Date is required</small
+            >
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="testName">*Test Name</label>
+            <input
+              type="text"
+              nbInput
+              [status]="
+                createTestForm.get('testName').invalid && createTestForm.get('testName').touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              id="testName"
+              fullWidth
+              formControlName="testName"
+              placeholder="Test Name"
+            />
+            <small
+              *ngIf="
+                createTestForm.get('testName').invalid && createTestForm.get('testName').touched
+              "
+              >*Test Name is required</small
+            >
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="testCode">*Test Code</label>
+            <input
+              type="text"
+              nbInput
+              [status]="
+                createTestForm.get('testCode').invalid && createTestForm.get('testCode').touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              id="testCode"
+              fullWidth
+              formControlName="testCode"
+              placeholder="Test Code"
+            />
+            <small
+              *ngIf="
+                createTestForm.get('testCode').invalid && createTestForm.get('testCode').touched
+              "
+              >*Code is required</small
+            >
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="totalMarks">*Test Marks</label>
+            <input
+              type="text"
+              nbInput
+              pattern="\d*"
+              maxlength="3"
+              [status]="
+                createTestForm.get('totalMarks').invalid && createTestForm.get('totalMarks').touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              id="totalMarks"
+              fullWidth
+              formControlName="totalMarks"
+              placeholder="Test Marks"
+            />
+            <small
+              *ngIf="
+                createTestForm.get('totalMarks').invalid && createTestForm.get('totalMarks').touched
+              "
+              >*Marks is required</small
+            >
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <label for="startTime">*From Time</label>
+          <input
+            type="time"
+            nbInput
+            fullWidth
+            [status]="
+              createTestForm.get('startTime').invalid && createTestForm.get('startTime').touched
+                ? 'danger'
+                : 'basic'
+            "
+            formControlName="startTime"
+          />
+          <span
+            style="color: #f00"
+            *ngIf="
+              createTestForm.get('startTime').invalid && createTestForm.get('startTime').touched
+            "
+            >*From Time is Required</span
+          >
+        </div>
+        <div class="col-sm-4">
+          <label for="toTime">*To Time</label>
+          <input
+            type="time"
+            nbInput
+            fullWidth
+            [status]="
+              createTestForm.get('toTime').invalid && createTestForm.get('toTime').touched
+                ? 'danger'
+                : 'basic'
+            "
+            formControlName="toTime"
+          />
+          <span
+            style="color: #f00"
+            *ngIf="createTestForm.get('toTime').invalid && createTestForm.get('toTime').touched"
+            >*To Time is Required</span
+          >
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary float-right mt-3">Save</button>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

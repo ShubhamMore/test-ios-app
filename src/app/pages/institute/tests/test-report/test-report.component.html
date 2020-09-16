@@ -1,0 +1,95 @@
+<!-- <ngx-institute-header></ngx-institute-header> -->
+
+<nb-card status="info" *ngIf="display">
+  <nb-card-body>
+    <div class="row mb-2">
+      <div class="col-sm-3">
+        <h3 class="text-black studentReportHeader">STUDENT PERFORMANCE REPORT</h3>
+      </div>
+      <div class="col-sm-3 pt-3">
+        <input
+          type="text"
+          nbInput
+          [(ngModel)]="searchStudentFilter"
+          (input)="filterActiveStudents()"
+          fullWidth
+          placeholder="Search Student By Name"
+        />
+      </div>
+      <div class="col-sm-3 pt-3">
+        <nb-select
+          placeholder="Select Course"
+          status="basic"
+          fullWidth
+          (selectedChange)="onSelectCourse($event)"
+        >
+          <nb-option value="">Select Course</nb-option>
+          <nb-option *ngFor="let course of institute.course" [value]="course._id">{{
+            course.name
+          }}</nb-option>
+        </nb-select>
+      </div>
+
+      <div class="col-sm-3 pt-3">
+        <nb-select
+          placeholder="Select Batch"
+          fullWidth
+          status="basic"
+          (selectedChange)="onSelectBatch($event)"
+        >
+          <nb-option value="">Select Batch</nb-option>
+          <nb-option *ngFor="let batch of batches" [value]="batch._id">{{
+            batch.batchCode
+          }}</nb-option>
+        </nb-select>
+      </div>
+    </div>
+    <div class="row" style="width: 100%">
+      <div class="col-md-12">
+        <div
+          class="table-responsive studentTable"
+          *ngIf="students.length > 0 && !hideHeaders; else noTests"
+        >
+          <table class="table table-borderless text-center">
+            <thead>
+              <tr>
+                <th>STUDENT NAME</th>
+                <th>ROLL NO</th>
+                <th>BATCH</th>
+                <th>COURSE</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let student of students; let i = index" [hidden]="student.filterOut">
+                <td>{{ student.basicDetails.name }}</td>
+                <td>{{ student.instituteDetails.rollNumber }}</td>
+                <td>{{ getBatchName(student.instituteDetails.batchId) }}</td>
+                <td>{{ getCourseName(student.instituteDetails.courseId) }}</td>
+                <td>
+                  <button
+                    class="mr-3 mb-1"
+                    nbButton
+                    status="success"
+                    (click)="
+                      viewScore(
+                        student._id,
+                        student.instituteDetails.batchId,
+                        student.instituteDetails.courseId
+                      )
+                    "
+                  >
+                    REPORT
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ng-template #noTests>
+          <p class="text-center pt-5">No Students Available</p>
+        </ng-template>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

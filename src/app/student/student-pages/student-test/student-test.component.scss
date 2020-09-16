@@ -1,0 +1,28 @@
+.date-block {
+  float: left;
+  width: 70px;
+  height: 70px;
+  background-color: #ffd500;
+  margin-bottom: 10px;
+}
+
+.month {
+  display: block;
+  text-align: center;
+  color: #000;
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: 25px;
+}
+
+.day {
+  display: block;
+  text-align: center;
+  color: #000;
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: 20px;
+}
+.boldText {
+  font-weight: bold;
+}

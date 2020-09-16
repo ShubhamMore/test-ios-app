@@ -1,0 +1,53 @@
+<div>
+  <nb-card>
+    <nb-card-header>
+      <div>
+        <button class="btn btn-yellow-black float-right" (click)="onClick()">ADD COURSES</button>
+        <p style="color: black; font-weight: bold">Manage Course Here</p>
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="table-responsive">
+        <table class="table table-borderless" *ngIf="courses.length > 0; else no_courses">
+          <thead>
+            <tr>
+              <th>Course Name</th>
+              <th>Code</th>
+              <th>Duration</th>
+              <th>Fees</th>
+              <th>GST</th>
+              <th>Total Fees (INR)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of courses; let i = index">
+              <td>{{ item.name }}</td>
+              <td>{{ item.courseCode }}</td>
+              <td>{{ item.duration }}</td>
+              <td>{{ item.fees }}</td>
+              <td>{{ item.gst }}</td>
+              <td>INR&nbsp;{{ item.totalFee }}</td>
+              <td style="text-align: right">
+                <button class="mr-3 mb-2 btn-yellow" nbButton (click)="edit(item._id)">
+                  <span class="btnText"> Edit </span>
+                  <span class="btnIcon">
+                    <nb-icon icon="edit-outline"></nb-icon>
+                  </span>
+                </button>
+                <button class="mr-3 mb-2" nbButton status="danger" (click)="delete(item._id)">
+                  <span class="btnText"> Del </span>
+                  <span class="btnIcon">
+                    <nb-icon icon="trash-2-outline"></nb-icon>
+                  </span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #no_courses>
+        <p class="mt-5 mb-5 text-center">No Courses Found</p>
+      </ng-template>
+    </nb-card-body>
+  </nb-card>
+</div>

@@ -1,0 +1,59 @@
+td {
+  padding-right: 50px;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.td-img {
+  // padding: 10px 8px;
+  width: 40px;
+
+  span{
+    width: 40px;
+  }
+}
+
+nb-card-header {
+  color: #ffd500;
+}
+.small {
+  display: block;
+}
+
+#date {
+  width: 26%;
+  float: right;
+  padding: 11px;
+  border-radius: 6px;
+  border: none;
+  font-size: 11px;
+  text-align: center;
+}
+
+.plan-status {
+  padding: 3px 5px;
+  border-radius: 3px;
+  color: #fff;
+}
+
+.active {
+  background-color: #00d68f;
+}
+
+.inactive {
+  background-color: #ff3d71;
+}
+
+@media only screen and (max-width: 600px) {
+  nb-card {
+    margin-bottom: 1.875rem !important;
+  }
+  td {
+    padding-right: 0px;
+  }
+  .table-responsive {
+    max-height: unset !important;
+  }
+}

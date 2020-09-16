@@ -1,0 +1,165 @@
+<nb-card class="mobileFullHeight">
+  <nb-card-header>
+    <p style="color: black; font-weight: bold">{{ edit ? 'Edit' : 'Add' }} Role Form Here</p>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-checkbox
+      (checkedChange)="changeAlreadyRegistered($event)"
+      [checked]="alreadyRegistered"
+      fullWidth
+      status="warning"
+      *ngIf="!edit && !dataFetched"
+      >Already Registered Employee</nb-checkbox
+    >
+    <form
+      [formGroup]="eduAtlasEmployeeForm"
+      (ngSubmit)="onEmployeeFormSearch()"
+      *ngIf="alreadyRegistered"
+    >
+      <p>Fetch Employee</p>
+      <div class="row">
+        <div class="col-sm-6">
+          <input
+            type="text"
+            nbInput
+            [status]="
+              eduAtlasEmployeeFormControl.eduAtlasId.errors &&
+              eduAtlasEmployeeFormControl.eduAtlasId.touched
+                ? 'danger'
+                : 'basic'
+            "
+            id="eduAtlasId"
+            fullWidth
+            formControlName="eduAtlasId"
+            placeholder="Enter EduId or Email"
+          />
+        </div>
+        <div class="col-sm-6 fetchBtn">
+          <button class="btn btn-yellow-black" type="submit" *ngIf="!edit && !dataFetched">
+            Fetch
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <form [formGroup]="otpForm" (ngSubmit)="verifyOtp()" *ngIf="otpSent && alreadyRegistered">
+      <p>OTP</p>
+      <div class="row">
+        <div class="col-sm-6">
+          <input
+            type="text"
+            nbInput
+            [status]="otpForm.get('otp').errors && otpForm.get('otp').touched ? 'danger' : 'basic'"
+            id="otp"
+            fullWidth
+            formControlName="otp"
+          />
+        </div>
+        <div class="col-sm-6 fetchBtn">
+          <button type="submit" class="btn btn-yellow-black" *ngIf="!edit">Verify</button>
+        </div>
+      </div>
+      <hr />
+    </form>
+
+    <form
+      [formGroup]="employeeForm"
+      (ngSubmit)="onSubmit()"
+      *ngIf="!alreadyRegistered || (alreadyRegistered && employee) || (employee && edit)"
+    >
+      <p>Employee Basic Details</p>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="name">*Name</label>
+            <input
+              type="text"
+              nbInput
+              [status]="f.name.errors && f.name.touched ? 'danger' : 'basic'"
+              id="name"
+              fullWidth
+              formControlName="name"
+              placeholder="Name"
+            />
+            <small *ngIf="f.name.errors && f.name.touched">*Employee name is required</small>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="email">*Email</label>
+            <input
+              type="email"
+              nbInput
+              [status]="f.employeeEmail.errors && f.employeeEmail.touched ? 'danger' : 'basic'"
+              id="email"
+              formControlName="employeeEmail"
+              fullWidth
+              placeholder="Email"
+            />
+            <small *ngIf="f.employeeEmail.errors && f.employeeEmail.touched"
+              >*Employee email is required</small
+            >
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="contact">*Employee Contact Number</label>
+            <input
+              type="text"
+              pattern="\d*"
+              nbInput
+              maxlength="10"
+              minlength="10"
+              [status]="f.contact.errors && f.contact.touched ? 'danger' : 'basic'"
+              id="contact"
+              formControlName="contact"
+              fullWidth
+              placeholder="Employee Contact No."
+            />
+            <small *ngIf="f.contact.errors && f.contact.touched"
+              >*Employee Contact Number is required.</small
+            >
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <label>*Role</label>
+          <nb-select
+            placeholder="Select Role"
+            [status]="f.role.errors && f.role.touched ? 'danger' : 'basic'"
+            status="basic"
+            formControlName="role"
+          >
+            <nb-option [value]="null">Select Role</nb-option>
+            <nb-option *ngFor="let role of roles" value="{{ role }}">{{ role }}</nb-option>
+          </nb-select>
+          <small *ngIf="f.role.errors && f.role.touched">*Employee Role is required.</small>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <label for="address">Address</label>
+          <textarea
+            type="text"
+            nbInput
+            status="basic"
+            fullWidth
+            id="address"
+            formControlName="address"
+            fullWidth
+            placeholder="Address"
+          >
+          </textarea>
+        </div>
+      </div>
+      <hr />
+      <div style="text-align: right">
+        <button type="submit" class="btn btn-yellow-black">
+          {{ employeeEduId ? 'Update Employee' : 'Add Employee' }}
+        </button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

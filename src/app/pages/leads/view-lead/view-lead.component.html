@@ -1,0 +1,21 @@
+<ngx-institute-header></ngx-institute-header>
+
+<nb-card *ngIf="display">
+  <nb-card-header>
+    <button class="mb-2 float-right" nbButton status="danger" (click)="delete(lead._id)">
+      Delete
+    </button>
+    <button class="mr-3 mb-2 btn btn-yellow float-right" (click)="edit(lead._id)">Edit</button>
+    <h4>Lead</h4>
+  </nb-card-header>
+  <nb-card-body>
+    <p class="float-right"><strong>Date: </strong> {{ lead.addedDate }}</p>
+    <p><strong>Name: </strong> {{ lead.leadName }}</p>
+    <p><strong>Contact: </strong>{{ lead.leadContact }}</p>
+    <p><strong>Email: </strong>{{ lead.leadEmail }}</p>
+    <p><strong>Course: </strong>{{ lead.courseId }}</p>
+    <p><strong>Status: </strong>{{ lead.status }}</p>
+    <p><strong>Source: </strong>{{ lead.source }}</p>
+    <p><strong>Comment: </strong>{{ lead.comment }}</p>
+  </nb-card-body>
+</nb-card>

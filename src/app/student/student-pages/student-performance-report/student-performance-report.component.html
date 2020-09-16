@@ -1,0 +1,96 @@
+<!-- <ngx-institute-header></ngx-institute-header> -->
+<ngx-student-institute-header></ngx-student-institute-header>
+<nb-card *ngIf="display" class="mobileFullHeight">
+  <nb-card-header style="background-color: #ffd500; color: black">
+    <div class="row">
+      <div class="col-md-9"></div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <nb-select
+            placeholder="Select Course"
+            status="basic"
+            fullWidth
+            (selectedChange)="onSelectCourse($event)"
+            [(selected)]="course"
+          >
+            <nb-option *ngFor="let course of courses" [value]="course">{{
+              course.courseName + ' (' + course.batchCode + ')'
+            }}</nb-option>
+          </nb-select>
+        </div>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body *ngIf="test; else noCourseSelected">
+    <div class="text-center py-2">
+      <div class="chartContainer">
+        <canvas
+          baseChart
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
+          [legend]="barChartLegend"
+          [chartType]="barChartType"
+          [colors]="chartColors"
+        >
+        </canvas>
+      </div>
+    </div>
+    <br />
+    <h6>TEST PERFORMANCE SUMMARY</h6>
+    <div>
+      <table class="table table-borderless text-center">
+        <thead>
+          <tr>
+            <th>TEST NAME</th>
+            <th>HIGHEST</th>
+            <th>AVERAGE</th>
+            <th>LOWEST</th>
+            <th>YOUR MARKS</th>
+            <th>PLOT ON GRAPH</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let singleTest of test; let i = index">
+            <td>{{ singleTest.testName }}</td>
+            <td>{{ singleTest.highestScore + '/' + singleTest.totalMarks }}</td>
+            <td>{{ singleTest.averageMarks + '/' + singleTest.totalMarks }}</td>
+            <td>{{ singleTest.lowestMarks + '/' + singleTest.totalMarks }}</td>
+            <td>{{ singleTest.students.marks + '/' + singleTest.totalMarks }}</td>
+            <td>
+              <nb-checkbox
+                status="warning"
+                (checkedChange)="changeGraph(singleTest, $event)"
+                checked="true"
+              ></nb-checkbox>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <h6 *ngIf="remarks && remarks.length > 0">TEACHER REMARKS</h6>
+    <div *ngIf="remarks && remarks.length > 0">
+      <table class="table table-borderless text-center">
+        <thead>
+          <tr>
+            <th>DATE</th>
+            <th>TEACHER</th>
+            <th>REMARK</th>
+            <th>SUGGESTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let remark of remarks; let i = index">
+            <td>{{ constructDate(remark.remarks.date) }}</td>
+            <td>{{ remark.remarks.teacherName }}</td>
+            <td>{{ remark.remarks.remark }}</td>
+            <td>{{ remark.remarks.suggestion }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </nb-card-body>
+</nb-card>
+<ng-template #noCourseSelected>
+  <p class="mt-5 mb-5 text-center">{{ noData }}</p>
+</ng-template>

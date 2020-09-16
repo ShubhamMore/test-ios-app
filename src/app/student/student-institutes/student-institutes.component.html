@@ -1,0 +1,50 @@
+<div class="row" *ngIf="display">
+  <div class="col-sm-6">
+    <nb-card status="basic">
+      <nb-card-header style="background-color: #00d68f">
+        <h5 class="text-white">MY INSTITUTES</h5>
+      </nb-card-header>
+      <nb-card-body>
+        <ng-container>
+          <div class="table-responsive" *ngIf="institutes.length > 0; else noInstitutes">
+            <table class="table" style="max-height: 35vh">
+              <tbody>
+                <ng-container *ngFor="let item of institutes; let i = index">
+                  <tr class="border-bottom">
+                    <td class="td-img">
+                      <span
+                        ><img
+                          [src]="item.basicInfo.logo.secure_url"
+                          width="35px"
+                          height="35px"
+                          style="border: 1px solid #ffd500; border-radius: 100%"
+                      /></span>
+                    </td>
+                    <td>
+                      <span class=""
+                        ><strong>{{ item.basicInfo.name }}</strong></span
+                      ><br /><span
+                        ><small>{{ item.currentPlan }}</small></span
+                      >
+                    </td>
+                    <td>
+                      <span class="">{{ item.address.city }}</span>
+                    </td>
+                    <td class="td-img">
+                      <span class="pointer float-right" (click)="viewInstitute(item._id)">
+                        <img src="assets/img/rarrow.png" width="30px" height="30px" />
+                      </span>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noInstitutes>
+            <p class="pt-5 text-center">No Student Found</p>
+          </ng-template>
+        </ng-container>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

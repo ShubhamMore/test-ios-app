@@ -1,0 +1,289 @@
+<ngx-institute-header></ngx-institute-header>
+
+<nb-card *ngIf="display">
+  <nb-card-header>
+    <button class="btn btn-yellow-black float-right" (click)="back()">Manage Schedule</button>
+    <h5>{{ edit ? 'Edit' : 'Add' }} Schedule</h5>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-sm-3">
+          <label for="course">*Select Course</label>
+          <nb-select
+            placeholder="Select Course"
+            [status]="
+              scheduleForm.get('courseId').invalid && scheduleForm.get('courseId').touched
+                ? 'danger'
+                : 'basic'
+            "
+            fullWidth
+            formControlName="courseId"
+            (selectedChange)="onSelectCourse($event)"
+          >
+            <nb-option value="">Select Course</nb-option>
+            <nb-option *ngFor="let course of institute.course" [value]="course._id">{{
+              course.name
+            }}</nb-option>
+          </nb-select>
+          <div *ngIf="scheduleForm.get('courseId').invalid && scheduleForm.get('courseId').touched">
+            <small>*This field is required</small>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <label for="batch">*Batch</label>
+          <nb-select
+            placeholder="Select Batch"
+            formControlName="batchId"
+            fullWidth
+            [status]="
+              scheduleForm.get('batchId').invalid && scheduleForm.get('batchId').touched
+                ? 'danger'
+                : 'basic'
+            "
+            (selectedChange)="onSelectBatch($event)"
+          >
+            <nb-option value="">Select Batch</nb-option>
+            <nb-option *ngFor="let batch of batches" [value]="batch._id">{{
+              batch.batchCode
+            }}</nb-option>
+          </nb-select>
+          <div *ngIf="scheduleForm.get('batchId').invalid && scheduleForm.get('batchId').touched">
+            <small>*This field is required</small>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <label for="scheduleStart">*Start Date</label>
+          <input
+            type="date"
+            nbInput
+            id="scheduleStart"
+            [status]="
+              scheduleForm.get('scheduleStart').invalid && scheduleForm.get('scheduleStart').touched
+                ? 'danger'
+                : 'basic'
+            "
+            formControlName="scheduleStart"
+            fullWidth
+            placeholder="Schedule From"
+            (input)="fromDatePicked($event.target.value)"
+          />
+          <div
+            *ngIf="
+              scheduleForm.get('scheduleStart').invalid && scheduleForm.get('scheduleStart').touched
+            "
+          >
+            <small>*This field is required</small>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <label for="scheduleEnd">*End Date</label>
+          <input
+            type="date"
+            nbInput
+            id="scheduleEnd"
+            [status]="
+              (scheduleForm.get('scheduleEnd').invalid ||
+                scheduleForm.hasError('invalidScheduleEndDate')) &&
+              scheduleForm.get('scheduleEnd').touched
+                ? 'danger'
+                : 'basic'
+            "
+            formControlName="scheduleEnd"
+            fullWidth
+            placeholder="Schedule To"
+            (input)="toDatePicked($event.target.value)"
+          />
+          <div
+            *ngIf="
+              scheduleForm.get('scheduleEnd').invalid && scheduleForm.get('scheduleEnd').touched
+            "
+          >
+            <small>*This field is required</small>
+          </div>
+
+          <div
+            *ngIf="
+              scheduleForm.hasError('invalidScheduleEndDate') &&
+              scheduleForm.get('scheduleEnd').touched
+            "
+          >
+            <small>*Select Valid End Date</small>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <div *ngIf="schedules.length > 0">
+        <nb-accordion>
+          <nb-accordion-item *ngFor="let schedule of schedules; let i = index">
+            <nb-accordion-item-header style="width: 100%">
+              <div class="row" style="width: 100%">
+                <div class="col-12 pt-2">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-yellow-black float-right"
+                    (click)="useRecurrenceSchedule(i)"
+                  >
+                    Use This
+                  </button>
+                  <p class="">
+                    <strong>Schedule From</strong> {{ getScheduleDate(schedule.scheduleStart) }}
+                    <strong>to</strong>
+                    {{ getScheduleDate(schedule.scheduleEnd) }}
+                  </p>
+                </div>
+              </div>
+            </nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="table-responsive">
+                <table class="table table-borderless table-sm">
+                  <thead>
+                    <tr>
+                      <th>DAY</th>
+                      <th>DATE</th>
+                      <th>FROM TIME</th>
+                      <th>TO TIME</th>
+                      <th>TOPIC</th>
+                      <th>TEACHER</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let day of schedule.days; let j = index">
+                      <tr *ngIf="day.select">
+                        <td>{{ day.day }}</td>
+                        <td>{{ getScheduleDate(day.date) }}</td>
+                        <td>{{ day.startTime }}</td>
+                        <td>{{ day.endTime }}</td>
+                        <td>{{ day.topic }}</td>
+                        <td>{{ schedule.teacherData[j].teacherName }}</td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+        <hr />
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="table-responsive">
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>DAY</th>
+                  <th>DATE</th>
+                  <th>FROM TIME</th>
+                  <th>TO TIME</th>
+                  <th>TOPIC</th>
+                  <th>TEACHER</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody formArrayName="days">
+                <ng-container
+                  *ngFor="let scheduleDay of scheduleForm.get('days')['controls']; let i = index"
+                >
+                  <tr [formGroupName]="i">
+                    <td>
+                      <nb-checkbox
+                        formControlName="select"
+                        (checkedChange)="onDaySelect($event, i)"
+                      ></nb-checkbox>
+                    </td>
+                    <td>
+                      {{ scheduleForm.get('days')['controls'][i].get('day').value }}
+                    </td>
+                    <td class="text-nowrap">
+                      {{
+                        getScheduleDate(scheduleForm.get('days')['controls'][i].get('date').value)
+                      }}
+                    </td>
+
+                    <td>
+                      <input
+                        type="time"
+                        nbInput
+                        status="basic"
+                        formControlName="startTime"
+                        fullWidth
+                        placeholder="Start Time"
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        type="time"
+                        nbInput
+                        status="basic"
+                        formControlName="endTime"
+                        fullWidth
+                        placeholder="End Time"
+                      />
+                    </td>
+
+                    <td style="min-width: 180px">
+                      <input
+                        type="text"
+                        nbInput
+                        status="basic"
+                        formControlName="topic"
+                        fullWidth
+                        placeholder="Topic"
+                      />
+                    </td>
+
+                    <td>
+                      <nb-select
+                        placeholder="Select Teacher"
+                        status="basic"
+                        formControlName="teacher"
+                        fullWidth
+                      >
+                        <nb-option value="">Select Teacher</nb-option>
+                        <nb-option *ngFor="let teacher of teachers" [value]="teacher._id">{{
+                          teacher.basicDetails.name
+                        }}</nb-option>
+                      </nb-select>
+                    </td>
+                    <td>
+                      <div class="btn-group">
+                        <button type="button" nbButton (click)="addAnotherClass(i)">
+                          <nb-icon icon="plus-outline"></nb-icon>
+                        </button>
+
+                        <button type="button" nbButton (click)="removeClass(i)">
+                          <nb-icon icon="minus-outline"></nb-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <nb-checkbox formControlName="recurrence" (checkedChange)="recurrence($event)">
+          Ask for recurrence at the time of definition
+        </nb-checkbox>
+      </div>
+
+      <div class="text-right mt-4">
+        <button class="btn btn-yellow-black" type="submit">
+          {{ edit ? 'EDIT' : 'POST' }} SCHEDULE
+        </button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,39 @@
+<ngx-checkout
+  [paymentDetails]="paymentDetails"
+  (close)="cancelCheckout()"
+  (submit)="submitCheckout($event)"
+  *ngIf="checkout"
+></ngx-checkout>
+
+<nb-card>
+  <nb-card-header>
+    <h3>SMS Packs</h3>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive" *ngIf="smsPacks.length > 0; else noSmsPacks">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>No Of SMS</th>
+            <th>Price per SMS</th>
+            <th>Total Amount</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let smsPack of smsPacks">
+            <td>{{ smsPack.noOfSMS }} SMS</td>
+            <td>{{ getAmount(smsPack.pricePerSMS) }}/-</td>
+            <td>{{ getAmount(smsPack.totalAmount) }}/-</td>
+            <td>
+              <button nbButton size="small" (click)="onRecharge(smsPack)">Recharge</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noSmsPacks>
+      <p class="pt-5 text-center">No SMS Packs Available</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

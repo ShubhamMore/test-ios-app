@@ -1,0 +1,328 @@
+<ng-container *ngIf="display">
+  <div style="width: 100%">
+    <nb-card class="dashboardHeader">
+      <nb-card-header>
+        <div class="instituteBox">
+          <div class="instituteNameLogo">
+            <span class="logo"
+              ><img
+                class="my-auto float-left"
+                [src]="myInstitute.institute.basicInfo.logo.secure_url"
+                width="40px"
+                height="40px"
+                style="border-radius: 100%; border: 1px solid #000"
+            /></span>
+            <span
+              class="name"
+              style="color: #ffd500; font-size: 30px; padding-top: 10px; font-weight: bold"
+            >
+              {{ myInstitute.institute.basicInfo.name | uppercase }}
+              <span class="planDiv float-left">{{
+                myInstitute.institute.currentPlan | uppercase
+              }}</span>
+            </span>
+          </div>
+          <div>
+            <span class="float-right mr-3">
+              <span>Total Students: {{ totalStudents }}</span
+              ><br />
+              <span>Total Batches: {{ totalBatches }}</span>
+            </span>
+          </div>
+        </div>
+      </nb-card-header>
+    </nb-card>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <nb-card class="card-height-1">
+        <nb-card-body>
+          <nb-tabset>
+            <nb-tab
+              tabTitle="UPCOMING CLASSES"
+              *ngIf="role === 'institute' || role === 'Manager' || role === 'Teacher'"
+            >
+              <div *ngIf="classes.length > 0; else noClasses">
+                <table class="table table-borderless">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Course</th>
+                      <th>Batch</th>
+                      <th>Topic</th>
+                      <th>Start Time</th>
+                      <th>Teacher</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let class of classes; let i = index">
+                      <tr>
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ class.courseName }}</td>
+                        <td>{{ class.batchCode }}</td>
+                        <td>{{ class.days.topic }}</td>
+                        <td>
+                          {{ createDate(class.days.date) }} {{ createTime(class.days.startTime) }}
+                        </td>
+                        <td>{{ class.teacherName | uppercase }}</td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+              <ng-template #noClasses>
+                <p class="text-center pt-5">No Classes Today</p>
+              </ng-template>
+            </nb-tab>
+            <nb-tab
+              tabTitle="PENDING FEES"
+              *ngIf="role === 'institute' || role === 'Manager' || role === 'Counselor'"
+            >
+              <div *ngIf="pendingFees.length > 0; else noFees">
+                <table class="table table-borderless">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Student</th>
+                      <th>Course</th>
+                      <th>Fees</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let fees of pendingFees; let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td>
+                        <span
+                          class="pointer"
+                          (click)="viewStudent(fees.eduAtlasId, fees.courseId)"
+                          >{{ fees.studentName }}</span
+                        >
+                      </td>
+                      <td>{{ fees.courseName }}</td>
+                      <td>{{ fees.pendingAmount }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <ng-template #noFees>
+                <p class="text-center pt-5">No Pending Fees</p>
+              </ng-template>
+            </nb-tab>
+            <nb-tab
+              tabTitle="Online Classes"
+              *ngIf="
+                ((role === 'institute' || role === 'Manager' || role === 'Counselor') &&
+                  instituteService.getInstitute().currentPlan === 'Value') ||
+                instituteService.getInstitute().currentPlan === 'Lite Plus'
+              "
+            >
+              <div
+                class="table-responsive"
+                *ngIf="onlineClasses && onlineClasses.length > 0; else noOnlineClass"
+              >
+                <table class="table table-borderless">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Topic</th>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Batch</th>
+                      <th>Course</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let req of onlineClasses; let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ req.topic }}</td>
+                      <td>{{ req.date }}</td>
+                      <td>{{ req.startTime }}</td>
+                      <td>{{ req.batchName }}</td>
+                      <td>{{ req.courseName }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <ng-template #noOnlineClass>
+                <p class="text-center pt-5">No Online Classes</p>
+              </ng-template>
+            </nb-tab>
+            <nb-tab
+              tabTitle="FOLLOW UPS"
+              *ngIf="role === 'institute' || role === 'Manager' || role === 'Counselor'"
+            >
+              <div class="table-responsive" *ngIf="newLeads.length > 0; else noLeads">
+                <table class="table table-borderless">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Contact</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let lead of newLeads; let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ lead.leadName }}</td>
+                      <td>{{ lead.leadContact }}</td>
+                      <td>{{ lead.status }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <ng-template #noLeads>
+                <p class="text-center pt-5">No New Leads</p>
+              </ng-template>
+            </nb-tab>
+          </nb-tabset>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="row">
+        <div
+          class="col-sm-6"
+          *ngIf="role === 'institute' || role === 'Manager' || role === 'Counselor'"
+        >
+          <nb-card class="card-height-2">
+            <nb-card-body>
+              <div class="image-container">
+                <img class="inst-logo" src="assets/img/add-user.png" alt="Institute" />
+              </div>
+              <br />
+              <button
+                class="btn btn-yellow"
+                [routerLink]="'/pages/institute/add-students/' + this.instituteId"
+              >
+                ADD STUDENT
+              </button>
+            </nb-card-body>
+          </nb-card>
+        </div>
+
+        <div
+          class="col-sm-6"
+          *ngIf="role === 'institute' || role === 'Manager' || role === 'Counselor'"
+        >
+          <nb-card class="card-height-2">
+            <nb-card-body>
+              <div class="image-container">
+                <img class="inst-logo" src="assets/img/rupee.png" alt="Institute" />
+              </div>
+              <br />
+              <button
+                class="btn btn-yellow"
+                [routerLink]="'/pages/institute/manage-students/' + this.instituteId"
+              >
+                COLLECT INSTALLMENT
+              </button>
+            </nb-card-body>
+          </nb-card>
+        </div>
+
+        <div class="col-sm-6">
+          <nb-card class="card-height-2">
+            <nb-card-body>
+              <div class="image-container">
+                <img class="inst-logo" src="assets/img/home-yellow.png" alt="Institute" />
+              </div>
+              <br />
+              <button
+                class="btn btn-yellow"
+                [routerLink]="'/pages/institute/add-schedule/' + this.instituteId"
+              >
+                ADD CLASS
+              </button>
+            </nb-card-body>
+          </nb-card>
+        </div>
+
+        <div class="col-sm-6">
+          <nb-card class="card-height-2">
+            <nb-card-body>
+              <div class="image-container">
+                <img class="inst-logo" src="assets/img/calendar.png" alt="Institute" />
+              </div>
+              <br />
+              <button
+                class="btn btn-yellow"
+                [routerLink]="'/pages/institute/attandance/' + this.instituteId"
+              >
+                ADD ATTENDANCE
+              </button>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <nb-card>
+        <nb-card-header style="background-color: #31bc9b">
+          <span style="font-size: 16px; color: #fff">ANNOUNCEMENTS</span>
+        </nb-card-header>
+        <nb-card-body class="body-height-1">
+          <div *ngIf="announcements && announcements.length > 0; else noAnnouncements">
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Title</th>
+                  <th>Date</th>
+                  <th>Attachment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let announcement of announcements; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>
+                    <a
+                      class="pointer announcement-title"
+                      (click)="goToAnnouncement(announcement._id)"
+                      ><u>{{ announcement.title }}</u></a
+                    >
+                  </td>
+                  <td>{{ getDate(announcement.date) }}</td>
+                  <td>
+                    <a
+                      href="#"
+                      (click)="openUrl(announcement.attachment.secure_url)"
+                      *ngIf="announcement.attachment.secure_url; else noFile"
+                    >
+                      {{ announcement.attachment.file_name }} </a
+                    ><ng-template #noFile>
+                      <span>--</span>
+                    </ng-template>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noAnnouncements>
+            <p class="text-center pt-5">No Announcements</p>
+          </ng-template>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-sm-6" *ngIf="role === 'institute' || role === 'Manager'">
+      <!-- <nb-card>
+        <nb-card-header>
+          REVENUE AND STUDENT GRAPH
+        </nb-card-header>
+        <nb-card-body class="body-height-1"></nb-card-body>
+      </nb-card> -->
+      <nb-card>
+        <nb-card-body>
+          <p class="font-weight-bold">SMS BALANCE</p>
+          <h2>{{ myInstitute.institute.smsCount }} SMS Pending</h2>
+          <br />
+          <button class="float-right" nbButton (click)="recharge()">Recharge</button>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</ng-container>

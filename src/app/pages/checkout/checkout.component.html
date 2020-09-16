@@ -1,0 +1,75 @@
+<!-- <div>
+    <iframe src="http://eduatlas.in/index.php/terms-of-use/"></iframe>
+</div> -->
+<div class="backdrop" (click)="onClose()"></div>
+<div class="checkout-box">
+  <div class="row">
+    <div class="col-12">
+      <div>
+        <table class="table">
+          <tbody>
+            <tr>
+              <th>Plan</th>
+              <td>{{ paymentDetails.planType }}</td>
+            </tr>
+            <tr>
+              <th>Amount</th>
+              <td>{{ getAmount(paymentDetails.amount) }}/-</td>
+            </tr>
+            <tr *ngIf="coupon">
+              <th>Coupon code</th>
+              <td>{{ coupon.code }}</td>
+            </tr>
+            <tr *ngIf="coupon">
+              <th>Coupon Discount</th>
+              <td>{{ coupon.amount }} {{ coupon.amountType === 'amount' ? '/-' : '%' }}</td>
+            </tr>
+            <tr *ngIf="coupon">
+              <th>Discount Amount</th>
+              <td>- {{ discAmount }}/-</td>
+            </tr>
+            <tr *ngIf="coupon">
+              <th>Amount After Discount</th>
+              <td>{{ amount }}/-</td>
+            </tr>
+            <tr>
+              <th>GST 18%</th>
+              <td>{{ gstAmount }}/-</td>
+            </tr>
+            <tr>
+              <th>Total Amount</th>
+              <td>{{ totalAmount }}/-</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div
+      class="col-12"
+      *ngIf="paymentDetails.amount !== '0' && paymentDetails.planType !== 'SMS Recharge'"
+    >
+      <div class="row">
+        <div class="col-md-10 col-12 mx-auto">
+          <p>Apply Coupon Code Here:</p>
+          <div class="row">
+            <div class="col-8">
+              <input type="text" nbInput [(ngModel)]="couponCode" fullWidth />
+            </div>
+            <div class="col-4">
+              <button nbButton (click)="apply()">Apply</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="row">
+    <div class="col-12">
+      <button type="button" nbButton status="primary" fullWidth (click)="onSubmit()">Submit</button>
+    </div>
+  </div>
+</div>

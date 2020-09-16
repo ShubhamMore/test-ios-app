@@ -1,0 +1,45 @@
+<nb-card class="mobileFullHeight">
+  <nb-card-header>
+    <div>
+      <button class="btn btn-yellow-black float-right" (click)="onClick()">Add Discount</button>
+      <p style="color: black; font-weight: bold">Manage Discount Here</p>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div>
+      <table class="table table-borderless" *ngIf="discounts.length > 0; else noDiscounts">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Amount</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of discounts; let i = index">
+            <td>{{ item.discountCode }}</td>
+            <td>{{ item.amount }}<span *ngIf="item.discountType === 'percentage'">%</span></td>
+            <td>{{ item.description }}</td>
+            <td class="text-right">
+              <button class="mr-3 mb-2 btn-yellow" nbButton (click)="edit(item._id)">
+                <span class="btnText"> Edit </span>
+                <span class="btnIcon">
+                  <nb-icon icon="edit-outline"></nb-icon>
+                </span>
+              </button>
+              <button class="mb-2" nbButton status="danger" (click)="delete(item._id)">
+                <span class="btnText"> Delete </span>
+                <span class="btnIcon">
+                  <nb-icon icon="trash-2-outline"></nb-icon>
+                </span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noDiscounts>
+      <p class="text-center mt-3">No Discounts Found</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

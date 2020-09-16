@@ -1,0 +1,96 @@
+<nb-card *ngIf="!display">
+  <nb-card-body>
+    <div class="text-center">
+      <img src="assets/img/institute.png" width="100px" height="100px" />
+      <h3 class="mt-4">NO INSTITUTE ADDED</h3>
+      <small *ngIf="showAddInstituteBtn"
+        >Click on add Institute Button to create other branches</small
+      >
+      <div class="mt-4" *ngIf="showAddInstituteBtn">
+        <button nbButton status="warning" style="color: black" (click)="addInstitute()">
+          ADD INSTITUTE
+        </button>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<div class="row" *ngIf="display">
+  <div class="col-sm-12">
+    <nb-card status="basic">
+      <nb-card-header style="background-color: #00d68f">
+        <h5 class="text-white">MY INSTITUTES</h5>
+      </nb-card-header>
+      <nb-card-body>
+        <ng-container>
+          <div *ngIf="institutes.length > 0">
+            <table class="table" style="max-height: 35vh">
+              <tbody>
+                <ng-container *ngFor="let item of institutes; let i = index">
+                  <tr class="border-bottom">
+                    <td class="td-img">
+                      <span class="float-right"
+                        ><img
+                          [src]="item.basicInfo.logo.secure_url"
+                          width="35px"
+                          height="35px"
+                          style="border: 1px solid #ffd500; border-radius: 100%"
+                      /></span>
+                    </td>
+                    <td>
+                      <span class=""
+                        ><strong>{{ item.basicInfo.name }}</strong></span
+                      ><br /><span
+                        ><small>{{ item.currentPlan }}</small></span
+                      >
+                    </td>
+                    <td>
+                      <span class="">{{ item.address.city }}</span>
+                    </td>
+                    <td>
+                      <span class="plan-status" [ngClass]="item.active ? 'active' : 'inactive'">{{
+                        item.active ? 'Active' : 'Inactive'
+                      }}</span>
+                    </td>
+                    <td class="td-img">
+                      <span
+                        class="pointer float-right"
+                        (click)="viewInstitute(item._id, item.active)"
+                      >
+                        <img src="assets/img/rarrow.png" width="30px" height="30px" />
+                      </span>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <br />
+          <div class="text-center" *ngIf="showAddInstituteBtn">
+            <button class="btn btn-yellow-black" (click)="addInstitute()">ADD INSTITUTE</button>
+          </div>
+        </ng-container>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <div class="col-sm-12" *ngIf="showAddInstituteBtn">
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-2">
+            <img src="assets/img/home-yellow.png" alt="Add Institute" />
+          </div>
+          <div class="col-8">
+            <p class="font-weight-bold pt-3">ADD INSTITUTE</p>
+          </div>
+          <div class="col-2 pt-2">
+            <a class="mt-3 pointer" (click)="addInstitute()">
+              <img src="assets/img/rarrow.png" width="30px" height="30px" />
+            </a>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

@@ -1,0 +1,122 @@
+<div class="row" *ngIf="display">
+  <div class="col-md-10 mx-auto">
+    <nb-card status="basic">
+      <nb-card-header style="background-color: #00d68f">
+        <h5 class="text-white">
+          INSTITUTES <small *ngIf="name">of {{ name | uppercase }}</small>
+        </h5>
+      </nb-card-header>
+      <nb-card-body>
+        <nb-tabset fullWidth>
+          <nb-tab tabTitle="active institutes">
+            <div class="table-responsive" *ngIf="activeInst.length > 0; else noInstitute">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th colspan="2">Institute</th>
+                    <th>Plan Type</th>
+                    <th>City</th>
+                    <th>Status</th>
+                    <th>Expiry Date</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let institute of activeInst; let i = index">
+                    <td class="td-img">
+                      <span
+                        ><img
+                          [src]="institute.basicInfo.logo.secure_url"
+                          width="35px"
+                          height="35px"
+                          style="border: 1px solid #ffd500; border-radius: 100%"
+                      /></span>
+                    </td>
+                    <td>
+                      <span class=""
+                        ><strong>{{ institute.basicInfo.name }}</strong></span
+                      >
+                    </td>
+                    <td>
+                      <span class="">{{ institute.currentPlan }}</span>
+                    </td>
+                    <td>
+                      <span class="">{{ institute.address.city }}</span>
+                    </td>
+                    <td>
+                      <span class="plan-status active"> Active </span>
+                    </td>
+                    <td>
+                      {{ getDate(institute.expiryDate) }}
+                    </td>
+                    <td class="td-img">
+                      <span class="pointer float-right" (click)="viewInstitute(true, i)">
+                        <img src="assets/img/rarrow.png" width="30px" height="30px" />
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </nb-tab>
+          <nb-tab tabTitle="inactive institutes">
+            <div class="table-responsive" *ngIf="inactiveInst.length > 0; else noInstitute">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th colspan="2">Institute</th>
+                    <th>Plan Type</th>
+                    <th>City</th>
+                    <th>Status</th>
+                    <th>Expiry Date</th>
+                    <th></th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr *ngFor="let institute of inactiveInst; let i = index">
+                    <td class="td-img">
+                      <span
+                        ><img
+                          [src]="institute.basicInfo.logo.secure_url"
+                          width="35px"
+                          height="35px"
+                          style="border: 1px solid #ffd500; border-radius: 100%"
+                      /></span>
+                    </td>
+                    <td>
+                      <span class=""
+                        ><strong>{{ institute.basicInfo.name }}</strong></span
+                      >
+                    </td>
+                    <td>
+                      <span class="">{{ institute.currentPlan }}</span>
+                    </td>
+                    <td>
+                      <span class="">{{ institute.address.city }}</span>
+                    </td>
+                    <td>
+                      <span class="plan-status inactive"> Inactive </span>
+                    </td>
+                    <td>
+                      {{ getDate(institute.expiryDate) }}
+                    </td>
+                    <td class="td-img">
+                      <span class="pointer float-right" (click)="viewInstitute(false, i)">
+                        <img src="assets/img/rarrow.png" width="30px" height="30px" />
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </nb-tab>
+        </nb-tabset>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<ng-template #noInstitute>
+  <p class="pt-5 text-center">No Institutes</p>
+</ng-template>

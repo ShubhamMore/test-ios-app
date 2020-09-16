@@ -1,0 +1,123 @@
+<!-- <ngx-institute-header></ngx-institute-header> -->
+
+<nb-card *ngIf="display">
+  <nb-card-header>
+    <p style="color: black; font-weight: bold">Schedule A PTM</p>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="ptmForm" (submit)="savePtm()">
+      <div class="row">
+        <div class="col-sm-3">
+          <label>Select Course</label>
+          <nb-select
+            placeholder="Select Course"
+            status="basic"
+            fullWidth
+            (selectedChange)="onSelectCourse($event)"
+            [status]="
+              ptmForm.get('courseId').errors && ptmForm.get('courseId').touched ? 'danger' : 'basic'
+            "
+            formControlName="courseId"
+          >
+            <nb-option value="">Select Course</nb-option>
+            <nb-option *ngFor="let course of institute.course" [value]="course._id">{{
+              course.name
+            }}</nb-option>
+          </nb-select>
+        </div>
+
+        <div class="col-sm-3">
+          <label>Select Batch</label>
+          <nb-select
+            placeholder="Select Batch"
+            fullWidth
+            status="basic"
+            [status]="
+              ptmForm.get('batchId').errors && ptmForm.get('batchId').touched ? 'danger' : 'basic'
+            "
+            formControlName="batchId"
+          >
+            <nb-option value="">Select Batch</nb-option>
+            <nb-option *ngFor="let batch of batches" [value]="batch._id">{{
+              batch.batchCode
+            }}</nb-option>
+          </nb-select>
+        </div>
+        <div class="col-sm-3">
+          <label for="date">Date</label>
+          <input
+            type="date"
+            nbInput
+            status="basic"
+            formControlName="date"
+            fullWidth
+            placeholder="Installment Date"
+            [status]="
+              ptmForm.get('date').errors && ptmForm.get('date').touched ? 'danger' : 'basic'
+            "
+            formControlName="date"
+          />
+          <!-- [nbDatepicker]="datePicker"
+            <nb-datepicker #datePicker></nb-datepicker> -->
+        </div>
+        <div class="col-sm-3">
+          <label for="time">Pick Time</label>
+          <input
+            type="time"
+            nbInput
+            id="time"
+            status="basic"
+            fullWidth
+            [status]="
+              ptmForm.get('time').errors && ptmForm.get('time').touched ? 'danger' : 'basic'
+            "
+            formControlName="time"
+            placeholder="Pick Time"
+          />
+        </div>
+      </div>
+      <!-- <div class="row">
+        <div class="col-md-6">
+          <label for="topic">Topic</label>
+          <input
+            type="text"
+            nbInput
+            id="topic"
+            fullWidth
+            formControlName="topic"
+            [status]="
+              ptmForm.get('topic').errors && ptmForm.get('topic').touched ? 'danger' : 'basic'
+            "
+            placeholder="Topic"
+          />
+        </div>
+      </div> -->
+      <div class="mt-3">
+        <label for="des">Description</label>
+        <textarea
+          name="description"
+          nbInput
+          id="description"
+          fullWidth
+          status="basic"
+          cols="40"
+          rows="4"
+          [status]="
+            ptmForm.get('description').errors && ptmForm.get('description').touched
+              ? 'danger'
+              : 'basic'
+          "
+          formControlName="description"
+          placeholder="Description(Optional)"
+        ></textarea>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-right">
+          <button type="submit" class="mt-2 btn btn-yellow-black">
+            {{ edit == 'true' ? 'Update' : 'Submit' }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

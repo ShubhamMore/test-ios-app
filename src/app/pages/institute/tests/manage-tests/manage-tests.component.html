@@ -1,0 +1,122 @@
+<!-- <ngx-institute-header></ngx-institute-header> -->
+
+<nb-card class="mobileFullHeight">
+  <nb-card-body>
+    <nb-tabset fullWidth>
+      <nb-tab tabTitle="UPCOMING/PENDING TESTS">
+        <div *ngIf="tests && tests.unmarked.length > 0; else noRecords">
+          <div class="row" *ngFor="let unmarkedTest of tests.unmarked; let i = index">
+            <div class="col-md-1">
+              <div class="date-block">
+                <span class="day">{{ getDay(unmarkedTest.date) }}</span>
+                <span class="month">{{ getMonth(unmarkedTest.date) }}</span>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div>
+                <span class="boldText">{{ unmarkedTest.testName }}</span>
+              </div>
+              <div>
+                <label>Max Marks : </label
+                ><span class="boldText">{{ unmarkedTest.totalMarks }}</span>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div><label></label><span class="boldText"></span></div>
+              <div>
+                <label>Time : </label
+                ><span class="boldText"
+                  >{{ unmarkedTest.startTime }} - {{ unmarkedTest.toTime }}</span
+                >
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div><label></label><span class="boldText"></span></div>
+              <div>
+                <label>Batch : </label><span class="boldText">{{ unmarkedTest.batchCode }}</span>
+              </div>
+            </div>
+            <div class="testBtns">
+              <button
+                nbButton
+                status="success"
+                (click)="markTest(unmarkedTest._id)"
+                [disabled]="isMarkAllowed(unmarkedTest.date)"
+              >
+                <span class="btnText"> MARK </span>
+                <span class="btnIcon">
+                  <nb-icon icon="checkmark-outline"></nb-icon>
+                </span>
+              </button>
+              <button class="btn-yellow mr-2 mb-2" nbButton (click)="editTest(unmarkedTest._id)">
+                <span class="btnIcon">
+                  <nb-icon icon="edit-outline"></nb-icon>
+                </span>
+                <span class="btnText"> Edit </span>
+              </button>
+              <button nbButton status="danger" (click)="deleteTest(unmarkedTest._id, i)">
+                <span class="btnText"> DELETE </span>
+                <span class="btnIcon">
+                  <nb-icon icon="trash-2-outline"></nb-icon>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="text-center">
+          <button class="btn btn-yellow-black" (click)="createTest()">ADD TEST</button>
+        </div>
+      </nb-tab>
+      <nb-tab tabTitle="MARKED TESTS">
+        <div *ngIf="tests && tests.marked.length > 0; else noRecords">
+          <div class="row" *ngFor="let markedTest of tests.marked">
+            <div class="col-md-1">
+              <div class="date-block">
+                <span class="day">{{ getDay(markedTest.date) }}</span>
+                <span class="month">{{ getMonth(markedTest.date) }}</span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div>
+                <span class="boldText">{{ markedTest.testName }}</span>
+              </div>
+              <div>
+                <label>Max Marks : </label
+                ><span class="boldText">{{ markedTest.totalMarks }} </span>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div><label></label><span class="boldText"></span></div>
+              <div>
+                <label>Time : </label
+                ><span class="boldText">{{ markedTest.startTime }} - {{ markedTest.toTime }}</span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div><label></label><span class="boldText"></span></div>
+              <div>
+                <label>Batch : </label><span class="boldText">{{ markedTest.batchCode }}</span>
+              </div>
+            </div>
+            <div class="testBtns">
+              <button class="btn-yellow-black" nbButton (click)="editMarks(markedTest._id)">
+                <span class="btnText"> EDIT MARKS </span>
+                <span class="btnIcon">
+                  <nb-icon icon="edit-outline"></nb-icon>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="text-center">
+          <button class="btn btn-yellow-black" (click)="createTest()">ADD TEST</button>
+        </div>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card-body>
+</nb-card>
+<ng-template #noRecords>
+  <p class="text-center pt-5">No Records Found</p>
+</ng-template>

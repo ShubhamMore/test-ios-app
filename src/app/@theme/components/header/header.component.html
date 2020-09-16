@@ -1,0 +1,230 @@
+<div class="header-container">
+  <div class="logo-container">
+    <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
+      <nb-icon icon="menu-2-outline"></nb-icon>
+    </a>
+    <a class="logo" href="#" (click)="navigateHome()">
+      <img src="assets/img/eduatlas.png" width="100%" />
+    </a>
+    <a class="mobileLogo" href="#" (click)="navigateHome()">
+      <img src="assets/img/EA FAVI.png" width="40px" />
+    </a>
+  </div>
+
+  <nb-card class="mt-4" *ngIf="user.role !== 'admin'">
+    <nb-select
+      status="primary"
+      placeholder="Select Institute"
+      [(ngModel)]="selectedInstitute"
+      fullWidth
+      (click)="setInstitutes()"
+      (selectedChange)="onSelect($event)"
+    >
+      <nb-option value="">Select Institute</nb-option>
+      <nb-option *ngFor="let item of institutes" value="{{ item._id }}">{{
+        item.basicInfo.name
+      }}</nb-option>
+    </nb-select>
+  </nb-card>
+</div>
+
+<div class="header-container">
+  <nb-actions size="small">
+    <nb-action
+      class="control-item"
+      icon="email-outline"
+      [nbPopover]="chatPopup"
+      nbPopoverPlacement="bottom"
+      (click)="getMembers()"
+      *ngIf="user.role !== 'admin'"
+    >
+    </nb-action>
+    <nb-action
+      class="control-item"
+      icon="bell-outline"
+      [nbPopover]="notificationPopup"
+      nbPopoverPlacement="bottom"
+      [badgeText]="notificationCount"
+      badgePosition="top right"
+      badgeStatus="danger"
+      *ngIf="user.role !== 'admin'"
+    >
+    </nb-action>
+    <nb-action class="control-item" icon="power" (click)="logout()"></nb-action>
+    <nb-action class="user-action" *nbIsGranted="['view', 'user']">
+      <nb-user [name]="name" [nbContextMenu]="userMenu"> </nb-user>
+    </nb-action>
+  </nb-actions>
+</div>
+
+<ng-template #chatPopup>
+  <div class="chatPopup">
+    <nb-tabset fullWidth>
+      <nb-tab tabTitle="Teachers" *ngIf="chatMembers.employeeDetails">
+        <nb-list *ngIf="chatMembers; else noChatMembers">
+          <nb-list-item>
+            <input
+              type="text"
+              nbInput
+              status="basic"
+              [(ngModel)]="employeeChatFilter"
+              fullWidth
+              placeholder="Search Chat"
+              (input)="filterChatsForEmployee()"
+            />
+          </nb-list-item>
+          <nb-list-item *ngFor="let user of chatMembers.employeeDetails" [hidden]="user.filterOut">
+            <nb-user
+              [name]="user.basicDetails.name"
+              style="cursor: pointer"
+              (click)="openChatBox(user, null)"
+            >
+            </nb-user>
+          </nb-list-item>
+        </nb-list>
+      </nb-tab>
+      <nb-tab tabTitle="Students" *ngIf="chatMembers.studentsDetails">
+        <nb-list *ngIf="chatMembers; else noChatMembers">
+          <nb-list-item>
+            <input
+              type="text"
+              nbInput
+              status="basic"
+              [(ngModel)]="studentChatFilter"
+              fullWidth
+              placeholder="Search Chat"
+              (input)="filterChatsForStudents()"
+            />
+          </nb-list-item>
+          <nb-list-item *ngFor="let user of chatMembers.studentsDetails" [hidden]="user.filterOut">
+            <nb-user
+              [name]="user.basicDetails.name"
+              style="cursor: pointer"
+              (click)="openChatBox(user, null)"
+            >
+            </nb-user>
+          </nb-list-item>
+        </nb-list>
+      </nb-tab>
+      <nb-tab tabTitle="Teachers" *ngIf="chatMembers.teacherDetails">
+        <nb-list *ngIf="chatMembers; else noChatMembers">
+          <nb-list-item>
+            <input
+              type="text"
+              nbInput
+              status="basic"
+              [(ngModel)]="employeeChatFilter"
+              fullWidth
+              placeholder="Search Chat"
+              (input)="filterChatsForEmployee()"
+            />
+          </nb-list-item>
+          <nb-list-item *ngFor="let user of chatMembers.teacherDetails" [hidden]="user.filterOut">
+            <nb-user
+              [name]="user.teachers.name"
+              style="cursor: pointer"
+              (click)="openChatBox(user, 'teacherDetails')"
+            >
+            </nb-user>
+          </nb-list-item>
+        </nb-list>
+      </nb-tab>
+      <nb-tab tabTitle="Institute" *ngIf="chatMembers.instituteDetails">
+        <nb-list *ngIf="chatMembers; else noChatMembers">
+          <nb-list-item>
+            <input
+              type="text"
+              nbInput
+              status="basic"
+              [(ngModel)]="studentChatFilter"
+              fullWidth
+              placeholder="Search Chat"
+              (input)="filterChatsForStudents()"
+            />
+          </nb-list-item>
+          <nb-list-item *ngFor="let user of chatMembers.instituteDetails" [hidden]="user.filterOut">
+            <nb-user
+              [name]="user.instituteUsers.name"
+              style="cursor: pointer"
+              (click)="openChatBox(user, 'instituteList')"
+            >
+            </nb-user>
+          </nb-list-item>
+        </nb-list>
+      </nb-tab>
+    </nb-tabset>
+  </div>
+</ng-template>
+
+<ng-template #notificationPopup>
+  <div class="chatPopup">
+    <nb-list *ngIf="notifications && notifications.length > 0; else noNotifications">
+      <nb-list-item
+        *ngFor="let notification of notifications; let i = index"
+        [ngClass]="!notification.seen ? 'newNotification' : ''"
+      >
+        <div style="cursor: pointer; position: relative">
+          <span
+            (click)="openNotificationBox(notification, notificationDialog)"
+            style="font-weight: bold"
+            >{{ notification.title }}
+          </span>
+          <span class="notificationText">{{ notification.message }}</span>
+          <span> ({{ constructDate(notification.date) }})</span>
+          <span style="position: absolute; right: 0px"
+            ><i
+              (click)="deleteNotification(notification._id, i, notification.seen)"
+              class="fa fa-trash"
+              style="font-size: 18px"
+              aria-hidden="true"
+            ></i
+          ></span>
+        </div>
+      </nb-list-item>
+    </nb-list>
+  </div>
+</ng-template>
+
+<ng-template #chatWindow let-receiverData>
+  <div>
+    <nb-chat [status]="chatmessage[receiverData.userId].status" size="small">
+      <nb-chat-message
+        *ngFor="let msg of chatmessage[receiverData.userId].messages"
+        [type]="msg.type"
+        [message]="msg.text"
+        [reply]="msg.reply"
+        [sender]="msg.user.name"
+        [date]="msg.date"
+        [files]="msg.files"
+        [avatar]="msg.user.avatar"
+      >
+      </nb-chat-message>
+      <nb-chat-form
+        (send)="sendMessage(chatmessage[receiverData.userId].messages, $event, receiverData)"
+      >
+      </nb-chat-form>
+    </nb-chat>
+  </div>
+</ng-template>
+
+<ng-template #noChatMembers>
+  <p class="mt-5 mb-5 text-center">No Record Found</p>
+</ng-template>
+
+<ng-template #notificationDialog let-ref="dialogRef" let-notification>
+  <nb-card>
+    <nb-card-header>{{ notification.title }}</nb-card-header>
+    <nb-card-body>
+      <div class="notificationModal">
+        {{ notification.message }}
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <button class="float-right" nbButton (click)="ref.close()">Close Dialog</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #noNotifications>
+  <p class="mt-5 mb-5 text-center">No Notifications Found</p>
+</ng-template>

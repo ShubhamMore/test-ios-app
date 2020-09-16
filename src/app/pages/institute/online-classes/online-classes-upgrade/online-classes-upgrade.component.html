@@ -1,0 +1,160 @@
+<div class="row" *ngIf="display">
+  <div class="col-md-10 mx-auto">
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-12 text-center">
+                <img src="assets/img/warning.png" width="100px" height="auto" alt="WARNING" />
+                <br />
+                <h2>BEFORE WE BEGIN!</h2>
+                <br />
+                <p>
+                  YOU NEED TO UPGRADE YOUR PLAN TO <strong>LITE PLUS/VALUE</strong> TO USE EDUATLAS
+                  LIVE.
+                </p>
+                <br />
+                <p>
+                  <strong
+                    >BOTH PLANS INCLUDES 2 GB OF DEDICATED ONLINE STORAGE FOR CLASS
+                    RECORDINGS</strong
+                  >
+                </p>
+              </div>
+            </div>
+
+            <br />
+
+            <div class="row border-yellow">
+              <div class="col-md-9 col-sm-8">
+                <div class="row">
+                  <div class="col-md-7">
+                    <p>
+                      <strong>LITE PLUS</strong> <br />Seamlessly integrate your google meet classes
+                      with your EA login.
+                    </p>
+                    <ul style="list-style-type: disc">
+                      <li>Use google meet to schedule classes.</li>
+                      <li>Share class links In your EA login.</li>
+                      <li>Upload recordings in EA to share with students.</li>
+                    </ul>
+                  </div>
+                  <div class="col-md-5 p-2 text-center">
+                    <button class="btn btn-yellow-black">How it Works?</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-4 bg-yellow">
+                <p><strong>UPGRADE COST</strong></p>
+                <p>
+                  <del>INR {{ upgradeToLitePlus.amount }}/-</del> + 18% GST
+                  <br />
+                  INR {{ upgradeToLitePlus.upgradeAmount }}/-
+                </p>
+                <div class="text-center">
+                  <button nbButton status="basic" (click)="activate(upgradeToLitePlus)">
+                    Activate Now
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <br />
+
+            <div class="row border-yellow">
+              <div class="col-md-9 col-sm-8">
+                <div class="row">
+                  <div class="col-md-7">
+                    <p>
+                      <strong>Value</strong>
+                      <br />
+                      NEED A ZOOM.US ACCOUNT?
+                      <a href="#" (click)="openUrl('https://zoom.us/')">CLICK HERE</a>
+                    </p>
+                    <p class="">PLEASE NOTE:</p>
+                    <ul style="list-style-type: disc">
+                      <li>
+                        EDUATLAS LIVE OFFERS SEEMLESS INTEGRATION OF YOUR CLASSES CONDUCTED THROUGH
+                        ZOOM.US. TO BE ABLE TO USE THIS FEATURES YOU NEED TO BE AN ACTIVE ZOOM.US
+                        USER.
+                      </li>
+                      <li>
+                        ANY CHARGES OR PLANS OF ZOOM.US ARE SOLELY ON THEIR DISCRETION AND EDUATLAS
+                        IN NO PART IS ASSOCIATED OR BOUND BY TERMS & CONDITIONS OF ZOOM.US.
+                      </li>
+                      <li>
+                        ONCE YOU ARE UPGRADED TO THE CORRECT PLAN, YOU WILL NEED TO INTEGRATE YOUR
+                        ZOOM ID WITH EDUATLAS. THIS WILL BE REQUIRED ONCE AND CAN BE USED FOR ALL
+                        BRANCHES THAT ARE IN VALUE/POWER PLAN.
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-md-5 p-2 text-center">
+                    <button class="btn btn-yellow-black">How it Works?</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-4 bg-yellow">
+                <p><strong>UPGRADE COST</strong></p>
+                <p>
+                  <del>INR {{ upgradeToValue.amount }}/-</del> + 18% GST
+                  <br />
+                  INR {{ upgradeToValue.upgradeAmount }}/-*
+                  <br />
+                  (Zoom Login Charges Extra)
+                </p>
+                <div class="text-center">
+                  <button nbButton status="basic" (click)="activate(upgradeToValue)">
+                    Activate Now
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <br />
+
+            <!-- <div class="row border-yellow">
+              <div class="col-md-9 col-sm-8">
+                <div class="row">
+                  <div class="col-md-7">
+                    <p>
+                      <strong>Power</strong>
+                      <br />
+                    </p>
+                    <p class="">PLEASE NOTE:</p>
+                    <ul style="list-style-type: disc;">
+                      <li>
+                        EDUATLAS LIVE OFFERS SEEMLESS INTEGRATION OF YOUR CLASSES CONDUCTED THROUGH
+                        ZOOM.US. TO BE ABLE TO USE THIS FEATURES YOU NEED TO BE AN ACTIVE ZOOM.US
+                        USER.
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-md-5 p-2 text-center">
+                    <button class="btn btn-yellow-black">How it Works?</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-4 bg-yellow">
+                <p><strong>UPGRADE COST</strong></p>
+                <p>
+                  <del>INR {{upgradeToPower.amount}}/-</del> + 18% GST
+                  <br />
+                  INR {{upgradeToPower.upgradeAmount}}/-*
+                  <br />
+                  (Zoom Login Charges Extra)
+                </p>
+                <div class="text-center">
+                  <button nbButton status="basic" (click)="activate(upgradeToPower)">
+                    Activate Now
+                  </button>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+<nb-card *ngIf="display">
+  <nb-card-header>
+    <div>
+      <button class="btn btn-yellow-black float-right" (click)="back()">MANAGE Coupons</button>
+      <p style="color: black; font-weight: bold">
+        {{ edit === 'true' ? 'Edit' : 'Add' }} Coupon Here
+      </p>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="form" (ngSubmit)="saveCoupon()">
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="code">*Coupon Code</label>
+          <input
+            type="text"
+            nbInput
+            id="code"
+            fullWidth
+            [status]="form.get('code').invalid && form.get('code').touched ? 'danger' : 'basic'"
+            formControlName="code"
+            placeholder="Coupon Code"
+          />
+          <small *ngIf="form.get('code').invalid && form.get('code').touched"
+            >*Coupon Code is required</small
+          >
+        </div>
+        <div class="col-sm-6">
+          <label for="amountType">*Amount Type</label>
+          <nb-select
+            id="amountType"
+            fullWidth
+            [status]="
+              form.get('amountType').invalid && form.get('amountType').touched ? 'danger' : 'basic'
+            "
+            formControlName="amountType"
+            placeholder="Amount Type"
+          >
+            <nb-option value="percentage"> Discount in Percentage </nb-option>
+            <nb-option value="amount"> Discount in Amount </nb-option>
+          </nb-select>
+          <small *ngIf="form.get('amountType').invalid && form.get('amountType').touched"
+            >*Amount Type is required</small
+          >
+        </div>
+        <div class="col-sm-6">
+          <label for="amount">*Coupon Amount</label>
+          <input
+            type="number"
+            nbInput
+            min="0"
+            [max]="form.get('amountType').value === 'amount' ? '99999999' : '100'"
+            fullWidth
+            [status]="
+              (form.get('amount').invalid && form.get('amount').touched) || !validateAmount()
+                ? 'danger'
+                : 'basic'
+            "
+            #amount
+            id="amount"
+            formControlName="amount"
+            placeholder="Coupon amount"
+          />
+          <small
+            *ngIf="(form.get('amount').invalid && form.get('amount').touched) || !validateAmount()"
+            >*Valid Coupon amount is required</small
+          >
+        </div>
+        <div class="col-sm-6">
+          <label for="expiryDate">*Expiry Date</label>
+          <input
+            type="date"
+            nbInput
+            fullWidth
+            [status]="
+              form.get('expiryDate').invalid && form.get('expiryDate').touched ? 'danger' : 'basic'
+            "
+            #amount
+            id="expiryDate"
+            formControlName="expiryDate"
+            placeholder="Expiry Date"
+          />
+          <small *ngIf="form.get('expiryDate').invalid && form.get('expiryDate').touched"
+            >*Expiry Date is required</small
+          >
+        </div>
+      </div>
+
+      <hr />
+
+      <div>
+        <button type="submit" class="btn btn-yellow-black float-right">
+          {{ edit === 'true' ? 'Update' : 'Add' }} Coupon
+        </button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

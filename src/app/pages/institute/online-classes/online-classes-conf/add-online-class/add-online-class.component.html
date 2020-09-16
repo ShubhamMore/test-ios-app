@@ -1,0 +1,232 @@
+<!-- <ngx-institute-header></ngx-institute-header> -->
+
+<nb-card>
+  <nb-card-header>
+    <p style="color: black; font-weight: bold">Schedule A Live Class</p>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="onlineClassForm" (submit)="saveOnlineClass()">
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="teacherId">*Teacher</label>
+          <nb-select
+            placeholder="Select Teacher"
+            id="teacherId"
+            [status]="
+              onlineClassForm.get('teacherId').invalid && onlineClassForm.get('teacherId').touched
+                ? 'danger'
+                : 'basic'
+            "
+            fullWidth
+            formControlName="teacherId"
+          >
+            <nb-option value="">Select Teacher</nb-option>
+            <nb-option *ngFor="let i of teachers" [value]="i._id">{{
+              i.basicDetails.name
+            }}</nb-option>
+          </nb-select>
+          <small
+            *ngIf="
+              onlineClassForm.get('teacherId').invalid && onlineClassForm.get('teacherId').touched
+            "
+            >*Course is required</small
+          >
+        </div>
+
+        <div class="col-sm-4">
+          <label for="courseId">*Course</label>
+          <nb-select
+            placeholder="Select Course"
+            id="courseId"
+            [status]="
+              onlineClassForm.get('courseId').invalid && onlineClassForm.get('courseId').touched
+                ? 'danger'
+                : 'basic'
+            "
+            fullWidth
+            formControlName="courseId"
+            (selectedChange)="onSelectCourse($event)"
+          >
+            <nb-option value="">Select Course</nb-option>
+            <nb-option *ngFor="let i of courses" [value]="i._id">{{ i.name }}</nb-option>
+          </nb-select>
+          <small
+            *ngIf="
+              onlineClassForm.get('courseId').invalid && onlineClassForm.get('courseId').touched
+            "
+            >*Course is required</small
+          >
+        </div>
+
+        <div class="col-sm-4">
+          <label for="batchId">*Batch</label>
+          <nb-select
+            placeholder="Select Batch"
+            id="batchId"
+            formControlName="batchId"
+            fullWidth
+            [status]="
+              onlineClassForm.get('batchId').invalid && onlineClassForm.get('batchId').touched
+                ? 'danger'
+                : 'basic'
+            "
+          >
+            <nb-option value="">Select Batch</nb-option>
+            <nb-option *ngFor="let item of batches" [value]="item._id">{{
+              item.batchCode
+            }}</nb-option>
+          </nb-select>
+          <small
+            *ngIf="onlineClassForm.get('batchId').invalid && onlineClassForm.get('batchId').touched"
+            >*Batch is required</small
+          >
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="startDate">*Start Date</label>
+            <input
+              type="date"
+              nbInput
+              [status]="
+                onlineClassForm.get('startDate').invalid && onlineClassForm.get('startDate').touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              id="startDate"
+              fullWidth
+              formControlName="startDate"
+              placeholder="startDate"
+            />
+            <small
+              *ngIf="
+                onlineClassForm.get('startDate').invalid && onlineClassForm.get('startDate').touched
+              "
+              >*Start Date is required</small
+            >
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="startTime">*Start Time</label>
+            <input
+              type="time"
+              nbInput
+              [status]="
+                onlineClassForm.get('startTime').invalid && onlineClassForm.get('startTime').touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              id="startTime"
+              fullWidth
+              formControlName="startTime"
+              placeholder="startTime"
+            />
+            <small
+              *ngIf="
+                onlineClassForm.get('startTime').invalid && onlineClassForm.get('startTime').touched
+              "
+              >*Start Time is required</small
+            >
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="duration">*Duration (in Min)</label>
+            <input
+              type="duration"
+              nbInput
+              pattern="\d*"
+              maxlength="3"
+              [status]="
+                onlineClassForm.get('duration').invalid && onlineClassForm.get('duration').touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              id="duration"
+              fullWidth
+              formControlName="duration"
+              placeholder="duration"
+            />
+            <small
+              *ngIf="
+                onlineClassForm.get('duration').invalid && onlineClassForm.get('duration').touched
+              "
+              >*Duration is required</small
+            >
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="topic">*Topic</label>
+            <input
+              type="topic"
+              nbInput
+              [status]="
+                onlineClassForm.get('topic').invalid && onlineClassForm.get('topic').touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              id="topic"
+              fullWidth
+              formControlName="topic"
+              placeholder="topic"
+            />
+            <small
+              *ngIf="onlineClassForm.get('topic').invalid && onlineClassForm.get('topic').touched"
+              >*Topic is required</small
+            >
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="agenda">*Agenda</label>
+            <input
+              type="startTime"
+              nbInput
+              status="basic"
+              id="agenda"
+              fullWidth
+              formControlName="agenda"
+              placeholder="Agenda"
+            />
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="password">*Password</label>
+            <input
+              type="topic"
+              nbInput
+              [status]="
+                onlineClassForm.get('password').invalid && onlineClassForm.get('password').touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              id="password"
+              fullWidth
+              formControlName="password"
+              placeholder="password"
+            />
+            <small
+              *ngIf="
+                onlineClassForm.get('password').invalid && onlineClassForm.get('password').touched
+              "
+              >*Password is required</small
+            >
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button type="submit" class="btn btn-yellow-black float-right">Save</button>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,78 @@
+<nb-card>
+  <nb-card-header>
+    <div class="instituteBox">
+      <div class="instituteNameLogo">
+        <span class="logo"
+          ><img
+            class="my-auto float-left"
+            [src]="institute.basicInfo.logo.secure_url"
+            width="40px"
+            height="40px"
+            style="border-radius: 100%; border: 1px solid #000"
+        /></span>
+        <span
+          class="name"
+          style="color: #ffd500; font-size: 30px; padding-top: 10px; font-weight: bold"
+        >
+          {{ institute.basicInfo.name | uppercase }}
+          <span class="planDiv">{{ institute.currentPlan | uppercase }}</span>
+        </span>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive">
+      <table class="table">
+        <tbody>
+          <tr>
+            <td><strong>Institute Name</strong></td>
+            <td>{{ institute.basicInfo.name }}</td>
+          </tr>
+          <tr>
+            <td><strong>Contact Number</strong></td>
+            <td>{{ institute.basicInfo.instituteContact }}</td>
+          </tr>
+          <tr>
+            <td><strong>Address</strong></td>
+            <td>
+              {{ institute.address.addressLine }} {{ institute.address.locality }}
+              {{ institute.address.city }} {{ institute.address.city }}
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Category</strong></td>
+            <td>
+              <div *ngFor="let i of institute.category">
+                <span>{{ i }}</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>MetaTag</strong></td>
+            <td>
+              <div *ngFor="let i of institute.metaTag">
+                <span>{{ i }}</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Total Courses</strong></td>
+            <td>{{ institute.course.length }}</td>
+          </tr>
+          <tr>
+            <td><strong>Current Plan</strong></td>
+            <td>{{ institute.currentPlan }}</td>
+          </tr>
+          <tr>
+            <td><strong>Started On</strong></td>
+            <td>{{ getDate(institute.startDate) }}</td>
+          </tr>
+          <tr>
+            <td><strong>Expire On</strong></td>
+            <td>{{ getDate(institute.expiryDate) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </nb-card-body>
+</nb-card>

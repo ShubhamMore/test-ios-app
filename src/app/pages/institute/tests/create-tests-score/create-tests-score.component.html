@@ -1,0 +1,157 @@
+<!-- <ngx-institute-header></ngx-institute-header> -->
+
+<nb-card>
+  <nb-card-header>
+    <span class="boldText">MARK TEST</span>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="uploadInstructions">
+      <div class="boldText">BULK UPLOAD</div>
+      <div>To bulk upload the MARKS, please follow the below mentioned steps:</div>
+      <div>
+        1.Download the template by clicking on the
+        <span class="btnText"> "Download" </span>
+        <span class="btnIcon">
+          <nb-icon icon="arrow-circle-down-outline"></nb-icon>
+        </span>
+        button
+      </div>
+      <div>2.Fill the details in columns.DO NOT DELETE COLUMNS</div>
+      <div>3.Save as *.CSV/*.XLS file</div>
+      <div class="boldText lastLine">
+        <div class="row w-100">
+          <div class="col-md-6">
+            <span
+              >Upload the file using the
+              <span class="btnText"> "Upload" </span>
+              <span class="btnIcon">
+                <nb-icon icon="upload-outline"></nb-icon>
+              </span>
+              button</span
+            >
+          </div>
+          <div class="col-md-6">
+            <div class="float-right uploadBtns">
+              <a
+                class="btn btn-yellow-black"
+                style="color: black; padding: 8px 14px"
+                href="#"
+                (click)="openUrl(sampleExcel)"
+              >
+                <span class="btnText"> Download </span>
+                <span class="btnIcon"> <nb-icon icon="arrow-circle-down-outline"></nb-icon> </span
+              ></a>
+              <button nbButton status="success" (click)="fileInput.click()" style="margin: 0 20px">
+                <span class="btnText"> Upload </span>
+                <span class="btnIcon">
+                  <nb-icon icon="upload-outline"></nb-icon>
+                </span>
+              </button>
+              <input
+                type="file"
+                nbInput
+                status="basic"
+                style="display: none"
+                fullWidth
+                (change)="onFilePicked($event)"
+                #fileInput
+              />
+              <button
+                *ngIf="file && !invalidFile"
+                style="margin-left: 0px"
+                class="btn btn-yellow-black"
+                (click)="uploadFile()"
+              >
+                <span class="btnText"> Submit </span>
+                <span class="btnIcon">
+                  <nb-icon icon="arrow-forward-outline"></nb-icon>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-right" style="margin-right: 20px">
+        <span style="color: #f00" *ngIf="invalidFile"
+          >*File format must be *.xsl, *.xlsx, *.csv</span
+        >
+        <span style="font-weight: bold" *ngIf="file && !invalidFile">{{ file.name }}</span>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card *ngIf="test">
+  <nb-card-header>
+    <div class="boldText">MARK TEST</div>
+    <hr />
+    <div class="row">
+      <div class="col-md-1">
+        <div class="date-block">
+          <span class="day">{{ getDay(test.date) }}</span>
+          <span class="month">{{ getMonth(test.date) }}</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div>
+          <span class="boldText">{{ test.testName }}</span>
+        </div>
+        <div>
+          <label>Max Marks : </label><span class="boldText">{{ test.totalMarks }}</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div><label></label><span class="boldText"></span></div>
+        <div>
+          <label>Time : </label
+          ><span class="boldText">{{ test.startTime }} To {{ test.toTime }}</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div><label></label><span class="boldText"></span></div>
+        <label>Batch : </label><span class="boldText">{{ batch }}</span>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="lastLine">
+      <!-- <span>Check the students that are/were present in this class or select all by clicking on the button</span> -->
+    </div>
+    <div class="table-responsive attendanceTable">
+      <table class="table table-borderless text-center">
+        <thead>
+          <tr>
+            <th class="text-center">ROLL NO.</th>
+            <th class="text-center">STUDENT NAME</th>
+            <th class="text-center">BATCH</th>
+            <th class="text-center">ADD MARKS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of studentScore; let i = index">
+            <td>{{ student.rollNo }}</td>
+            <td>{{ student.studentName }}</td>
+            <td>{{ batch }}</td>
+            <td>
+              <input
+                type="number"
+                nbInput
+                maxlength="3"
+                [max]="test.totalMarks"
+                min="0"
+                [id]="student.studentId"
+                style="width: 50px; padding: 2px"
+                [value]="student.marks"
+                [status]="marksError[i] ? 'danger' : 'basic'"
+                (input)="addMarks($event, i)"
+              />/{{ test.totalMarks }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-right">
+      <button nbButton status="success" (click)="saveMarks()">SAVE Marks</button>
+    </div>
+  </nb-card-body>
+</nb-card>

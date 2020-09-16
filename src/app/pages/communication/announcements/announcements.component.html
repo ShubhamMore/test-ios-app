@@ -1,0 +1,186 @@
+<!-- <ngx-institute-header></ngx-institute-header> -->
+
+<nb-card *ngIf="display">
+  <nb-card-body>
+    <h5 style="color: #ffd500">START NEW THREAD</h5>
+    <hr />
+
+    <form [formGroup]="announcementForm" (submit)="onSubmit()">
+      <div class="form-group-inline">
+        <label for="title">TITLE</label>
+        <input
+          nbInput
+          type="text"
+          id="title"
+          formControlName="title"
+          fullWidth
+          [status]="
+            announcementForm.get('title').touched && announcementForm.get('title').invalid
+              ? 'danger'
+              : 'basic'
+          "
+        />
+        <span
+          class="input-error"
+          *ngIf="announcementForm.get('title').invalid && announcementForm.get('title').touched"
+        >
+          <small class="error">*Title is required</small>
+        </span>
+      </div>
+
+      <br />
+
+      <angular-editor
+        placeholder="Enter text here..."
+        formControlName="text"
+        [config]="editorConfig"
+      ></angular-editor>
+
+      <br />
+
+      <div>
+        <label>SELECT ATTACHMENT</label>
+        <input
+          type="file"
+          nbInput
+          fullWidth
+          status="basic"
+          value="select Attachment"
+          (change)="onFilePicked($event)"
+          #pickedFile
+        />
+      </div>
+
+      <hr />
+      <div class="row">
+        <div class="col-sm-10">
+          <div class="row">
+            <div class="col-sm-6 pb-3">
+              <nb-select
+                placeholder="Select Batches"
+                fullWidth
+                formControlName="batchCodes"
+                multiple
+                [status]="batchError ? 'danger' : 'basic'"
+                (selectedChange)="onSelectBatch($event)"
+              >
+                <nb-option [value]="undefined">--Select Batch--</nb-option>
+                <nb-option *ngFor="let i of batches" value="{{ i.batchCode }}">{{
+                  i.batchCode
+                }}</nb-option>
+              </nb-select>
+              <span class="input-error" *ngIf="batchError">
+                <small class="error">*Batch Code is required</small>
+              </span>
+            </div>
+
+            <div class="col-sm-6 pb-3">
+              <nb-checkbox status="warning" (checkedChange)="check($event)">SELECT ALL</nb-checkbox>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-sm-6 pb-3">
+              <nb-select
+                placeholder="Select Category Tags"
+                multiple
+                formControlName="categories"
+                fullWidth
+                status="warning"
+                (selectedChange)="onSelectCategory($event)"
+                [status]="categoryError ? 'danger' : 'basic'"
+              >
+                <nb-option [value]="undefined">--Select Category--</nb-option>
+                <nb-option *ngFor="let i of institute.category" value="{{ i }}">{{ i }}</nb-option>
+              </nb-select>
+              <span class="input-error" *ngIf="categoryError">
+                <small class="error">*Category is required</small>
+              </span>
+            </div>
+            <div class="col-sm-6 pb-3">
+              <input
+                type="date"
+                nbInput
+                fullWidth
+                formControlName="date"
+                placeholder="Select Date"
+                [status]="
+                  announcementForm.get('date').touched && announcementForm.get('date').invalid
+                    ? 'danger'
+                    : 'basic'
+                "
+              />
+              <span
+                class="input-error"
+                *ngIf="announcementForm.get('date').invalid && announcementForm.get('date').touched"
+              >
+                <small class="error">*Date is required</small>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-2 pt-5" style="border-left: 1px solid lightgrey">
+          <button class="btn btn-yellow-black float-right">
+            Announce &nbsp;&nbsp;<img src="assets/img/rarrow.png" width="20px" height="20px" />
+          </button>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>
+
+<br />
+
+<nb-card>
+  <nb-card-header style="background: #ffd500">DISCUSSION THREADS</nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive" *ngIf="announcements.length > 0; else noAnnouncement">
+      <table class="table table-borderless">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Text</th>
+            <th>Attachment</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of announcements; let i = index">
+            <td>
+              <span>Announcement {{ i + 1 }}</span>
+            </td>
+            <td>
+              <span> {{ item.title }}</span>
+            </td>
+            <td>
+              <div [innerHTML]="item.text | safeHtml"></div>
+            </td>
+            <td>
+              <a
+                class="pointer"
+                (click)="openUrl(item.attachment.secure_url)"
+                *ngIf="item.attachment"
+                >{{ item.attachment.file_name }}</a
+              >
+            </td>
+            <div>
+              <button nbButton status="danger" (click)="onDelete(item._id)">
+                <span class="btnText"> Delete </span>
+                <span class="btnIcon">
+                  <nb-icon icon="trash-2-outline"></nb-icon>
+                </span>
+              </button>
+            </div>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noAnnouncement>
+      <p class="text-center pt-5">No Announcements</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

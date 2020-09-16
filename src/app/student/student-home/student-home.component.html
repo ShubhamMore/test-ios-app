@@ -1,0 +1,154 @@
+<div class="row" *ngIf="display">
+  <div class="col-sm-8">
+    <nb-card class="card-height-1">
+      <nb-card-body>
+        <nb-tabset>
+          <nb-tab tabTitle="IMPORTANT ANNOUNCEMENTS">
+            <div class="table-responsive" *ngIf="announcements.length > 0; else noAnnouncements">
+              <table class="table table-borderless">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Institute</th>
+                    <th>Batch</th>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Attachment</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let announcement of announcements; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ announcement.instituteName }}</td>
+                    <td>{{ announcement.batchCode }}</td>
+                    <td>{{ announcement.announcements.title }}</td>
+                    <td>{{ announcement.announcements.date }}</td>
+                    <td>
+                      <a
+                        href="#"
+                        (click)="openUrl(announcement.announcements.attachment.secure_url)"
+                        *ngIf="announcement.announcements.attachment.secure_url; else noFile"
+                      >
+                        {{ announcement.announcements.attachment.file_name }} </a
+                      ><ng-template #noFile>
+                        <span>--</span>
+                      </ng-template>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <ng-template #noAnnouncements>
+              <p class="text-center pt-5">No Announcements</p>
+            </ng-template>
+          </nb-tab>
+          <nb-tab tabTitle="UPCOMING CLASSES">
+            <div class="table-responsive" *ngIf="schedules.length > 0; else noSchedules">
+              <table class="table table-borderless">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Institute</th>
+                    <th>Course</th>
+                    <th>Topic</th>
+                    <th>Start Time</th>
+                    <th>Teacher</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let schedule of schedules; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ schedule.instituteName }}</td>
+                    <td>{{ schedule.courseName + ' (' + schedule.batchCode + ')' }}</td>
+                    <td>{{ schedule.lecture.topic }}</td>
+                    <td>
+                      {{ createDate(schedule.lecture.date) }}&nbsp;
+                      {{ createTime(schedule.lecture.startTime) }}
+                    </td>
+                    <td>{{ schedule.lecture?.teacherName | uppercase }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <ng-template #noSchedules>
+              <p class="text-center pt-5">No Upcoming Classes</p>
+            </ng-template>
+          </nb-tab>
+          <nb-tab tabTitle="UPCOMING TESTS">
+            <div class="table-responsive" *ngIf="tests.length > 0; else noTests">
+              <table class="table table-borderless">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Institute</th>
+                    <th>Course</th>
+                    <th>Date</th>
+                    <th>Test Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let test of tests; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ test.instituteName }}</td>
+                    <td>{{ test.courseName + ' (' + test.batchCode + ')' }}</td>
+                    <td>{{ test.test.date }}</td>
+                    <td>{{ test.test.testName }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <ng-template #noTests>
+              <p class="text-center pt-5">No Upcoming Tests</p>
+            </ng-template>
+          </nb-tab>
+          <nb-tab tabTitle="Online Classes">
+            <div
+              class="table-responsive"
+              *ngIf="onlineClasses && onlineClasses.length > 0; else noOnlineClass"
+            >
+              <table class="table table-borderless">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Topic</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Batch</th>
+                    <th>Course</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let onlineClass of onlineClasses; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ onlineClass.onlineclass.topic }}</td>
+                    <td>
+                      {{ onlineClass.onlineclass.date }}
+                    </td>
+                    <td>{{ onlineClass.onlineclass.startTime }}</td>
+                    <td>{{ onlineClass.batchCode }}</td>
+                    <td>{{ onlineClass.courseName }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <ng-template #noOnlineClass>
+              <p class="text-center pt-5">No Upcoming Online Class</p>
+            </ng-template>
+          </nb-tab>
+        </nb-tabset>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <div class="col-sm-4">
+    <nb-card class="card-height-2" style="display: none">
+      <nb-card-body>
+        <div class="image-container">
+          <img class="inst-logo" src="assets/img/home-yellow.png" alt="Institute" />
+        </div>
+        <br />
+        <button class="btn btn-yellow">Join Institute</button>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

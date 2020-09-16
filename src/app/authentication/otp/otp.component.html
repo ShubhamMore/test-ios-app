@@ -1,0 +1,26 @@
+<div class="wrapper fadeInDown" style="background-color: #ffd500">
+  <div id="formContent">
+    <nb-layout style="background-color: white">
+      <nb-layout-column style="background-color: white">
+        <nb-card style="box-shadow: none">
+          <nb-card-body class="text-center">
+            <div class="fadeIn first">
+              <img src="assets/img/EA FAVI.png" id="icon" alt="User Icon" style="width: 30%" />
+            </div>
+
+            <h2 class="font-weight-bolder d-inline-block" style="font-size: 25px; color: black">
+              Verify OTP
+            </h2>
+            <input type="text" nbInput placeholder="Enter OTP" [(ngModel)]="otp" />
+            <div class="mt-4">
+              <button nbButton status="success" (click)="verifyOtp(otp)">Verify</button>
+            </div>
+            <div class="text-center">
+              <span class="btn-link pointer" (click)="resendOtp()"> Resend OTP </span>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </nb-layout-column>
+    </nb-layout>
+  </div>
+</div>

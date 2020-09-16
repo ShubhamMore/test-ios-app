@@ -1,0 +1,7 @@
+{
+  "name": "eduAtlas",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,113 @@
+<nb-card>
+  <nb-card-header>
+    <div>
+      <button (click)="back()" class="btn btn-yellow-black float-right">Manage Receipt</button>
+      <p style="font-weight: bold">Receipt Configuration</p>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="receipt" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="name">Business Name</label>
+          <input
+            type="text"
+            nbInput
+            id="name"
+            fullWidth
+            status="basic"
+            formControlName="businessName"
+            [status]="f.businessName.errors && submitted ? 'danger' : 'basic'"
+            placeholder="Business Name"
+          />
+          <small *ngIf="f.businessName.errors && submitted">*Business Name is Required</small>
+        </div>
+
+        <div class="col-sm-4">
+          <label for="gst">GST Number (Optional)</label>
+          <input
+            type="text"
+            nbInput
+            fullWidth
+            id="gst"
+            status="basic"
+            formControlName="gstNumber"
+            placeholder="GST Number (optional)"
+          />
+        </div>
+
+        <div class="col-sm-4">
+          <label for="fee">Fee</label>
+          <input
+            type="text"
+            nbInput
+            fullWidth
+            id="fee"
+            status="basic"
+            disabled="true"
+            formControlName="fee"
+            placeholder="Collection Basis"
+          />
+          <!-- <nb-select
+            placeholder="Fee"
+            id="fee"
+            status="basic"
+            [status]="f.fee.errors && submitted ? 'danger' : 'basic'"
+            formControlName="fee"
+          >
+            <nb-option *ngFor="let item of fees" [value]="item">{{ item }}</nb-option>
+          </nb-select>
+          <small *ngIf="f.fee.errors && submitted">*Fee is Required</small> -->
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-sm-12">
+          <label for="address">Address</label>
+
+          <textarea
+            type="text"
+            nbInput
+            fullWidth
+            status="basic"
+            formControlName="address"
+            rows="5"
+            [status]="f.address.errors && submitted ? 'danger' : 'basic'"
+            placeholder="Address"
+          >
+          </textarea>
+
+          <small *ngIf="f.address.errors && submitted">*Address is Required</small>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-sm-12">
+          <label for="tc">Terms & Conditions</label>
+          <textarea
+            type="text"
+            nbInput
+            id="tc"
+            status="basic"
+            fullWidth
+            formControlName="termsAndCondition"
+            [status]="f.termsAndCondition.errors && submitted ? 'danger' : 'basic'"
+            placeholder="Terms and Conditions"
+            cols="15"
+            rows="7"
+          >
+          </textarea>
+          <small *ngIf="f.termsAndCondition.errors && submitted"
+            >*Terms & Conditions is Required</small
+          >
+        </div>
+      </div>
+
+      <div style="text-align: right; margin: 1rem">
+        <button type="submit" class="btn btn-yellow-black">
+          {{ edit ? 'Update' : 'Add' }}
+        </button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

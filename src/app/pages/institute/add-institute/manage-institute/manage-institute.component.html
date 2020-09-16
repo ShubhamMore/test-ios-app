@@ -1,0 +1,61 @@
+<nb-card *ngIf="institutes.length > 0; else no_institute">
+  <nb-card-body>
+    <div class="table-responsive">
+      <table class="table table-borderless">
+        <thead>
+          <th>Institute/Branch Name</th>
+          <th class="hideMobile">Institute Address</th>
+          <th>Institute Contact</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of institutes">
+            <td>{{ i.basicInfo.name }}</td>
+            <td class="hideMobile">
+              {{ i.address.addressLine }} {{ i.address.locality }} {{ i.address.city }}
+              {{ i.address.pincode }}
+            </td>
+            <td>{{ i.basicInfo.instituteContact }}</td>
+            <td>
+              <button class="mr-2 mb-2" nbButton status="primary" (click)="getInstitute(i._id)">
+                <span class="btnText"> Manage </span>
+                <span class="btnIcon">
+                  <nb-icon icon="settings-outline"></nb-icon>
+                  <!-- <i class="fa fa-gear" aria-hidden="true"></i> -->
+                </span>
+              </button>
+              <button class="mr-2 mb-2 btn-yellow" nbButton (click)="updateInstitute(i._id)">
+                <span class="btnText"> Edit </span>
+                <span class="btnIcon">
+                  <!-- <nb-icon icon="edit-outline"></nb-icon> -->
+                  <nb-icon icon="edit-outline"></nb-icon>
+                </span>
+              </button>
+              <button class="mr-2 mb-2" nbButton status="danger" (click)="delete(i._id)">
+                <span class="btnText">Delete </span>
+                <span class="btnIcon">
+                  <nb-icon icon="trash-2-outline"></nb-icon>
+                </span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </nb-card-body>
+</nb-card>
+<ng-template #no_institute>
+  <nb-card>
+    <nb-card-body>
+      <div class="text-center">
+        <img src="assets/img/institute.png" width="100px" height="100px" />
+        <h3 class="mt-4">NO INSTITUTE ADDED</h3>
+        <small *ngIf="showAddInstituteBtn"
+          >Click on add Institute Button to create other branches</small
+        >
+        <div class="mt-4" *ngIf="showAddInstituteBtn">
+          <button class="btn btn-yellow" (click)="onClick()">ADD INSTITUTE</button>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</ng-template>

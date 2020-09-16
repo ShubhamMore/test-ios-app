@@ -1,0 +1,76 @@
+<ngx-student-institute-header></ngx-student-institute-header>
+<nb-card *ngIf="display" class="mobileFullHeight">
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9">
+        <h3>Announcements</h3>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <nb-select
+            placeholder="Select Course"
+            status="basic"
+            fullWidth
+            (selectedChange)="onSelectCourse($event)"
+            [(selected)]="batchCode"
+          >
+            <nb-option value="">Select Course</nb-option>
+            <nb-option *ngFor="let course of courses" [value]="course.batchCode"
+              >{{ course.courseName + ' (' + course.batchCode + ')' }}
+            </nb-option>
+          </nb-select>
+        </div>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <ng-container *ngIf="announcements.length > 0; else noAnnouncements">
+      <div class="row">
+        <div class="col-12">
+          <div class="table-responsive">
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Title</th>
+                  <th>Attachment</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of announcements; let i = index">
+                  <td>
+                    <span> {{ i + 1 }}</span>
+                  </td>
+                  <td>
+                    <span> {{ item.title }}</span>
+                  </td>
+                  <td>
+                    <a
+                      href="#"
+                      *ngIf="item.attachment"
+                      (click)="openUrl(item.attachment.secure_url)"
+                      >{{ item.attachment.file_name }}</a
+                    >
+                    <span *ngIf="!item.attachment">--</span>
+                  </td>
+                  <div>
+                    <button class="mr-3 mb-2" nbButton (click)="onView(item._id)">
+                      <span class="btnText"> View </span>
+                      <span class="btnIcon">
+                        <nb-icon icon="eye-outline"></nb-icon>
+                      </span>
+                    </button>
+                  </div>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #noAnnouncements>
+      <p class="text-center pt-5">No Announcements</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

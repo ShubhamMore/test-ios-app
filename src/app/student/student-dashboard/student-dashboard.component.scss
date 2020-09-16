@@ -1,0 +1,17 @@
+.card-height-1,
+.body-height-1 {
+  height: 50vh;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+@media only screen and (max-width: 600px) {
+  nb-card {
+    margin-bottom: 1.875rem !important;
+  }
+  table {
+    max-height: 0vh;
+  }
+  .dashboardHeader {
+    margin-bottom: 0px !important;
+  }
+}

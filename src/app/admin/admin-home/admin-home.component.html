@@ -1,0 +1,51 @@
+<div class="row" *ngIf="display">
+  <div class="col-md-10 mx-auto">
+    <nb-card status="basic">
+      <nb-card-header style="background-color: #00d68f">
+        <h5 class="text-white">INSTITUTES</h5>
+      </nb-card-header>
+      <nb-card-body>
+        <div class="table-responsive" *ngIf="institutes.length > 0; else noInstitute">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Institute</th>
+                <th>Phone</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let institute of institutes; let i = index">
+                <td>
+                  <nb-user
+                    name="{{ institute.name | uppercase }}"
+                    [title]="institute.email"
+                    size="large"
+                  ></nb-user>
+                </td>
+                <td>
+                  <span class="">{{ institute.phone }}</span>
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    nbButton
+                    size="small"
+                    status="info"
+                    (click)="viewInstitutes(institute._id, institute.name)"
+                  >
+                    View Institutes
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<ng-template #noInstitute>
+  <p class="pt-5 text-center">No Institutes</p>
+</ng-template>

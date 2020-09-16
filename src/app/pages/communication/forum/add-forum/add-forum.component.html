@@ -1,0 +1,66 @@
+<!-- <ngx-institute-header></ngx-institute-header> -->
+<nb-card class="mobileFullHeight">
+  <nb-card-header>
+    <div>
+      <button (click)="back()" class="btn btn-yellow-black float-right">Forum Page</button>
+      <p style="font-weight: bold">Forum</p>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="forumForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="topic">*Topic</label>
+          <input
+            type="text"
+            nbInput
+            id="topic"
+            fullWidth
+            status="basic"
+            formControlName="topic"
+            [status]="f.topic.errors && submitted ? 'danger' : 'basic'"
+            placeholder="Topic"
+          />
+          <small *ngIf="f.topic.errors && submitted">*Topic Required</small>
+        </div>
+        <div class="col-sm-4">
+          <label for="course">Course</label>
+          <nb-select
+            placeholder="Course"
+            id="course"
+            status="basic"
+            fullWidth="true"
+            formControlName="courseId"
+          >
+            <nb-option value="">Select Course</nb-option>
+            <nb-option *ngFor="let course of courses" [value]="course._id">{{
+              course.name
+            }}</nb-option>
+          </nb-select>
+        </div>
+      </div>
+      <br />
+
+      <br />
+      <div class="row">
+        <div class="col-sm-12">
+          <label for="description">*Description</label>
+          <angular-editor
+            rows="2"
+            placeholder="Enter text here..."
+            formControlName="description"
+            id="description"
+          ></angular-editor>
+
+          <small *ngIf="f.description.errors && submitted">*Description is Required</small>
+        </div>
+      </div>
+
+      <div style="text-align: right; margin: 1rem">
+        <button type="submit" class="btn btn-yellow-black">
+          {{ edit ? 'Update' : 'Add' }}
+        </button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

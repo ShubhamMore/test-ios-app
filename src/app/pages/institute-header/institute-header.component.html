@@ -1,0 +1,30 @@
+<div style="width: 100%">
+  <nb-card>
+    <nb-card-header>
+      <div class="instituteBox">
+        <div class="instituteNameLogo">
+          <span class="logo"
+            ><img
+              class="my-auto float-left"
+              [src]="instituteHeaderDetails.secure_url"
+              width="40px"
+              height="40px"
+              style="border-radius: 100%; border: 1px solid #000"
+          /></span>
+          <span
+            class="name"
+            style="color: #ffd500; font-size: 30px; padding-top: 10px; font-weight: bold"
+          >
+            {{ instituteHeaderDetails.name | uppercase }}
+            <span class="planDiv">{{ instituteHeaderDetails.currentPlan | uppercase }}</span>
+          </span>
+        </div>
+        <span class="float-right mr-3">
+          <span>Total Students: {{ instituteHeaderDetails.totalStudents }}</span
+          ><br />
+          <span>Total Batches: {{ instituteHeaderDetails.totalBatches }}</span>
+        </span>
+      </div>
+    </nb-card-header>
+  </nb-card>
+</div>

@@ -1,0 +1,136 @@
+<nb-card>
+  <nb-card-header>
+    <div>
+      <button class="btn btn-yellow-black float-right" (click)="back()">MANAGE COURSES</button>
+      <p style="color: black; font-weight: bold">Add Course Here</p>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="course" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="name">Course Name</label>
+          <input
+            type="text"
+            nbInput
+            id="name"
+            fullWidth
+            [status]="f.name.errors && submitted ? 'danger' : 'basic'"
+            formControlName="name"
+            placeholder="Course Name"
+          />
+          <small *ngIf="f.name.errors && submitted">*Course name is req.</small>
+        </div>
+        <div class="col-sm-4">
+          <label for="code">Course Code</label>
+          <input
+            type="text"
+            nbInput
+            id="code"
+            fullWidth
+            [status]="f.courseCode.errors && submitted ? 'danger' : 'basic'"
+            formControlName="courseCode"
+            placeholder="Course Code"
+          />
+          <small *ngIf="f.courseCode.errors && submitted">*Course code is required</small>
+        </div>
+        <div class="col-sm-4">
+          <label for="fees">Course Fees</label>
+          <input
+            type="text"
+            pattern="\d*"
+            nbInput
+            fullWidth
+            [status]="f.fees.errors && submitted ? 'danger' : 'basic'"
+            #fees
+            (keyup)="courseFee(fees.value)"
+            id="fees"
+            formControlName="fees"
+            placeholder="Course Fees"
+          />
+          <small *ngIf="f.fees.errors && submitted">*Course Fees is required</small>
+        </div>
+      </div>
+      <hr />
+
+      <div class="row">
+        <div class="col-sm-3">
+          <label for="gst">Course Duration (in Months)</label>
+          <input
+            nbInput
+            type="text"
+            pattern="\d*"
+            fullWidth
+            [status]="f.duration.errors && submitted ? 'danger' : 'basic'"
+            formControlName="duration"
+            maxlength="2"
+            minlength="1"
+            placeholder="Duration in Months"
+          />
+          <small *ngIf="f.duration.errors && submitted">*Course Duration is required</small>
+        </div>
+        <div class="col-sm-3">
+          <label for="gst">GST</label>
+          <input
+            nbInput
+            type="text"
+            pattern="\d*"
+            fullWidth
+            formControlName="gstValue"
+            #ex
+            (keyup)="exclusive(ex.value)"
+            placeholder="Exclusive GST in %"
+          />
+        </div>
+        <div class="col-sm-1"><br /><br />Or</div>
+        <div class="col-sm-2">
+          <br />
+          <nb-checkbox
+            (checkedChange)="inclusiveGst($event)"
+            [(ngModel)]="gstCheckBox"
+            [ngModelOptions]="{ standalone: true }"
+            fullWidth
+            status="warning"
+            >Inclusive GST</nb-checkbox
+          >
+        </div>
+        <div class="col-sm-3">
+          <label>Total Fees</label>
+          <input
+            type="text"
+            nbInput
+            fullWidth
+            status="basic"
+            formControlName="totalFee"
+            disabled="true"
+            placeholder="TotalFee"
+          />
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-sm-12">
+          <label for="des">Description</label>
+          <textarea
+            name="discription"
+            id="des"
+            status="basic"
+            nbInput
+            fullWidth
+            formControlName="discription"
+            placeholder="Description"
+            cols="100"
+            rows="4"
+            id="dis"
+          ></textarea>
+        </div>
+      </div>
+
+      <div style="display: block; margin-top: 1rem; text-align: right">
+        <button type="submit" class="btn btn-yellow-black">
+          {{ edit === 'true' ? 'Update Course' : 'Add Course' }}
+        </button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

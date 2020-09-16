@@ -1,0 +1,64 @@
+<nb-card>
+  <nb-card-header>
+    <button class="btn btn-yellow-black float-right" (click)="onClick()">Add Employee</button>
+    <p class="font-weight-bolder">Employees</p>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive">
+      <table class="table table-borderless" *ngIf="employees.length > 0">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Role</th>
+            <!-- <th>Course Name</th> -->
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let employee of employees; let i = index">
+            <td>{{ employee.basicDetails.name }}</td>
+            <td>{{ employee.basicDetails.employeeContact }}</td>
+            <td>{{ employee.instituteDetails.role }}</td>
+            <!-- <td>{{ employee.courseDetails.course }}</td> -->
+            <td>
+              <button
+                class="mr-2 mb-2"
+                nbButton
+                status="primary"
+                (click)="view(employee.eduAtlasId, employee._id)"
+              >
+                <span class="btnText"> MANAGE </span>
+
+                <span class="btnIcon">
+                  <!-- <i class="fa fa-user" aria-hidden="true"></i> -->
+                  <nb-icon icon="person-outline"></nb-icon>
+                </span>
+              </button>
+              <button
+                class="mr-2 mb-2 btn-yellow"
+                nbButton
+                (click)="edit(employee.eduAtlasId, employee._id)"
+              >
+                <span class="btnText"> Edit </span>
+
+                <span class="btnIcon">
+                  <nb-icon icon="edit-outline"></nb-icon>
+                </span>
+              </button>
+              <button class="mr-2 mb-2" nbButton status="danger" (click)="delete(employee._id)">
+                <span class="btnText"> Delete </span>
+                <span class="btnIcon">
+                  <nb-icon icon="trash-2-outline"></nb-icon>
+                </span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="employees.length == 0">
+      <p class="pt-5 text-center">No Records Found</p>
+    </div>
+  </nb-card-body>
+</nb-card>

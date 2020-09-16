@@ -1,0 +1,18 @@
+<nb-card *ngIf="display" class="mobileFullHeight">
+  <nb-card-header>
+    <button class="btn btn-yellow float-right" (click)="back()">Back</button>
+    <h3>{{ announcement.title }}</h3>
+    <div *ngIf="announcement.attachment">
+      <a href="#" (click)="openUrl(announcement.attachment.secure_url)">{{
+        announcement.attachment.file_name
+      }}</a>
+    </div>
+    <div>
+      <p><strong>Date: </strong>{{ announcement.date }}</p>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div style="font-weight: bold">Announcement Details:</div>
+    <div [innerHTML]="announcement.text | safeHtml"></div>
+  </nb-card-body>
+</nb-card>

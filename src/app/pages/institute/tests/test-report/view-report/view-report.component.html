@@ -1,0 +1,118 @@
+<!-- <ngx-institute-header></ngx-institute-header> -->
+
+<nb-card *ngIf="display">
+  <nb-card-header style="background-color: #ffd500; color: black">
+    <div class="row">
+      <div class="col-sm-3">
+        <label> <strong>Student Name: </strong>{{ test[0].students.studentName }}</label>
+      </div>
+      <div class="col-sm-3">
+        <label><strong>Roll No.: </strong>{{ test[0].students.rollNo }}</label>
+      </div>
+      <div class="col-sm-3">
+        <label for="courseId"><strong>Course: </strong>{{ course }}</label>
+      </div>
+
+      <div class="col-sm-3">
+        <label for="batchId"><strong>Batch: </strong>{{ batch }}</label>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="text-center py-2">
+      <div class="chartContainer">
+        <canvas
+          baseChart
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
+          [legend]="barChartLegend"
+          [chartType]="barChartType"
+          [colors]="chartColors"
+        >
+        </canvas>
+      </div>
+    </div>
+    <br />
+    <h6>TEST PERFORMANCE SUMMARY</h6>
+    <div>
+      <table class="table table-borderless text-center">
+        <thead>
+          <tr>
+            <th>TEST NAME</th>
+            <th>HIGHEST</th>
+            <th>AVERAGE</th>
+            <th>LOWEST</th>
+            <th>YOUR MARKS</th>
+            <th>PLOT ON GRAPH</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let singleTest of test; let i = index">
+            <td>{{ singleTest.testName }}</td>
+            <td>{{ singleTest.highestScore + '/' + singleTest.totalMarks }}</td>
+            <td>{{ singleTest.averageMarks + '/' + singleTest.totalMarks }}</td>
+            <td>{{ singleTest.lowestMarks + '/' + singleTest.totalMarks }}</td>
+            <td>{{ singleTest.students.marks + '/' + singleTest.totalMarks }}</td>
+            <td>
+              <nb-checkbox
+                status="warning"
+                (checkedChange)="changeGraph(singleTest, $event)"
+                checked="true"
+              ></nb-checkbox>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <h6>TEACHER REMARKS</h6>
+    <div>
+      <table class="table table-borderless text-center">
+        <thead>
+          <tr>
+            <th>DATE</th>
+            <th>TEACHER</th>
+            <th>REMARK</th>
+            <th>SUGGESTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let remark of remarks; let i = index">
+            <td>{{ constructDate(remark.remarks.date) }}</td>
+            <td>{{ remark.remarks.teacherName }}</td>
+            <td>{{ remark.remarks.remark }}</td>
+            <td>{{ remark.remarks.suggestion }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="showRemarksOption">
+      <form [formGroup]="addRemarkForm" (ngSubmit)="addRemark()" #myRemarkForm="ngForm">
+        <div class="row">
+          <div class="col-md-1">
+            <label style="padding-top: 10px">Remark*</label>
+          </div>
+          <div class="col-md-3">
+            <input
+              type="text"
+              nbInput
+              status="basic"
+              [status]="f.remark.errors && myRemarkForm.submitted ? 'danger' : 'basic'"
+              formControlName="remark"
+              fullWidth
+            />
+          </div>
+          <div class="col-md-1">
+            <label style="padding-top: 10px">Suggestions</label>
+          </div>
+          <div class="col-md-3">
+            <input type="text" nbInput status="basic" formControlName="suggestion" fullWidth />
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-yellow-black" type="submit">ADD REMARKS</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nb-card-body>
+</nb-card>

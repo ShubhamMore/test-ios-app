@@ -1,0 +1,67 @@
+<ngx-student-institute-header></ngx-student-institute-header>
+<nb-card *ngIf="display">
+  <nb-card-header style="background-color: #ffd500">
+    <div class="row">
+      <div class="col-sm-9">
+        <h4>mentoring</h4>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-tabset fullWidth>
+      <nb-tab tabTitle="PAST mentoringS">
+        <div class="table-responsive" *ngIf="pastMentorings.length > 0; else noPastMentorings">
+          <table class="table table-borderless">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Note</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let mentoring of pastMentorings; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ getDate(mentoring.date) }}</td>
+                <td>{{ getTime(mentoring.time) }}</td>
+                <td>{{ mentoring.note }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ng-template #noPastMentorings>
+          <p class="text-center pt-5">No Past Mentoring Sessions</p>
+        </ng-template>
+      </nb-tab>
+      <nb-tab tabTitle="UPCOMING mentoring">
+        <div
+          class="table-responsive"
+          *ngIf="upcomingMentorings.length > 0; else noUpcomingMentorings"
+        >
+          <table class="table table-borderless">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Note</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let mentoring of upcomingMentorings; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ getDate(mentoring.date) }}</td>
+                <td>{{ getTime(mentoring.time) }}</td>
+                <td>{{ mentoring.note }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ng-template #noUpcomingMentorings>
+          <p class="text-center pt-5">No Upcoming Mentoring Sessions</p>
+        </ng-template>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card-body>
+</nb-card>

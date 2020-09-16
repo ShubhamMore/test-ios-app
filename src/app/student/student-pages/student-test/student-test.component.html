@@ -1,0 +1,51 @@
+<ngx-student-institute-header></ngx-student-institute-header>
+<nb-card *ngIf="display" class="mobileFullHeight">
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-9">
+        <h4 class="font-weight-bolder">Upcoming Tests</h4>
+      </div>
+
+      <div class="col-sm-3"></div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div *ngIf="tests.length > 0; else noTests">
+      <div class="row" *ngFor="let singleTest of tests; let i = index">
+        <div class="col-md-1">
+          <div class="date-block">
+            <span class="day">{{ getDay(singleTest.test.date) }}</span>
+            <span class="month">{{ getMonth(singleTest.test.date) }}</span>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div>
+            <span class="boldText">{{ singleTest.test.testName }}</span>
+          </div>
+          <div>
+            <label>Max Marks : </label
+            ><span class="boldText">{{ singleTest.test.totalMarks }}</span>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div><label></label><span class="boldText"></span></div>
+          <div>
+            <label>Time : </label
+            ><span class="boldText"
+              >{{ singleTest.test.startTime }} - {{ singleTest.test.toTime }}</span
+            >
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div><label></label><span class="boldText"></span></div>
+          <div>
+            <label>Batch : </label><span class="boldText">{{ singleTest.batchCode }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noTests>
+      <p class="mt-5 text-center">{{ noTestsData }}</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

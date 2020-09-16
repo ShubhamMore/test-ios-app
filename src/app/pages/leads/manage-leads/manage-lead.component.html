@@ -1,0 +1,158 @@
+<ngx-institute-header></ngx-institute-header>
+
+<nb-card>
+  <nb-card-header>
+    <button class="btn btn-yellow float-right" (click)="addLead()">Add Lead</button>
+    <h3>Manage Leads</h3>
+  </nb-card-header>
+</nb-card>
+
+<nb-card>
+  <nb-card-header class="bg-yellow">
+    <div class="row mb-2" *ngIf="courses">
+      <div class="col-sm-9">
+        <h3 class="text-white">UPCOMING FOLLOW UPS</h3>
+      </div>
+      <div class="col-sm-3">
+        <nb-select
+          placeholder="Select Course"
+          status="basic"
+          fullWidth
+          (selectedChange)="onSelectCourse($event)"
+        >
+          <nb-option value="">All</nb-option>
+          <nb-option *ngFor="let course of courses" [value]="course._id">{{
+            course.name
+          }}</nb-option>
+        </nb-select>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="p-2">
+    <div class="card-height">
+      <table class="table" *ngIf="upcomingLeads && upcomingLeads.length > 0; else noFollowLeads">
+        <tbody>
+          <tr *ngFor="let lead of upcomingLeads; let i = index">
+            <td>
+              <div class="date-block-warning">
+                <span class="day">{{ getDay(lead.date) }}</span>
+                <span class="month">{{ getMonth(lead.date) }}</span>
+              </div>
+            </td>
+            <td>
+              <div class="meeting-details">
+                <div class="detail">
+                  <strong>{{ lead.leadName | uppercase }}</strong>
+                </div>
+                <div class="detail"><strong>Email: </strong> {{ lead.leadEmail }}</div>
+                <div class="detail"><strong>Contact: </strong> {{ lead.leadContact }}</div>
+                <div class="detail">
+                  <strong>Course: </strong> {{ getCourseName(lead.courseId) }}
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="meeting-details">
+                <div class="detail">
+                  <strong>Lead Date: </strong> {{ getFormattedDate(lead.date) }}
+                </div>
+                <div class="detail">
+                  <strong>Last Follow Up: </strong> {{ getFormattedDate(lead.followUpDate) }}
+                </div>
+                <div class="detail"><strong>Strength: </strong> {{ lead.strength }}</div>
+              </div>
+            </td>
+            <td class="text-right">
+              <!-- <button class="mr-3 mb-2" nbButton (click)="view(lead._id)">View</button> -->
+              <button class="mr-3 mb-2 btn btn-green" (click)="edit(lead._id)">FOLLOW UP</button>
+              <!-- <button class="mb-2" nbButton status="danger" (click)="deleteUpcomingLead(lead._id, i)">
+                  Delete
+                </button> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #noFollowLeads>
+        <p class="mt-5 mb-5 text-center">No Follow Up Leads Found</p>
+      </ng-template>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card class="mobileFullHeight">
+  <nb-card-header>
+    <div class="row mb-2" *ngIf="courses">
+      <div class="col-sm-9">
+        <h3 class="">CLOSED LEADS</h3>
+      </div>
+      <div class="col-sm-3">
+        <nb-select
+          placeholder="Select Course"
+          status="basic"
+          fullWidth
+          (selectedChange)="onSelectCourse($event)"
+        >
+          <nb-option value="">All</nb-option>
+          <nb-option *ngFor="let course of courses" [value]="course._id">{{
+            course.name
+          }}</nb-option>
+        </nb-select>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="p-2">
+    <div class="card-height">
+      <table class="table" *ngIf="lostLeads && lostLeads.length > 0; else noLeads">
+        <tbody>
+          <tr *ngFor="let lead of lostLeads; let i = index">
+            <td>
+              <div [ngClass]="lead.status === 'LOST' ? 'date-block-danger' : 'date-block-success'">
+                <span class="day">{{ getDay(lead.date) }}</span>
+                <span class="month">{{ getMonth(lead.date) }}</span>
+              </div>
+            </td>
+            <td>
+              <div class="meeting-details">
+                <div class="detail">
+                  <strong>{{ lead.leadName | uppercase }}</strong>
+                </div>
+                <div class="detail"><strong>Email: </strong> {{ lead.leadEmail }}</div>
+                <div class="detail"><strong>Contact: </strong> {{ lead.leadContact }}</div>
+                <div class="detail">
+                  <strong>Course: </strong> {{ getCourseName(lead.courseId) }}
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="meeting-details">
+                <div class="detail">
+                  <strong>Lead Date: </strong> {{ getFormattedDate(lead.date) }}
+                </div>
+                <div class="detail">
+                  <strong>Last Follow Up: </strong> {{ getFormattedDate(lead.followUpDate) }}
+                </div>
+                <div class="detail"><strong>Strength: </strong> {{ lead.strength }}</div>
+              </div>
+            </td>
+            <td class="text-right">
+              <!-- <button class="mr-3 mb-2" nbButton (click)="view(lead._id)">View</button> -->
+              <button
+                class="mr-3 mb-2 btn btn-green"
+                (click)="edit(lead._id)"
+                *ngIf="lead.status === 'LOST'"
+              >
+                REOPEN
+              </button>
+              <!-- <button class="mb-2" nbButton status="danger" (click)="deleteLostLead(lead._id, i)">
+                  Delete
+                </button> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #noLeads>
+        <p class="mt-5 mb-5 text-center">No Closed Leads Found</p>
+      </ng-template>
+    </div>
+  </nb-card-body>
+</nb-card>

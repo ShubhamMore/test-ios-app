@@ -1,0 +1,38 @@
+<nb-card>
+  <nb-card-header>
+    <button class="btn btn-yellow float-right" nbButton routerLink="add">Add SMS Pack</button>
+    <h3>Sms Packs</h3>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive" *ngIf="smsPacks.length > 0; else noSmsPacks">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>No Of SMS</th>
+            <th>Price per SMS</th>
+            <th>Total Amount</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let smsPack of smsPacks">
+            <td>{{ smsPack.noOfSMS }}</td>
+            <td>{{ smsPack.pricePerSMS }}</td>
+            <td>{{ smsPack.totalAmount }}</td>
+            <td>
+              <button class="btn mr-2" nbButton status="basic" (click)="editSmsPack(smsPack._id)">
+                Edit
+              </button>
+              <button class="btn" nbButton status="danger" (click)="deleteSmsPack(smsPack._id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noSmsPacks>
+      <p class="pt-5 text-center">No SMS Packs Added</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

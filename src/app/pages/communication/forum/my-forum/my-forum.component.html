@@ -1,0 +1,63 @@
+<!-- <ngx-institute-header></ngx-institute-header> -->
+
+<div class="py-4">
+  <button (click)="back()" class="btn btn-yellow-black float-right">Forum Page</button>
+</div>
+<br /><br />
+<nb-card status="info" *ngIf="display">
+  <nb-card-header>
+    <div class="row mb-2" *ngIf="courses">
+      <div class="col-sm-9">
+        <h3 class="text-white">My Forums</h3>
+      </div>
+      <div class="col-sm-3">
+        <nb-select
+          placeholder="Select Course"
+          status="basic"
+          fullWidth
+          (selectedChange)="onSelectCourse($event)"
+        >
+          <nb-option value="">All</nb-option>
+          <nb-option *ngFor="let course of courses" [value]="course._id">{{
+            course.name
+          }}</nb-option>
+        </nb-select>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <table class="table table-borderless text-center" *ngIf="myForums.length > 0; else noForums">
+      <thead>
+        <tr>
+          <th>Topic</th>
+          <th>Course</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let myforum of myForums; let i = index">
+          <td>{{ myforum.title }}</td>
+          <td>{{ myforum.courseId }}</td>
+          <td>{{ myforum.date }}</td>
+          <td class="text-right">
+            <button class="mr-3 mb-2 btn-yellow" nbButton (click)="edit(myforum._id)">
+              <span class="btnText"> Edit </span>
+              <span class="btnIcon">
+                <nb-icon icon="edit-outline"></nb-icon>
+              </span>
+            </button>
+            <button class="mb-2" nbButton status="danger" (click)="delete(myforum._id, i)">
+              <span class="btnText"> Delete </span>
+              <span class="btnIcon">
+                <nb-icon icon="trash-2-outline"></nb-icon>
+              </span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noForums>
+      <p class="mt-5 mb-5 text-center">No Record Found</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,47 @@
+<nb-card>
+  <nb-card-header>
+    <div>
+      <button class="btn btn-yellow-black float-right" (click)="onClick()" style="color: black">
+        Add Batch
+      </button>
+      <p style="color: black; font-weight: bold">Manage Batch Here</p>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive">
+      <table class="table table-borderless" *ngIf="batches.length > 0; else noBatches">
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>Code</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let batch of batches">
+            <td>{{ batch.course }}</td>
+            <td>{{ batch.batchCode }}</td>
+            <td>{{ batch.description }}</td>
+            <td class="text-right">
+              <button class="mr-3 mb-2 btn-yellow" nbButton (click)="edit(batch._id)">
+                <span class="btnText"> Edit </span>
+                <span class="btnIcon">
+                  <nb-icon icon="edit-outline"></nb-icon>
+                </span>
+              </button>
+              <button class="mr-3 mb-2" nbButton status="danger" (click)="delete(batch._id)">
+                <span class="btnText"> Delete </span>
+                <span class="btnIcon">
+                  <nb-icon icon="trash-2-outline"></nb-icon>
+                </span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noBatches>
+      <p class="text-center mt-3">No Batches Found</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

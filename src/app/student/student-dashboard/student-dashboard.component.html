@@ -1,0 +1,108 @@
+<ng-container *ngIf="display">
+  <div style="width: 100%">
+    <nb-card class="dashboardHeader">
+      <nb-card-header>
+        <div class="instituteBox">
+          <div class="instituteNameLogo">
+            <span class="logo"
+              ><img
+                class="my-auto float-left"
+                [src]="institute.basicInfo.logo.secure_url"
+                width="40px"
+                height="40px"
+                style="border-radius: 100%; border: 1px solid #000"
+            /></span>
+            <span
+              class="name"
+              style="color: #ffd500; font-size: 30px; padding-top: 10px; font-weight: bold"
+            >
+              {{ institute.basicInfo.name | uppercase }}
+            </span>
+          </div>
+        </div>
+      </nb-card-header>
+    </nb-card>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <nb-card class="card-height-1">
+        <nb-card-header>
+          <h5>ANNOUNCEMENTS</h5>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="table-responsive" *ngIf="announcements.length > 0; else noAnnouncements">
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Title</th>
+                  <th>Date</th>
+                  <th>Attachment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let announcement of announcements; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ announcement.announcements.title }}</td>
+                  <td>{{ announcement.announcements.date }}</td>
+                  <td>
+                    <a
+                      href="#"
+                      (click)="openUrl(announcement.announcements.attachment.secure_url)"
+                      *ngIf="announcement.announcements.attachment.secure_url; else noFile"
+                    >
+                      {{ announcement.announcements.attachment.file_name }} </a
+                    ><ng-template #noFile>
+                      <span>--</span>
+                    </ng-template>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noAnnouncements>
+            <p class="text-center pt-5">No Announcements</p>
+          </ng-template>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-sm-6">
+      <nb-card class="card-height-1">
+        <nb-card-header>
+          <h5>CLASS SCHEDULE</h5>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="table-responsive" *ngIf="schedules.length > 0; else noSchedules">
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Batch</th>
+                  <th>Topic</th>
+                  <th>Time</th>
+                  <th>Teacher</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let schedule of schedules; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ schedule.batchCode }}</td>
+                  <td>{{ schedule.lecture.topic }}</td>
+                  <td>
+                    {{ createDate(schedule.lecture.date) }}&nbsp;
+                    {{ createTime(schedule.lecture.startTime) }}
+                  </td>
+                  <td>{{ schedule.lecture?.teacherName | uppercase }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noSchedules>
+            <p class="text-center pt-5">No Upcoming Classes</p>
+          </ng-template>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</ng-container>

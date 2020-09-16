@@ -1,0 +1,374 @@
+<ngx-checkout
+  [paymentDetails]="paymentDetails"
+  (close)="cancelCheckout()"
+  (submit)="submitCheckout($event)"
+  *ngIf="checkout"
+></ngx-checkout>
+
+<!-- <nb-layout-column> -->
+<div class="row" *ngIf="display">
+  <div class="col-12">
+    <div class="pricingDiv">
+      <h1 class="pricingTitle">PRICING</h1>
+      <hr />
+      <div class="table-responsive">
+        <table class="table table-striped priceTable text-center">
+          <thead>
+            <tr>
+              <th>
+                <div class="featuresHeader">
+                  <span>Features</span>
+                  <p>COMPARE PACKAGE FEATURES</p>
+                </div>
+              </th>
+              <th>
+                <div class="lite">
+                  <div class="liteHeader">
+                    <span>{{ lite.planType }}</span>
+                  </div>
+                  <div class="headerValue">RS. {{ lite.amount }}/-</div>
+                  <div class="headerSubValue">+18% GST ANNUALY</div>
+                </div>
+              </th>
+              <th>
+                <div class="lite-plus">
+                  <div class="lite-plusHeader">
+                    <span>{{ litePlus.planType }}</span>
+                  </div>
+                  <div class="headerValue">RS. {{ litePlus.amount }}/-</div>
+                  <div class="headerSubValue">+18% GST ANNUALY</div>
+                </div>
+              </th>
+              <th>
+                <div class="value">
+                  <div class="valueHeader">
+                    <span>{{ value.planType }}</span>
+                  </div>
+                  <div class="headerValue">RS. {{ value.amount }}/-</div>
+                  <div class="headerSubValue">+18% GST ANNUALY</div>
+                </div>
+              </th>
+              <th class="hide">
+                <div class="power">
+                  <div class="powerHeader">
+                    <span>{{ power.planType }}</span>
+                  </div>
+                  <div class="headerValue">RS. {{ power.amount }}/-</div>
+                  <div class="headerSubValue">+18% GST ANNUALY</div>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CLASS MANAGEMENT</td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td class="hide">
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>STUDENT MANAGEMENT</td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td class="hide">
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>ATTENDANCE MANAGEMENT</td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td class="hide">
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>STUDY MATERIAL STORAGE & SHARING</td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td class="hide">
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>STUDENT PERFORMANCE TRACKER</td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td class="hide">
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>SMART COMMUNICATION MODULE</td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td class="hide">
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>FEE MANAGEMENT</td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td class="hide">
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>ROLE MANAGEMENT</td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td class="hide">
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>REAL TIME BUSINESS REPORTS</td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td class="hide">
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>REAL TIME NOTIFICATIONS</td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td class="hide">
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>REMINDER AND ALERTS</td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td class="hide">
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>MULTI PLATFORM ACCESS (MOBILE + WEB)</td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td class="hide">
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>RECORDED VIDEO SHARING</td>
+              <td>
+                <nb-icon icon="close-outline" status="danger"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td class="hide">
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>EA LIVE (LIVE CLASSES)</td>
+              <td>
+                <nb-icon icon="close-outline" status="danger"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+              <td class="hide">
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>ONLINE COURSE CREATION (LMS)</td>
+              <td>
+                <nb-icon icon="close-outline" status="danger"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="close-outline" status="danger"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="close-outline" status="danger"></nb-icon>
+              </td>
+              <td class="hide">
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>ONLINE STORE</td>
+              <td>
+                <nb-icon icon="close-outline" status="danger"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="close-outline" status="danger"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="close-outline" status="danger"></nb-icon>
+              </td>
+              <td class="hide">
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>CLOUD STORAGE</td>
+              <td>100MB</td>
+              <td>2GB</td>
+              <td>2GB</td>
+              <td class="hide">10GB</td>
+            </tr>
+            <tr>
+              <td>SMS GATEWAY INTEGRATION</td>
+              <td>NO SMS BALANCE</td>
+              <td>5000 SMS BALANCE</td>
+              <td>5000 SMS BALANCE</td>
+              <td class="hide">10000 SMS BALANCE</td>
+            </tr>
+            <tr>
+              <td>ONLINE FEE COLLECTION</td>
+              <td>
+                <nb-icon icon="close-outline" status="danger"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="close-outline" status="danger"></nb-icon>
+              </td>
+              <td>
+                <nb-icon icon="close-outline" status="danger"></nb-icon>
+              </td>
+              <td class="hide">
+                <nb-icon icon="checkmark-outline" status="success"></nb-icon>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>
+                <button
+                  nbButton
+                  style="color: white; background-color: #ffd500"
+                  (click)="activate(lite)"
+                >
+                  Activate
+                </button>
+              </td>
+              <td>
+                <button
+                  nbButton
+                  style="color: white; background-color: #ff3d71"
+                  (click)="activate(litePlus)"
+                >
+                  Activate
+                </button>
+              </td>
+              <td>
+                <button
+                  nbButton
+                  style="color: white; background-color: #4c34fb"
+                  (click)="activate(value)"
+                >
+                  Activate
+                </button>
+              </td>
+              <td class="hide">
+                <button nbButton style="color: white; background-color: #04c34f">
+                  <!-- <button nbButton style="color: white; background-color: #04c34f;" (click)="activate(power)"> -->
+                  Coming Soon
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- </nb-layout-column> -->

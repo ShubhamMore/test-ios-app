@@ -1,0 +1,44 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: hsla(0, 0%, 0%, 0.75);
+  z-index: 150;
+}
+
+.play-recording-box {
+  position: fixed;
+  top: 20vh;
+  left: 20vw;
+  width: 60vw;
+  padding: 0px;
+  z-index: 200;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+@media only screen and (max-width: 1200px) {
+  .play-recording-box {
+    top: 15vh;
+    left: 15vw;
+    width: 75vw;
+  }
+}
+
+@media only screen and (max-width: 840px) {
+  .play-recording-box {
+    top: 12vh;
+    left: 10vw;
+    width: 80vw;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .play-recording-box {
+    top: 10vh;
+    left: 5vw;
+    width: 90vw;
+  }
+}

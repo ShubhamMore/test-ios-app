@@ -1,0 +1,84 @@
+<nb-card *ngIf="display">
+  <nb-card-header>
+    <div>
+      <button class="btn btn-yellow-black float-right" (click)="back()">MANAGE SMS Packs</button>
+      <p style="color: black; font-weight: bold">
+        {{ edit === 'true' ? 'Edit' : 'Add' }} Sms Pack Here
+      </p>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="form" (ngSubmit)="saveSmsPack()">
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="noOfSMS">*No. of SMS</label>
+          <input
+            type="number"
+            nbInput
+            id="noOfSMS"
+            fullWidth
+            [status]="
+              form.get('noOfSMS').invalid && form.get('noOfSMS').touched ? 'danger' : 'basic'
+            "
+            formControlName="noOfSMS"
+            placeholder="No. of SMS"
+          />
+          <small *ngIf="form.get('noOfSMS').invalid && form.get('noOfSMS').touched"
+            >*No. of SMS is required</small
+          >
+        </div>
+
+        <div class="col-sm-6">
+          <label for="pricePerSMS">*Price Per SMS</label>
+          <input
+            type="number"
+            nbInput
+            fullWidth
+            [status]="
+              form.get('pricePerSMS').invalid && form.get('pricePerSMS').touched
+                ? 'danger'
+                : 'basic'
+            "
+            #pricePerSMS
+            id="pricePerSMS"
+            formControlName="pricePerSMS"
+            placeholder="Price Per SMS"
+            (change)="onPricePerSms()"
+          />
+          <small *ngIf="form.get('pricePerSMS').invalid && form.get('pricePerSMS').touched"
+            >*Price Per SMS is required</small
+          >
+        </div>
+        <div class="col-sm-6">
+          <label for="totalAmount">*Total Amount</label>
+          <input
+            type="text"
+            nbInput
+            fullWidth
+            [status]="
+              form.get('totalAmount').invalid && form.get('totalAmount').touched
+                ? 'danger'
+                : 'basic'
+            "
+            #pricePerSMS
+            id="totalAmount"
+            formControlName="totalAmount"
+            placeholder="Total Amount"
+            disabled
+          />
+          <small *ngIf="form.get('totalAmount').invalid && form.get('totalAmount').touched"
+            >*Total Amount is required</small
+          >
+        </div>
+      </div>
+
+      <hr />
+
+      <div>
+        <button type="submit" class="btn btn-yellow-black float-right">
+          {{ edit === 'true' ? 'Update' : 'Add' }} Sms Pack
+        </button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

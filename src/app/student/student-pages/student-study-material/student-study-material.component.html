@@ -1,0 +1,52 @@
+<ngx-student-institute-header></ngx-student-institute-header>
+<nb-card *ngIf="display" class="mobileFullHeight">
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9">
+        <h4>STUDY MATERIAL</h4>
+      </div>
+      <div class="col-md-3">
+        <nb-select
+          placeholder="Select Course"
+          fullWidth
+          (selectedChange)="onSelectCourse($event)"
+          [(selected)]="batchCode"
+        >
+          <nb-option value="">Select Course</nb-option>
+          <nb-option *ngFor="let course of courses" [value]="course.batchCode">{{
+            course.courseName + ' (' + course.batchCode + ')'
+          }}</nb-option>
+        </nb-select>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive" *ngIf="materials.length > 0; else noMaterial">
+      <table class="table table-borderless">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>TITLE</th>
+            <th>CATEGORY</th>
+            <th>FILE/LINK</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let material of materials; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ material.title }}</td>
+            <td>{{ material.category }}</td>
+            <td>
+              <a href="#" (click)="openUrl(material.file.secure_url)">{{
+                material.file.file_name
+              }}</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noMaterial>
+      <p class="text-center pt-5 pb-5">No Study Material Available</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

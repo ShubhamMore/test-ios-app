@@ -1,0 +1,78 @@
+<ngx-student-institute-header></ngx-student-institute-header>
+<nb-card *ngIf="display" class="mobileFullHeight">
+  <nb-card-header style="background-color: #ffd500">
+    <div class="row">
+      <div class="col-sm-9">
+        <h4>MEETING</h4>
+      </div>
+      <div class="col-sm-3">
+        <nb-select
+          placeholder="Select Course"
+          status="basic"
+          fullWidth
+          (selectedChange)="onSelectCourse($event)"
+          [(selected)]="courseId"
+        >
+          <nb-option value="">Select Course</nb-option>
+          <nb-option *ngFor="let course of courses" [value]="course._id">{{
+            course.courseName + ' (' + course.batchCode + ')'
+          }}</nb-option>
+        </nb-select>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-tabset fullWidth>
+      <nb-tab tabTitle="PAST MEETINGS">
+        <div class="table-responsive" *ngIf="pastMeetings.length > 0; else noPastMeetings">
+          <table class="table table-borderless">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let meeting of pastMeetings; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ getDate(meeting.meeting.date) }}</td>
+                <td>{{ getTime(meeting.meeting.time) }}</td>
+                <td>{{ meeting.meeting.description }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ng-template #noPastMeetings>
+          <p class="text-center pt-5">No Past Meetings</p>
+        </ng-template>
+      </nb-tab>
+      <nb-tab tabTitle="UPCOMING MEETING">
+        <div class="table-responsive" *ngIf="upcomingMeetings.length > 0; else noUpcomingMeetings">
+          <table class="table table-borderless">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let meeting of upcomingMeetings; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ getDate(meeting.meeting.date) }}</td>
+                <td>{{ getTime(meeting.meeting.time) }}</td>
+                <td>{{ meeting.meeting.description }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ng-template #noUpcomingMeetings>
+          <p class="text-center pt-5">No Upcoming Meetings</p>
+        </ng-template>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card-body>
+</nb-card>

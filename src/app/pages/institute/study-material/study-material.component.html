@@ -1,0 +1,214 @@
+<ngx-institute-header></ngx-institute-header>
+
+<nb-card *ngIf="display">
+  <nb-card-header>
+    <h4>ADD STUDY MATERIAL</h4>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="materialForm" (submit)="addMaterial()">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="title">*Title</label>
+          <input
+            type="text"
+            nbInput
+            id="title"
+            [status]="
+              materialForm.get('title').invalid && materialForm.get('title').touched
+                ? 'danger'
+                : 'basic'
+            "
+            formControlName="title"
+            fullWidth
+            placeholder="Title"
+          />
+          <small *ngIf="materialForm.get('title').invalid && materialForm.get('title').touched"
+            >*Title is Required</small
+          >
+        </div>
+
+        <div class="col-md-4">
+          <label for="title">*Category</label>
+          <nb-select
+            placeholder="Select Category"
+            [status]="
+              materialForm.get('category').invalid && materialForm.get('category').touched
+                ? 'danger'
+                : 'basic'
+            "
+            formControlName="category"
+            (selectedChange)="onSelectCategory($event)"
+            fullWidth
+          >
+            <nb-option value="NOTES/PRIMARY MATERIAL">NOTES/PRIMARY MATERIAL</nb-option>
+            <nb-option value="ADDITIONAL REFERENCE">ADDITIONAL REFERENCE</nb-option>
+            <nb-option value="ASSIGNMENT">ASSIGNMENT</nb-option>
+            <nb-option value="HOMEWORK">HOMEWORK</nb-option>
+            <nb-option value="LEARNING VIDEO">LEARNING VIDEO</nb-option>
+          </nb-select>
+          <small
+            *ngIf="materialForm.get('category').invalid && materialForm.get('category').touched"
+            >*Category is Required</small
+          >
+        </div>
+
+        <div class="col-md-4">
+          <label for="title">*File/Link</label>
+          <input
+            [type]="videoUrl ? 'url' : 'file'"
+            nbInput
+            fullWidth
+            formControlName="link"
+            status="basic"
+            [placeholder]="videoUrl ? 'Link' : 'File'"
+            (change)="onFilePicked($event)"
+          />
+          <small
+            *ngIf="
+              !videoUrl && materialForm.get('link').invalid && materialForm.get('link').touched
+            "
+            >*File is Required</small
+          >
+          <small
+            *ngIf="videoUrl && materialForm.get('link').invalid && materialForm.get('link').touched"
+            >*Link is Required</small
+          >
+        </div>
+
+        <div class="col-md-4">
+          <label for="title">*Course</label>
+          <nb-select
+            placeholder="Select Course"
+            formControlName="courseId"
+            multiple
+            [status]="courseError ? 'danger' : 'basic'"
+            fullWidth
+            (selectedChange)="onSelectFormCourse($event)"
+          >
+            <nb-option *ngFor="let course of courses" [value]="course.courseCode">{{
+              course.name
+            }}</nb-option>
+          </nb-select>
+          <small *ngIf="courseError">*Course is Required</small>
+        </div>
+
+        <div class="col-md-4">
+          <label for="title">*Batches</label>
+          <nb-select
+            placeholder="Select Batches"
+            fullWidth
+            formControlName="batches"
+            multiple
+            [status]="batchError ? 'danger' : 'basic'"
+            (selectedChange)="onSelectFormBatch()"
+          >
+            <nb-option *ngFor="let i of batches" value="{{ i.batchCode }}">{{
+              i.batchCode
+            }}</nb-option>
+          </nb-select>
+          <small *ngIf="batchError">*Batch is Required</small>
+        </div>
+
+        <div class="col-md-4 pt-4">
+          <nb-checkbox status="basic" (checkedChange)="check($event)"
+            >SHARE WITH EVERYONE</nb-checkbox
+          >
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="row">
+        <div class="col-12">
+          <button type="submit" class="btn btn-yellow-black float-right">SHARE</button>
+          <button
+            *ngIf="edit"
+            class="btn float-right mr-3"
+            nbButton
+            status="danger"
+            type="button"
+            (click)="cancelEdit()"
+          >
+            CANCEL
+          </button>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>
+
+<nb-card *ngIf="display">
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-9">
+        <h4>STUDY MATERIAL</h4>
+      </div>
+      <div class="col-md-3">
+        <nb-select placeholder="Select Course" fullWidth (selectedChange)="onSelectCourse($event)">
+          <nb-option value="all">All</nb-option>
+          <nb-option *ngFor="let course of courses" [value]="course.courseCode">{{
+            course.name
+          }}</nb-option>
+        </nb-select>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div *ngIf="materials.length > 0; else noMaterial">
+      <table class="table table-borderless">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>TITLE</th>
+            <th>CATEGORY</th>
+            <th>FILE/LINK</th>
+            <th>SHARED WITH</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let material of materials; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ material.title }}</td>
+            <td>{{ material.category }}</td>
+            <td>
+              <a href="#" (click)="openUrl(material.file.secure_url)">{{
+                material.file.file_name
+              }}</a>
+            </td>
+            <td>{{ material.batches.join(',') }}</td>
+            <td>
+              <button
+                type="button"
+                class="btn mr-3 mb-2 btn-yellow"
+                nbButton
+                (click)="editMaterial(i)"
+              >
+                <span class="btnText"> Edit </span>
+
+                <span class="btnIcon">
+                  <nb-icon icon="edit-outline"></nb-icon>
+                </span>
+              </button>
+              <button
+                type="button"
+                class="btn mb-2"
+                nbButton
+                status="danger"
+                (click)="deleteMaterial(material._id)"
+              >
+                <span class="btnText"> Delete </span>
+                <span class="btnIcon">
+                  <nb-icon icon="trash-2-outline"></nb-icon>
+                </span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noMaterial>
+      <p class="text-center pt-5 pb-5">No Study Material Available</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

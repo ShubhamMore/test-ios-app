@@ -1,0 +1,115 @@
+<nb-card *ngIf="display">
+  <nb-card-header>
+    <div>
+      <button class="btn btn-yellow-black float-right" (click)="back()">Manage Discount</button>
+      <p style="color: black; font-weight: bold">Define Discount</p>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="discountForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="code">Code</label>
+          <input
+            type="text"
+            nbInput
+            fullWidth
+            id="code"
+            status="basic"
+            formControlName="discountCode"
+            [status]="
+              discountForm.get('discountCode').invalid && discountForm.get('discountCode').touched
+                ? 'danger'
+                : 'basic'
+            "
+            placeholder="Code"
+          />
+          <small
+            *ngIf="
+              discountForm.get('discountCode').invalid && discountForm.get('discountCode').touched
+            "
+            style="display: block"
+            >*This field Required</small
+          >
+        </div>
+
+        <div class="col-sm-4">
+          <label for="discountType">Discount Type</label>
+          <nb-select
+            placeholder="Select Amount Type"
+            id="discountType"
+            fullWidth
+            [status]="
+              discountForm.get('discountType').invalid && discountForm.get('discountType').touched
+                ? 'danger'
+                : 'basic'
+            "
+            formControlName="discountType"
+          >
+            <!-- <nb-option value="">Select Parent Course</nb-option> -->
+            <nb-option value="percentage"> Discount in Percentage </nb-option>
+            <nb-option value="amount"> Discount in Amount </nb-option>
+          </nb-select>
+          <small
+            *ngIf="
+              discountForm.get('discountType').invalid && discountForm.get('discountType').touched
+            "
+            style="display: block"
+            >*This field Required</small
+          >
+        </div>
+
+        <div class="col-sm-4">
+          <label for="amt"
+            >Amount
+            <span *ngIf="discountForm.get('discountType').value === 'percentage'"
+              >(in %)</span
+            ></label
+          >
+          <input
+            type="text"
+            pattern="\d*"
+            nbInput
+            fullWidth
+            id="amt"
+            status="basic"
+            formControlName="amount"
+            [status]="
+              (discountForm.get('amount').invalid || discountForm.hasError('invalidDiscount')) &&
+              discountForm.get('amount').touched
+                ? 'danger'
+                : 'basic'
+            "
+            placeholder="Amount"
+          />
+          <small
+            *ngIf="
+              (discountForm.get('amount').invalid || discountForm.hasError('invalidDiscount')) &&
+              discountForm.get('amount').touched
+            "
+            style="display: block"
+            >*Enter Valid Amount</small
+          >
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <label for="des">Description</label>
+        <textarea
+          name="description"
+          nbInput
+          id="description"
+          fullWidth
+          status="basic"
+          cols="40"
+          rows="4"
+          formControlName="description"
+          placeholder="Description(Optional)"
+        ></textarea>
+      </div>
+      <div class="mt-4" style="text-align: right">
+        <button type="submit" class="btn btn-yellow-black">Submit</button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

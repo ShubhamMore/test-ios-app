@@ -1,0 +1,136 @@
+<ngx-institute-header></ngx-institute-header>
+<nb-card>
+  <nb-card-header>
+    <button class="btn btn-yellow-black float-right" (click)="addSchedule()">Schedule Class</button>
+    <h4>Manage Schedule</h4>
+  </nb-card-header>
+</nb-card>
+
+<nb-card class="mobileFullHeight" *ngIf="display">
+  <nb-card-header style="background-color: #ffd500">
+    <div class="row">
+      <div class="col-sm-6">
+        <h4>SCHEDULED CLASS</h4>
+      </div>
+      <div class="col-sm-3 pt-3">
+        <nb-select
+          placeholder="Select Course"
+          status="basic"
+          fullWidth
+          (selectedChange)="onSelectCourse($event)"
+          [(selected)]="courseId"
+        >
+          <nb-option value="all">All Courses</nb-option>
+          <nb-option *ngFor="let course of institute.course" [value]="course._id">{{
+            course.name
+          }}</nb-option>
+        </nb-select>
+      </div>
+
+      <div class="col-sm-3 pt-3">
+        <nb-select
+          placeholder="Select Batch"
+          fullWidth
+          status="basic"
+          (selectedChange)="onSelectBatch($event)"
+          [(selected)]="batchId"
+        >
+          <nb-option value="all">All Batches</nb-option>
+          <nb-option *ngFor="let batch of batches" [value]="batch._id">{{
+            batch.batchCode
+          }}</nb-option>
+        </nb-select>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-accordion *ngIf="schedules.length > 0; else no_schedule">
+      <nb-accordion-item *ngFor="let schedule of schedules; let i = index">
+        <nb-accordion-item-header style="width: 100%">
+          <div class="row" style="width: 100%">
+            <div class="col-12 py-2">
+              <div class="float-right pb-3">
+                <button
+                  class="float-right"
+                  nbButton
+                  status="danger"
+                  (click)="deleteSchedule(schedule._id)"
+                >
+                  <span class="btnText"> Delete </span>
+
+                  <span class="btnIcon">
+                    <nb-icon icon="trash-2-outline"></nb-icon>
+                  </span>
+                </button>
+                <button
+                  class="mr-3 btn-yellow float-right"
+                  nbButton
+                  status=""
+                  (click)="editSchedule(schedule._id)"
+                >
+                  <span class="btnText"> Edit </span>
+                  <span class="btnIcon">
+                    <nb-icon icon="edit-outline"></nb-icon>
+                  </span>
+                </button>
+                <button
+                  class="mr-3 float-right"
+                  nbButton
+                  status="primary"
+                  (click)="viewSchedule(schedule._id)"
+                >
+                  <span class="btnText"> View </span>
+
+                  <span class="btnIcon">
+                    <nb-icon icon="eye-outline"></nb-icon>
+                  </span>
+                </button>
+              </div>
+              <p class="">
+                <strong>Schedule From</strong> {{ getScheduleDate(schedule.scheduleStart) }}
+                <strong>to</strong>
+                {{ getScheduleDate(schedule.scheduleEnd) }}
+              </p>
+            </div>
+          </div>
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <div *ngFor="let day of schedule.days; let j = index" style="padding-bottom: 10px">
+            <div *ngIf="day.select">
+              <div class="date-block">
+                <span class="day">{{ getDay(day.date) }}</span>
+                <span class="month">{{ getMonth(day.date) }}</span>
+              </div>
+
+              <div class="scheduleDetailsContainer">
+                <span class="scheduleDetailBlock">
+                  <div class="meeting-details">
+                    <div class="detail1">Date: {{ getScheduleDate(day.date) }}</div>
+                    <div class="detail1">
+                      Time: {{ time(day.startTime) + ' to ' + time(day.endTime) }}
+                    </div>
+                  </div>
+                </span>
+                <span class="scheduleDetailBlock">
+                  <div class="meeting-details">
+                    <div class="detail1">Topic: {{ day.topic }}</div>
+                    <div class="detail1">Teacher: {{ schedule.teacherData[j].teacherName }}</div>
+                  </div>
+                </span>
+                <span class="scheduleDetailBlock">
+                  <div class="meeting-details">
+                    <div class="detail1">Course: {{ schedule.courseId }}</div>
+                    <div class="detail2">Batch: {{ schedule.batchId }}</div>
+                  </div>
+                </span>
+              </div>
+            </div>
+          </div>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+    </nb-accordion>
+    <ng-template #no_schedule>
+      <h6 class="text-center mt-5">No Schedule</h6>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

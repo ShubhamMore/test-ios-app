@@ -1,0 +1,31 @@
+small {
+  color: red;
+}
+.details {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, 224px);
+}
+
+.feeDetail {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, 224px);
+}
+nb-select {
+  display: block;
+}
+p {
+  color: black;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 600px) {
+  .fetchBtn {
+    margin-top: 20px;
+
+    button {
+      float: right;
+    }
+  }
+}

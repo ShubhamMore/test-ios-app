@@ -1,0 +1,111 @@
+<ngx-institute-header></ngx-institute-header>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-6">
+        <p class="font-weight-bolder">Pending Students</p>
+      </div>
+
+      <div class="col-sm-3">
+        <label>Search Student</label>
+        <input
+          type="text"
+          nbInput
+          [(ngModel)]="searchStudentFilter"
+          (input)="filterPendingStudents()"
+          fullWidth
+          placeholder="Search Student By Name"
+        />
+      </div>
+
+      <div class="col-sm-3">
+        <div class="form-group">
+          <label>Select Course</label>
+          <nb-select
+            placeholder="Select Course"
+            status="basic"
+            fullWidth
+            (selectedChange)="onSelectCourse($event)"
+            selected="all"
+          >
+            <nb-option value="all">All</nb-option>
+            <nb-option *ngFor="let i of courses" [value]="i._id">{{ i.name }}</nb-option>
+          </nb-select>
+        </div>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive">
+      <table
+        class="table table-borderless"
+        *ngIf="students.length > 0 && !hideHeaders; else noStudents"
+      >
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Roll No.</th>
+            <th class="hideMobile">Contact</th>
+            <!-- <th>Course Name</th> -->
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let student of students; let i = index" [hidden]="student.filterOut">
+            <td>{{ student.basicDetails.name }}</td>
+            <td>{{ student.instituteDetails.rollNumber }}</td>
+            <td class="hideMobile">{{ student.basicDetails.studentContact }}</td>
+            <!-- <td>{{ student.courseDetails.course }}</td> -->
+            <td>
+              <button
+                class="mr-2 mb-2"
+                nbButton
+                status="primary"
+                (click)="view(student.eduAtlasId, student.instituteDetails.courseId)"
+              >
+                <span class="btnText"> View </span>
+
+                <span class="btnIcon">
+                  <nb-icon icon="eye-outline"></nb-icon>
+                </span>
+              </button>
+              <button
+                type="button"
+                class="btn-yellow mb-2 mr-2"
+                nbButton
+                (click)="edit(student.eduAtlasId, student.instituteDetails.courseId)"
+              >
+                <span class="btnText"> Edit </span>
+                <span class="btnIcon">
+                  <nb-icon icon="edit-outline"></nb-icon>
+                </span>
+              </button>
+              <button
+                class="mr-2 mb-2"
+                nbButton
+                status="danger"
+                (click)="
+                  delete(
+                    student.eduAtlasId,
+                    student.instituteDetails._id,
+                    student.instituteDetails.courseId,
+                    student._id
+                  )
+                "
+              >
+                <span class="btnText"> Delete </span>
+
+                <span class="btnIcon">
+                  <nb-icon icon="trash-2-outline"></nb-icon>
+                </span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noStudents>
+      <p class="text-center pt-5">No Students Found</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>

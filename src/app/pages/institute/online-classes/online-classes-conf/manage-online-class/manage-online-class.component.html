@@ -1,0 +1,85 @@
+<!-- <ngx-institute-header></ngx-institute-header> -->
+
+<nb-card status="info" *ngIf="display">
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-6">
+        <h3 class="text-white">UPCOMING CLASSES</h3>
+      </div>
+      <div class="col-sm-3 pt-3">
+        <nb-select
+          placeholder="Select Course"
+          status="basic"
+          fullWidth
+          (selectedChange)="onSelectCourse($event)"
+        >
+          <nb-option value="">Select Course</nb-option>
+          <nb-option *ngFor="let course of institute.course" [value]="course._id">{{
+            course.name
+          }}</nb-option>
+        </nb-select>
+      </div>
+      <div class="col-sm-3 pt-3">
+        <nb-select
+          placeholder="Select Batch"
+          fullWidth
+          status="basic"
+          (selectedChange)="onSelectBatch($event)"
+        >
+          <nb-option value="">Select Batch</nb-option>
+          <nb-option *ngFor="let batch of batches" [value]="batch._id">{{
+            batch.batchCode
+          }}</nb-option>
+        </nb-select>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-list *ngIf="meetings.length > 0; else noMeetings">
+      <nb-list-item *ngFor="let meeting of meetings; let i = index">
+        <div class="row" style="width: 100%">
+          <div class="col-md-6">
+            <div class="date-block">
+              <span class="month">{{ month(meeting.startTime) }}</span>
+              <span class="day">{{ day(meeting.startTime) }}</span>
+            </div>
+            <div class="meeting-details">
+              <div class="detail1">Topic: {{ meeting.topic }}</div>
+              <div class="detail1">Start Time: {{ createTime(meeting.startTime) }}</div>
+              <div class="detail2">Host: {{ meeting.hostName }}</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="text-right">
+              <button class="mr-3 mb-1" nbButton status="info" (click)="goLive(meeting.startUrl)">
+                Go Live
+              </button>
+              <!-- <button class="mr-3 mb-1" nbButton status="success" (click)="notify(meeting._id)">
+                Notify
+              </button> -->
+              <button class="mr-3 mb-1 btn btn-yellow" (click)="edit(meeting._id)">Edit</button>
+              <button
+                class="mr-3 mb-1"
+                nbButton
+                status="danger"
+                (click)="deleteMeeting(meeting._id, meeting.meetingId)"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </nb-list-item>
+    </nb-list>
+    <ng-template #noMeetings>
+      <p class="mt-5 text-center">No Meetings Available</p>
+    </ng-template>
+  </nb-card-body>
+</nb-card>
+
+<!-- <nb-card status="warning">
+  <nb-card-header>RECORDED CLASSES</nb-card-header>
+  <nb-card-body>
+    <p class="mt-5 text-center">No Recorded Classes</p>
+  </nb-card-body>
+</nb-card> -->

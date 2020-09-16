@@ -1,0 +1,75 @@
+<div class="py-4">
+  <button class="btn btn-yellow-black float-right" (click)="back()">Back</button>
+</div>
+<br /><br />
+<nb-card status="info" *ngIf="forumCommentData" class="mobileFullHeight">
+  <nb-card-header>
+    <div class="row mb-2">
+      <div class="col-sm-9">
+        <h3 class="text-white">{{ forumCommentData.title }}</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">Description : {{ forumCommentData.description }}</div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-md-3">
+        <label>Created By :</label><span> {{ forumCommentData.createdByName }}</span>
+      </div>
+      <div class="col-md-3">
+        <label>Created at :</label><span> {{ getFormattedDateTime(forumCommentData.date) }}</span>
+      </div>
+      <div class="col-md-3" *ngIf="forumCommentData.courseName">
+        <label>Course Name : </label><span> {{ forumCommentData.courseName }}</span>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <hr />
+    <div *ngFor="let comment of forumCommentData.comments" class="commentBox">
+      <div class="row">
+        <div class="col-md-9">
+          <label>Comment By : </label><span>{{ comment.userName }}</span>
+        </div>
+        <div class="col-md-3">
+          <label>Comment At : </label><span>{{ getFormattedDateTime(comment.commentDate) }}</span>
+        </div>
+      </div>
+      <div class="my-4">
+        {{ comment.comment }}
+        <div
+          class="deleteComment"
+          (click)="deleteComment(comment._id)"
+          *ngIf="comment.userId == authService.getUser()._id"
+        >
+          <nb-icon icon="trash-2-outline"></nb-icon>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="forumCommentData.comments.length === 0">
+      <p class="text-center">You Are The First One To Comment</p>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-md-12">
+        <label>Your Comment: </label>
+        <textarea
+          type="text"
+          nbInput
+          fullWidth
+          status="basic"
+          [(ngModel)]="userComment"
+          rows="5"
+          placeholder="Comment"
+        >
+        </textarea>
+      </div>
+    </div>
+    <hr />
+
+    <button class="float-right mt-3 btn btn-yellow-black" (click)="submitComment()" type="submit">
+      Submit
+    </button>
+  </nb-card-body>
+</nb-card>

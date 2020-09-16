@@ -1,0 +1,61 @@
+<nb-card>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-5">
+        <p class="font-weight-bold">Institute Name</p>
+      </div>
+      <div class="col-sm-5">
+        <p>{{ institute.institute.basicInfo.name }}</p>
+      </div>
+      <div class="col-sm-1"></div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-5">
+        <p class="font-weight-bold">Contact Number</p>
+      </div>
+      <div class="col-sm-5">
+        <p>{{ institute.institute.basicInfo.contactNumber }}</p>
+      </div>
+      <div class="col-sm-1"></div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-5">
+        <p class="font-weight-bold">Address</p>
+      </div>
+      <div class="col-sm-5">
+        <p>
+          {{ institute.institute.address.addressLine }} {{ institute.institute.address.locality }}
+          {{ institute.institute.address.city }} {{ institute.institute.address.city }}
+        </p>
+      </div>
+      <div class="col-sm-1"></div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-5">
+        <p class="font-weight-bold">Category</p>
+      </div>
+      <div class="col-sm-5">
+        <p *ngFor="let i of institute.institute.category">{{ i }}</p>
+      </div>
+      <div class="col-sm-1"></div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-5">
+        <p class="font-weight-bold">MetaTag</p>
+      </div>
+      <div class="col-sm-5">
+        <p *ngFor="let i of institute.institute.metaTag">{{ i }}</p>
+      </div>
+      <div class="col-sm-1"></div>
+    </div>
+  </nb-card-body>
+</nb-card>
