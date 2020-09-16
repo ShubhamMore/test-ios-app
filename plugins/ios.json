@@ -21,6 +21,15 @@
     },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+    },
+    "cordova-plugin-ionic": {
+      "APP_ID": "57884f1d",
+      "CHANNEL_NAME": "Production",
+      "UPDATE_API": "https://api.ionicjs.com",
+      "UPDATE_METHOD": "background",
+      "MAX_STORE": "2",
+      "MIN_BACKGROUND_DURATION": "30",
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     }
   },
   "dependent_plugins": {

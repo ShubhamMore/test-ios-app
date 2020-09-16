@@ -48,5 +48,17 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>IonAppId</key>
+	<string>57884f1d</string>
+	<key>IonChannelName</key>
+	<string>Production</string>
+	<key>IonApi</key>
+	<string>https://api.ionicjs.com</string>
+	<key>IonUpdateMethod</key>
+	<string>background</string>
+	<key>IonMaxVersions</key>
+	<string>2</string>
+	<key>IonMinBackgroundDuration</key>
+	<string>30</string>
 </dict>
 </plist>

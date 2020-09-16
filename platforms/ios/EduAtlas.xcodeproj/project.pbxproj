@@ -29,6 +29,7 @@
 		52820FFA301444D68E761EB9 /* UNNotificationRequest+APPLocalNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 396D74A1CAAA48CBA8516560 /* UNNotificationRequest+APPLocalNotification.m */; };
 		A15BDC88CB3D403696378E60 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1D7872E44144E6A3ADDFE6 /* UserNotifications.framework */; };
 		59BD66CC52454979BE9711F4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6163C388F24B8DBEC4A7C9 /* CoreLocation.framework */; };
+		1A5859CE0414481590B658C4 /* IonicCordovaCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = AD98D1ACD8854E7595360A4B /* IonicCordovaCommon.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +104,8 @@
 		37853BDEB3094CB38CE0F1F6 /* UNNotificationRequest+APPLocalNotification.h */ = {isa = PBXFileReference; name = "UNNotificationRequest+APPLocalNotification.h"; path = "cordova-plugin-local-notification/UNNotificationRequest+APPLocalNotification.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		EB1D7872E44144E6A3ADDFE6 /* UserNotifications.framework */ = {isa = PBXFileReference; name = "UserNotifications.framework"; path = "System/Library/Frameworks/UserNotifications.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 		BA6163C388F24B8DBEC4A7C9 /* CoreLocation.framework */ = {isa = PBXFileReference; name = "CoreLocation.framework"; path = "System/Library/Frameworks/CoreLocation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		AD98D1ACD8854E7595360A4B /* IonicCordovaCommon.m */ = {isa = PBXFileReference; name = "IonicCordovaCommon.m"; path = "cordova-plugin-ionic/IonicCordovaCommon.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		C45249FB96FD494797DA1EE3 /* IonicCordovaCommon.h */ = {isa = PBXFileReference; name = "IonicCordovaCommon.h"; path = "cordova-plugin-ionic/IonicCordovaCommon.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +240,8 @@
 				3101E130118442849331A4CA /* APPNotificationOptions.h */,
 				E2C249FAE37F4C988E1B8A95 /* UNUserNotificationCenter+APPLocalNotification.h */,
 				37853BDEB3094CB38CE0F1F6 /* UNNotificationRequest+APPLocalNotification.h */,
+				AD98D1ACD8854E7595360A4B /* IonicCordovaCommon.m */,
+				C45249FB96FD494797DA1EE3 /* IonicCordovaCommon.h */,
 			);
 			name = Plugins;
 			path = "EduAtlas/Plugins";
@@ -373,6 +378,7 @@
 				CE12CC678EB94D13A849A211 /* APPNotificationOptions.m in Sources */,
 				0476535F1F944E26A96E4656 /* UNUserNotificationCenter+APPLocalNotification.m in Sources */,
 				52820FFA301444D68E761EB9 /* UNNotificationRequest+APPLocalNotification.m in Sources */,
+				1A5859CE0414481590B658C4 /* IonicCordovaCommon.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

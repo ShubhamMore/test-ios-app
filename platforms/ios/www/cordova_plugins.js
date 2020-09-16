@@ -65,6 +65,20 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
         "cordova.plugins.notification.local.core",
         "plugin.notification.local.core"
       ]
+    },
+    {
+      "id": "cordova-plugin-ionic.common",
+      "file": "plugins/cordova-plugin-ionic/dist/common.js",
+      "pluginId": "cordova-plugin-ionic",
+      "clobbers": [
+        "IonicCordova"
+      ]
+    },
+    {
+      "id": "cordova-plugin-ionic.guards",
+      "file": "plugins/cordova-plugin-ionic/dist/guards.js",
+      "pluginId": "cordova-plugin-ionic",
+      "runs": true
     }
   ];
   module.exports.metadata = {
@@ -73,6 +87,7 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-ionic-keyboard": "2.2.0",
     "cordova-plugin-ionic-webview": "4.2.1",
     "cordova-plugin-local-notification": "0.9.0-beta.2",
-    "cordova-plugin-whitelist": "1.3.3"
+    "cordova-plugin-whitelist": "1.3.3",
+    "cordova-plugin-ionic": "5.4.7"
   };
 });
